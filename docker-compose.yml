@@ -29,15 +29,13 @@ services:
         ports:
             - '${MARIA_DB_PORT:-3306}:3306'
         environment:
-            MYSQL_ROOT_PASSWORD: '${MARIA_DB_ROOT_PASSWORD}'
-            MYSQL_ROOT_HOST: '%'
-            MYSQL_DATABASE: '${MARIA_DB_DATABASE}'
-            MYSQL_USER: '${MARIA_DB_USERNAME}'
-            MYSQL_PASSWORD: '${MARIA_DB_USER_PASSWORD}'
-            MYSQL_ALLOW_EMPTY_PASSWORD: 1
+            MARIADB_ROOT_PASSWORD: '${MARIA_DB_ROOT_PASSWORD}'
+            MARIADB_ROOT_HOST: '%'
+            MARIADB_DATABASE: '${MARIA_DB_DATABASE}'
+            MARIADB_USER: '${MARIA_DB_USERNAME}'
+            MARIADB_PASSWORD: '${MARIA_DB_USER_PASSWORD}'
         volumes:
             - 'franlara-mariadb:/var/lib/mysql'
-            - './vendor/laravel/sail/database/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
         networks:
             - franlaranet
         healthcheck:
