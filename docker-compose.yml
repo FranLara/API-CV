@@ -14,7 +14,7 @@ services:
             - '${APP_PORT:-80}:80'
             - '${APP_PORT_SECURE:-443}:443'
         environment:
-            WWWUSER: '${WWWUSER}'
+            WWWUSER: '${APP_WWWUSER}'
             XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
             XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
             IGNITION_LOCAL_SITES_PATH: '${PWD}'
