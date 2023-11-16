@@ -45,6 +45,4 @@ COPY ./config/php/php-fpm.d /etc/php/8.2/fpm/pool.d/
 COPY ./config/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 RUN chmod +x /usr/local/bin/run-api
 
-EXPOSE 8000
-
 ENTRYPOINT ["run-api"]

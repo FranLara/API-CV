@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+export XDEBUG_HOST=$(ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p' | head -n 1)
+
+if [ $# -gt 0 ]; then
+
+    if [[ "$1" == "start" ]]; then
+        docker compose up -d
+
+    elif [[ "$1" == "stop" ]]; then
+        docker compose down
+
+    elif [[ "$1" == "rebuild" ]]; then
+        docker compose up -d --build
+
+    elif [[ "$1" == "artisan" ]] || [[ "$1" == "art" ]]; then
+        shift 1
+        docker compose exec franlara.cv php artisan "$@"
+
+    elif [[ "$1" == "composer" ]] || [[ "$1" == "comp" ]]; then
+        shift 1
+        docker compose exec franlara.cv composer "$@"
+
+    fi
+
+else
+    docker-compose ps
+fi
