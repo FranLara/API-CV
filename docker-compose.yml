@@ -43,6 +43,14 @@ services:
             retries: 3
             timeout: 5s
         restart: always
+    maildebug:
+        image: mailhog/mailhog
+        networks:
+            - franlaranet
+        ports:
+          - ${MAILHOG_PORT}:1025
+          - ${MAILHOG_HTTP_PORT_EXTERNAL}:8025
+        restart: always
 networks:
     franlaranet:
         driver: bridge
