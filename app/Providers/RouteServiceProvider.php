@@ -28,7 +28,13 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->routes(function () {
             Route::middleware('web')->namespace(self::ROOT . 'Web')->group(base_path('routes/web.php'));
-            Route::middleware('api')->namespace(self::ROOT . 'API')->prefix('api')->group(base_path('routes/api.php'));
+            //Route::middleware('api')->namespace(self::ROOT . 'API')->group(base_path('routes/api.php'));
         });
+        
+        $router = app('Dingo\Api\Routing\Router');
+        
+        $router->version('v1', ['middleware' => 'api.auth'], function ($api) {
+        	require base_path('routes/api.php');
+        })->na;
     }
 }

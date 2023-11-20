@@ -19,3 +19,7 @@ yarn-error.log
 /.vscode
 /config/ide-helper.php
 /nbproject
+.DS_Store
+/.project
+/.settings/
+/.editorconfig
