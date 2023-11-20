@@ -11,11 +11,6 @@ class Landing extends Controller
 {
     public function home(): Factory|View
     {
-        return $this->getSimpleView('home');
-    }
-
-    private function getSimpleView(string $view): Factory|View
-    {
-        return view($view);
+        return view('home');
     }
 }
