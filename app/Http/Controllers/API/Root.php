@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller\API as APIController;
+use App\Http\Controllers\API\API as APIController;
 use Dingo\Api\Http\Response;
 use Illuminate\Support\Facades\Log;
 

@@ -33,8 +33,8 @@ class RouteServiceProvider extends ServiceProvider
         
         $router = app('Dingo\Api\Routing\Router');
         
-        $router->version('v1', ['middleware' => 'api.auth'], function ($api) {
+        $router->version('v1', function ($api) {
         	require base_path('routes/api.php');
-        })->na;
+        });
     }
 }
