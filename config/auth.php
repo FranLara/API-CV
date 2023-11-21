@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Users\Recruiter;
+
 return [
 
     /*
@@ -14,7 +16,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard'     => 'web',
         'passwords' => 'users',
     ],
 
@@ -37,12 +39,16 @@ return [
 
     'guards' => [
         'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
+            'recruiter' => [
+                'driver'   => 'session',
+                'provider' => 'recruiters',
+            ],
         ],
         'api' => [
-            'driver' => 'jwt',
-            'provider' => 'users',
+            'recruiter' => [
+                'driver'   => 'jwt',
+                'provider' => 'recruiters',
+            ],
         ],
     ],
 
@@ -65,14 +71,9 @@ return [
 
     'providers' => [
         'users' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'recruiters' => 'eloquent',
+            'model'      => Recruiter::class,
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
     ],
 
     /*
@@ -97,8 +98,8 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
-            'table' => 'password_reset_tokens',
-            'expire' => 60,
+            'table'    => 'password_reset_tokens',
+            'expire'   => 60,
             'throttle' => 60,
         ],
     ],
