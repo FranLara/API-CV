@@ -13,13 +13,25 @@ if [ $# -gt 0 ]; then
     elif [[ "$1" == "rebuild" ]]; then
         docker compose up -d --build
 
-    elif [[ "$1" == "artisan" ]] || [[ "$1" == "art" ]]; then
+    elif [[ "$1" == "npm" ]]; then
         shift 1
-        docker compose exec franlara.cv php artisan "$@"
+        docker compose exec franlara.cv npm "$@"
 
-    elif [[ "$1" == "composer" ]] || [[ "$1" == "comp" ]]; then
+    elif [[ "$1" == "node" ]]; then
+        shift 1
+        docker compose exec franlara.cv node "$@"
+
+    elif [[ "$1" == "compile" ]]; then
+        shift 1
+        docker compose exec franlara.cv npm run build
+
+    elif [[ "$1" == "composer" ]]; then
         shift 1
         docker compose exec franlara.cv composer "$@"
+
+    elif [[ "$1" == "artisan" ]]; then
+        shift 1
+        docker compose exec franlara.cv php artisan "$@"
 
     fi
 

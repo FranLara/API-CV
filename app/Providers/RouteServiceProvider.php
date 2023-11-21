@@ -6,6 +6,7 @@ use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Routing\UrlGenerator;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 
@@ -22,13 +23,8 @@ class RouteServiceProvider extends ServiceProvider
     {
         resolve(UrlGenerator::class)->forceScheme('https');
 
-        RateLimiter::for('api', function (Request $request) {
-            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
-        });
-
         $this->routes(function () {
             Route::middleware('web')->namespace(self::ROOT . 'Web')->group(base_path('routes/web.php'));
-            //Route::middleware('api')->namespace(self::ROOT . 'API')->group(base_path('routes/api.php'));
         });
         
         $router = app('Dingo\Api\Routing\Router');

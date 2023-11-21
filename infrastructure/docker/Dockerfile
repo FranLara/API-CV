@@ -3,6 +3,7 @@ FROM ubuntu:22.04
 LABEL maintainer="Fran Lara"
 
 ARG WWWGROUP
+ARG NODE_VERSION=21
 
 WORKDIR /var/www/html
 
@@ -26,6 +27,11 @@ RUN apt update \
        php8.2-msgpack php8.2-igbinary php8.2-redis php8.2-swoole \
        php8.2-memcached php8.2-pcov php8.2-xdebug \
     && curl -sLS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer \
+    && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
+    && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_VERSION.x nodistro main" > /etc/apt/sources.list.d/nodesource.list \
+    && apt update \
+    && apt install -y nodejs \
+    && npm install -g npm \
     && apt install -y mysql-client \
     && apt -y autoremove \
     && apt clean \

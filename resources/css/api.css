@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 0;
-    background-image: linear-gradient(to top, rgba(0, 0, 0, 1) 35%, rgba(0, 0, 0, 0.31) 100%), url('/images/background.jpg');
+    background-image: linear-gradient(to top, rgba(0, 0, 0, 1) 35%, rgba(0, 0, 0, 0.31) 100%), url('../images/background.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
