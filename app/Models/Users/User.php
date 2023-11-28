@@ -10,13 +10,11 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 
 abstract class User extends Authenticatable implements JWTSubject
 {
-    use Notifiable;
+    use Notifiable, HasFactory;
 
     protected $fillable = ['name', 'email'];
 
-    protected $hidden = ['password', 'remember_token'];
-
-    protected $casts = ['email_verified_at' => 'datetime'];
+    protected $hidden = ['password'];
 
     public function getJWTIdentifier()
     {

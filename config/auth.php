@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\Users\Admin;
 use App\Models\Users\Recruiter;
+use App\Models\Users\Technician;
 
 return [
 
@@ -16,7 +18,7 @@ return [
     */
 
     'defaults' => [
-        'guard'     => 'web',
+        'guard'     => 'web.recruiter',
         'passwords' => 'users',
     ],
 
@@ -39,15 +41,31 @@ return [
 
     'guards' => [
         'web' => [
-            'recruiter' => [
+            'admin'      => [
+                'driver'   => 'session',
+                'provider' => 'admins',
+            ],
+            'recruiter'  => [
                 'driver'   => 'session',
                 'provider' => 'recruiters',
             ],
+            'technician' => [
+                'driver'   => 'session',
+                'provider' => 'technicians',
+            ],
         ],
         'api' => [
-            'recruiter' => [
+            'admin'      => [
+                'driver'   => 'jwt',
+                'provider' => 'admins',
+            ],
+            'recruiter'  => [
                 'driver'   => 'jwt',
                 'provider' => 'recruiters',
+            ],
+            'technician' => [
+                'driver'   => 'jwt',
+                'provider' => 'technicians',
             ],
         ],
     ],
@@ -70,9 +88,17 @@ return [
     */
 
     'providers' => [
-        'users' => [
-            'recruiters' => 'eloquent',
-            'model'      => Recruiter::class,
+        'admins'      => [
+            'driver' => 'eloquent',
+            'model'  => Admin::class,
+        ],
+        'recruiters'  => [
+            'driver' => 'eloquent',
+            'model'  => Recruiter::class,
+        ],
+        'technicians' => [
+            'driver' => 'eloquent',
+            'model'  => Technician::class,
         ],
     ],
 
