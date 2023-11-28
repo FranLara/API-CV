@@ -10,10 +10,10 @@ class Root extends APIController
 {
     public function index(): Response
     {
-        return $this->response->array(['foo' => 'bar']);
+        return $this->response->array(['Requests' => ['request' => ['token' => 'GET']]]);
     }
 
-    public function options(): Response
+    public function optional(): Response
     {
         return (new Response([], Response::HTTP_OK))->header('Allow',
             implode(', ', [Request::METHOD_GET, Request::METHOD_OPTIONS, Request::METHOD_POST]));

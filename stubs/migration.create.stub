@@ -8,17 +8,14 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('recruiters', function (Blueprint $table) {
+        Schema::create('{{ table }}', function (Blueprint $table) {
             $table->id();
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('linkedin_profile');
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('recruiters');
+        Schema::dropIfExists('{{ table }}');
     }
 };
