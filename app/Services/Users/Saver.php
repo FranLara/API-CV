@@ -1,5 +1,5 @@
 <?php
-namespace app\Services\Users;
+namespace App\Services\Users;
 
 use app\DTOs\Users\User;
 
