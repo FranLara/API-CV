@@ -6,6 +6,7 @@
 <img src="{{ Vite::asset('resources/images/logo.png') }}">
 @else
 {{ $slot }}
+<img src="{{ Vite::asset('resources/images/logo.png') }}">
 @endif
 </a>
 </td>

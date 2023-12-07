@@ -28,7 +28,7 @@ class AdminCreated extends Notification implements ShouldQueue
     {
         return (new MailMessage())->subject(__(self::TRANSLATIONS . 'subject', [
             'username' => $this->admin->getUsername()]))
-            ->greeting(self::TRANSLATIONS . 'greeting')
+            ->greeting(__(self::TRANSLATIONS . 'greeting'))
             ->line('The introduction to the notification.')
             ->action('Notification Action', url('/'))
             ->line('Thank you for using our application!');
