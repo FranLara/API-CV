@@ -1,28 +1,34 @@
 <?php
+
 namespace App\Services\Users\Admins;
 
-use App\Models\Users\Admin as AdminModel;
-use App\DTOs\Users\Admin;
-use App\Services\Users\Admins\Admin as AdminService;
-use App\Services\Users\Saver as SaverInterface;
+use App\BusinessObjects\DTOs\Users\Admin;
+use App\BusinessObjects\Models\Users\Admin as AdminModel;
+use App\Services\Users\Saver as UserSaver;
 
-class Saver extends AdminService implements SaverInterface
+class Saver extends UserSaver
 {
 
-    public function save(Admin $admin)
+    public function __construct(Mapper $mapper)
+    {
+        $this->mapper = $mapper;
+    }
+
+    public function save(Admin $admin): bool
     {
         $model = $this->getMappedModel($admin);
+
+        if ($model->isDirty()) {
+            return $model->save();
+        }
+
+        return true;
     }
 
     private function getMappedModel(Admin $admin): AdminModel
     {
-        $model = new AdminModel();
+        $model = AdminModel::firstOrNew(['username' => $admin->getUsername()]);
 
-        if (!empty($admin->getIdentifier())) {
-            $model = $this->getModel($admin->getIdentifier());
-        }
-
-        return $model;
+        return $this->mapper->map($admin, $model);
     }
 }
-

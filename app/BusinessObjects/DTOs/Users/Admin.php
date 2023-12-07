@@ -1,5 +1,6 @@
 <?php
-namespace App\DTOs\Users;
+
+namespace App\BusinessObjects\DTOs\Users;
 
 class Admin extends User
 {
@@ -8,7 +9,17 @@ class Admin extends User
     public function __construct(int $identifier = null, string $username = null, string $psswd = null, string $language = null)
     {
         parent::__construct($identifier, $psswd, $language);
-        
+
+        $this->username = $username;
+    }
+
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(string $username)
+    {
         $this->username = $username;
     }
 }

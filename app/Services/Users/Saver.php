@@ -1,10 +1,14 @@
 <?php
+
 namespace App\Services\Users;
 
-use app\DTOs\Users\User;
+use App\BusinessObjects\DTOs\Users\User;
+use app\Services\Saver as SaverInterface;
 
-interface Saver
+abstract class Saver implements SaverInterface
 {
-    public function save(User $user);
+    protected Mapper $mapper;
+    
+    abstract public function save(User $user);
 }
 

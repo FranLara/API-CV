@@ -1,17 +1,20 @@
 <?php
-namespace App\DTOs\Users;
 
-abstract class User
+namespace App\BusinessObjects\DTOs\Users;
+
+use app\BusinessObjects\DTOs\DTO;
+
+abstract class User extends DTO
 {
     protected ?string $psswd;
-    protected ?int $identifier;
     protected ?string $language;
 
     public function __construct(?int $identifier = null, ?string $psswd = null, ?string $language = null)
     {
+        parent::__construct($identifier);
+
         $this->psswd = $psswd;
         $this->language = $language;
-        $this->identifier = $identifier;
     }
 
     public function getPsswd(): ?string
@@ -19,19 +22,18 @@ abstract class User
         return $this->psswd;
     }
 
-    public function setPsswd(?string $psswd): void
+    public function setPsswd(string $psswd): void
     {
         $this->psswd = $psswd;
     }
-    
-    public function getIdentifier(): ?int
+
+    public function getLanguage(): ?string
     {
-        return $this->identifier;
+        return $this->language;
     }
-    
-    public function setIdentifier(?int $identifier): void
+
+    public function setLanguage(string $language): void
     {
-        $this->identifier = $identifier;
+        $this->language = $language;
     }
 }
-

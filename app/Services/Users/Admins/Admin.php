@@ -7,7 +7,7 @@ abstract class Admin
 {
     protected function getModel(int $identifier): AdminModel
     {
-        return AdminModel::find($identifier);
+        return AdminModel::findOrFail($identifier);
     }
 }
 

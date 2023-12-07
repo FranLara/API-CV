@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Users;
+namespace App\BusinessObjects\Models\Users;
 
 use Database\Factories\TechnicianFactory;
 
