@@ -1,22 +1,32 @@
 <?php
+
 namespace App\Console\Commands;
 
+use App\BusinessObjects\DTOs\Users\Admin;
+use App\Notifications\AdminCreated;
+use App\Services\Users\Admins\Saver;
 use Illuminate\Console\Command;
-use app\DTOs\Users\Admin;
+use Illuminate\Support\Facades\Notification;
 
 class CreateAdmin extends Command
 {
+    private const TRANSLATIONS = 'command.creation.admin.';
     protected $signature = 'create:admin';
     protected $description = 'This command creates an admin user asking by keyboard the username and the password.';
-    private $translations = 'command.creation.admin.';
 
-    public function handle(): void
+    public function handle(Saver $saver): void
     {
-        $username = $this->ask(trans($this->translations . 'username'));
-        $password = $this->secret(trans($this->translations . 'password'));
-        $language = $this->ask(trans($this->translations . 'language'), 1);
+        $username = $this->ask(__(self::TRANSLATIONS . 'username'));
+        $password = $this->secret(__(self::TRANSLATIONS . 'password'));
+        $language = $this->ask(__(self::TRANSLATIONS . 'language'), 1);
 
-        $admin = new Admin($username, $password, $this->getLanguage($language));
+        $admin = new Admin(null, $username, $password, $this->getLanguage($language));
+
+        $userSaved = $saver->save($admin);
+
+        if ($userSaved) {
+            Notification::route('mail', 'testing@test.com')->notify(new AdminCreated($admin));
+        }
     }
 
     private function getLanguage(int $language): string

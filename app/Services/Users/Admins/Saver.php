@@ -2,6 +2,7 @@
 
 namespace App\Services\Users\Admins;
 
+use App\BusinessObjects\DTOs\DTO;
 use App\BusinessObjects\DTOs\Users\Admin;
 use App\BusinessObjects\Models\Users\Admin as AdminModel;
 use App\Services\Users\Saver as UserSaver;
@@ -14,7 +15,7 @@ class Saver extends UserSaver
         $this->mapper = $mapper;
     }
 
-    public function save(Admin $admin): bool
+    public function save(DTO $admin): bool
     {
         $model = $this->getMappedModel($admin);
 

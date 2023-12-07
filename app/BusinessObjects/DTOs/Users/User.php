@@ -2,7 +2,7 @@
 
 namespace App\BusinessObjects\DTOs\Users;
 
-use app\BusinessObjects\DTOs\DTO;
+use App\BusinessObjects\DTOs\DTO;
 
 abstract class User extends DTO
 {
