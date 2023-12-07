@@ -6,8 +6,12 @@ class Admin extends User
 {
     private ?string $username;
 
-    public function __construct(int $identifier = null, string $username = null, string $psswd = null, string $language = null)
-    {
+    public function __construct(
+        string $username = null,
+        string $psswd = null,
+        string $language = null,
+        int $identifier = null
+    ) {
         parent::__construct($identifier, $psswd, $language);
 
         $this->username = $username;
@@ -18,7 +22,7 @@ class Admin extends User
         return $this->username;
     }
 
-    public function setUsername(string $username)
+    public function setUsername(string $username): void
     {
         $this->username = $username;
     }

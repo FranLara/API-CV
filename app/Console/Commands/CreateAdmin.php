@@ -20,7 +20,7 @@ class CreateAdmin extends Command
         $password = $this->secret(__(self::TRANSLATIONS . 'password'));
         $language = $this->ask(__(self::TRANSLATIONS . 'language'), 1);
 
-        $admin = new Admin(null, $username, $password, $this->getLanguage($language));
+        $admin = new Admin($username, $password, $this->getLanguage($language));
 
         $userSaved = true; //$saver->save($admin);
 
