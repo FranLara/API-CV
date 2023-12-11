@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="color-scheme" content="light">
 <meta name="supported-color-schemes" content="light">
+
 <style>
 @media only screen and (max-width: 600px) {
 .inner-body {
@@ -23,6 +24,7 @@ width: 100% !important;
 }
 }
 </style>
+@vite(['resources/css/api.css', 'resources/js/api.js'])
 </head>
 <body>
 

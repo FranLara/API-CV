@@ -9,6 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 abstract class Mapper implements MapperInterface
 {
 
-    abstract public function map(DTO $dto, Model $user);
+    abstract public function map(DTO $dto, Model $user): Model;
 }
 

@@ -22,7 +22,7 @@ class CreateAdmin extends Command
 
         $admin = new Admin($username, $password, $this->getLanguage($language));
 
-        $userSaved = true; //$saver->save($admin);
+        $userSaved = $saver->save($admin);
 
         if ($userSaved) {
             Notification::route('mail', 'testing@test.com')->notify(new AdminCreated($admin));

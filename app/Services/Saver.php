@@ -6,6 +6,6 @@ use App\BusinessObjects\DTOs\DTO;
 
 interface Saver
 {
-    public function save(DTO $dto);
-}
 
+    public function save(DTO $dto): bool;
+}
