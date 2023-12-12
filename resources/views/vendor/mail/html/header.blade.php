@@ -2,8 +2,7 @@
 <tr>
 <td class="header">
 <a href="{{ $url }}" style="display: inline-block;">
-{{ $slot }}
-<img src="$logo" class="logo">
+<img src="{{ Vite::asset('resources/images/logo.png') }}" class="logo" alt="Fran Lara CV Logo">
 </a>
 </td>
 </tr>
