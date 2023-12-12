@@ -9,6 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 abstract class Transformer implements TransformerInterface
 {
 
-    abstract public function transform(Model $user): User;
+    abstract public function transform(Model $model): User;
 }
 

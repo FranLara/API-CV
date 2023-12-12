@@ -8,8 +8,8 @@ class Admin extends User
 
     public function __construct(
         string $username = null,
-        string $psswd = null,
         string $language = null,
+        string $psswd = null,
         int $identifier = null
     ) {
         parent::__construct($identifier, $psswd, $language);

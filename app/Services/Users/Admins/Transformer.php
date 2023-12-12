@@ -11,13 +11,10 @@ class Transformer extends UserTransformer
 
     public function transform(Model $model): Admin
     {
-        $admin = new Admin($model->username);
+        $admin = new Admin($model->username, $model->language);
 
         if (!empty($model->id)) {
             $admin->setIdentifier($model->id);
-        }
-        if (!empty($model->getLanguage())) {
-            $admin->setLanguage($admin->language);
         }
 
         return $admin;
