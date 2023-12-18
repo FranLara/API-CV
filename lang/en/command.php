@@ -14,11 +14,11 @@ return [
             'update'   => [
                 'username'     => 'Which admin do you want to update? (Type "exit" to finish the command)',
                 'password'     => 'Which is the new password?',
-                'language'     => '¿Quieres actualizar el idioma? ¿A cuál? (Teclea el número del deseado)' . PHP_EOL
-                                  . PHP_EOL . 'AVISO: El actual es el indicado entre corchetes' . PHP_EOL
+                'language'     => 'Do you want to update their language? To which one? (Type the number of the desired one)'
+                                  . PHP_EOL . 'WARNING: The current one is indicated between square brackets' . PHP_EOL
                                   . '  1.- English' . PHP_EOL . '  2.- Castellano' . PHP_EOL . '  3.- Deutsch'
                                   . PHP_EOL,
-                'non_existing' => 'El nombre de usuario ":username" no pertenece a ningún administrador.',
+                'non_existing' => 'The username ":username" doesn\'t belong to any admin.',
             ]
         ]
     ],
