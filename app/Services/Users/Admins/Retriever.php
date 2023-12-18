@@ -20,7 +20,7 @@ class Retriever extends UserRetriever
         return $this->transformer->transform(AdminModel::findOrFail($identifier));
     }
 
-    public function retrieveByField(string $field, $value): User
+    public function retrieveByField(string $field, $value): Admin
     {
         $model = AdminModel::firstWhere($field, $value);
 
