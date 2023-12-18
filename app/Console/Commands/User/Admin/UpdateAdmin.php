@@ -46,7 +46,7 @@ class UpdateAdmin extends AdminCommand
         try {
             return $retriever->retrieveByField('username', $username);
         } catch (ModelNotFoundException) {
-            $this->error(__(self::UPDATE_TRANSLATIONS . 'existing', ['username' => $username]));
+            $this->error(__(self::UPDATE_TRANSLATIONS . 'non_existing', ['username' => $username]));
         }
 
         return new Admin();
