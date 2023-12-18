@@ -4,14 +4,14 @@ namespace App\Console\Commands\User\Admin;
 
 use App\BusinessObjects\DTOs\Users\Admin;
 use App\Console\Commands\User\Admin\Admin as AdminCommand;
-use App\Notifications\AdminCreated;
+use App\Notifications\User\Admin\Created;
 use App\Services\Users\Admins\Retriever;
 use App\Services\Users\Admins\Saver;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 
-class CreateAdmin extends AdminCommand
+class Create extends AdminCommand
 {
     private const CREATION_TRANSLATIONS = self::ADMIN_TRANSLATIONS . 'creation.';
 
@@ -30,7 +30,7 @@ class CreateAdmin extends AdminCommand
             $username = $this->ask(__(self::CREATION_TRANSLATIONS . 'username'));
         } while ((!$this->isUsernameUnique($retriever, $username)) && (!Str::of($username)->exactly(self::EXIT)));
 
-        if (!Str::of($username)->exactly(self::EXIT)) {
+        if (!Str::of($username)->lower()->exactly(self::EXIT)) {
             $this->createAdmin($saver, $username);
         }
     }
@@ -58,7 +58,7 @@ class CreateAdmin extends AdminCommand
         $userSaved = $saver->save($admin);
 
         if ($userSaved) {
-            Notification::route('mail', config('mail.notifications.internal'))->notify(new AdminCreated($admin));
+            Notification::route('mail', config('mail.notifications.internal'))->notify(new Created($admin));
         }
     }
 }

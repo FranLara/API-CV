@@ -4,14 +4,15 @@ namespace App\Console\Commands\User\Admin;
 
 use App\BusinessObjects\DTOs\Users\Admin;
 use App\Console\Commands\User\Admin\Admin as AdminCommand;
-use App\Notifications\AdminCreated;
+use App\Notifications\User\Admin\Created;
+use App\Notifications\User\Admin\Updated;
 use App\Services\Users\Admins\Retriever;
 use App\Services\Users\Admins\Saver;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 
-class UpdateAdmin extends AdminCommand
+class Update extends AdminCommand
 {
     private const UPDATE_TRANSLATIONS = self::ADMIN_TRANSLATIONS . 'update.';
 
@@ -28,7 +29,7 @@ class UpdateAdmin extends AdminCommand
     {
         do {
             $admin = $this->getAdmin($retriever);
-        } while ((!Str::of($admin->getUsername())->exactly(self::EXIT)) && (empty($admin->getIdentifier())));
+        } while ((!Str::of($admin->getUsername())->lower()->exactly(self::EXIT)) && (empty($admin->getIdentifier())));
 
         if (!empty($admin->getIdentifier())) {
             $this->updateAdmin($saver, $admin);
@@ -39,7 +40,7 @@ class UpdateAdmin extends AdminCommand
     {
         $username = $this->ask(__(self::UPDATE_TRANSLATIONS . 'username'));
 
-        if (Str::of($username)->exactly(self::EXIT)) {
+        if (Str::of($username)->lower()->exactly(self::EXIT)) {
             return new Admin($username);
         }
 
@@ -62,7 +63,7 @@ class UpdateAdmin extends AdminCommand
         $userSaved = $saver->save($admin);
 
         if ($userSaved) {
-            Notification::route('mail', config('mail.notifications.internal'))->notify(new AdminCreated($admin));
+            Notification::route('mail', config('mail.notifications.internal'))->notify(new Updated($admin));
         }
     }
 
