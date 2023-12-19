@@ -3,15 +3,11 @@
 namespace App\Notifications\User\Admin;
 
 use App\BusinessObjects\DTOs\Users\Admin as AdminDTO;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
 
-abstract class Admin extends Notification implements ShouldQueue
+abstract class Admin extends Notification
 {
-    use Queueable;
-
     protected const ADMIN_TRANSLATIONS = 'notification.admin.';
 
     protected AdminDTO $admin;

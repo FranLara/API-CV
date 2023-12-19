@@ -10,9 +10,12 @@ use App\Services\Users\Admins\Saver;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
+use App\Utils\Notifications as NotificationUtils;
 
 class Create extends AdminCommand
 {
+    use NotificationUtils;
+
     private const CREATION_TRANSLATIONS = self::ADMIN_TRANSLATIONS . 'creation.';
 
     protected $description = 'This command creates an admin user asking by keyboard the username and the password.';
@@ -58,7 +61,7 @@ class Create extends AdminCommand
         $userSaved = $saver->save($admin);
 
         if ($userSaved) {
-            Notification::route('mail', config('mail.notifications.internal'))->notify(new Created($admin));
+            $this->sendMailNotification(new Created($admin), $admin->getLanguage());
         }
     }
 }

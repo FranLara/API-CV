@@ -2,10 +2,9 @@
 
 namespace App\Notifications\User\Admin;
 
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class Created extends Admin implements ShouldQueue
+class Created extends Admin
 {
     private const CREATION_TRANSLATIONS = self::ADMIN_TRANSLATIONS . 'creation.';
 

@@ -2,11 +2,9 @@
 
 namespace App\Notifications\User\Admin;
 
-
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class Updated extends Admin implements ShouldQueue
+class Updated extends Admin
 {
     private const UPDATE_TRANSLATIONS = self::ADMIN_TRANSLATIONS . 'update.';
 
@@ -14,10 +12,8 @@ class Updated extends Admin implements ShouldQueue
     {
         return (new MailMessage())->subject(__(self::UPDATE_TRANSLATIONS . 'subject', [
             'username' => $this->admin->getUsername()
-        ]))
-                                  ->greeting(__(self::ADMIN_TRANSLATIONS . 'greeting'))
-                                  ->line('The introduction to the notification.')
-                                  ->action('Notification Action', url('/'))
-                                  ->line('Thank you for using our application!');
+        ]))->greeting(__(self::ADMIN_TRANSLATIONS . 'greeting'))->line(__(self::UPDATE_TRANSLATIONS . 'line_1',
+            ['username' => $this->admin->getUsername()]))->line(__(self::ADMIN_TRANSLATIONS . 'line_2',
+            ['language' => $this->getLanguage($this->admin->getLanguage())]));
     }
 }

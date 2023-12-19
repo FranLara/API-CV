@@ -4,16 +4,17 @@ namespace App\Console\Commands\User\Admin;
 
 use App\BusinessObjects\DTOs\Users\Admin;
 use App\Console\Commands\User\Admin\Admin as AdminCommand;
-use App\Notifications\User\Admin\Created;
 use App\Notifications\User\Admin\Updated;
 use App\Services\Users\Admins\Retriever;
 use App\Services\Users\Admins\Saver;
+use App\Utils\Notifications as NotificationUtils;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 
 class Update extends AdminCommand
 {
+    use NotificationUtils;
+
     private const UPDATE_TRANSLATIONS = self::ADMIN_TRANSLATIONS . 'update.';
 
     protected $description = 'This command updates an admin user asking by keyboard the username and the new password.';
@@ -63,7 +64,7 @@ class Update extends AdminCommand
         $userSaved = $saver->save($admin);
 
         if ($userSaved) {
-            Notification::route('mail', config('mail.notifications.internal'))->notify(new Updated($admin));
+            $this->sendMailNotification(new Updated($admin), $admin->getLanguage());
         }
     }
 
