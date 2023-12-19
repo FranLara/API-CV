@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'regards' => 'Regards',
     'admin' => [
         'greeting' => 'Warning!',
         'line_2' => 'Their chosen language is: ":language"',

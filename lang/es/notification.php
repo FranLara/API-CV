@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'regards' => 'Un saludo',
     'admin' => [
         'greeting' => '¡Aviso!',
         'line_2' => 'Su idioma escogido es el: ":language"',
