@@ -2,6 +2,7 @@
 
 return [
     'regards' => 'Regards',
+    'rights' => 'All rights reserved.',
     'admin' => [
         'greeting' => 'Warning!',
         'line_2' => 'Their chosen language is: ":language"',

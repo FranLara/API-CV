@@ -2,6 +2,7 @@
 
 return [
     'regards' => 'Un saludo',
+    'rights' => 'Todos los derechos reservados.',
     'admin' => [
         'greeting' => '¡Aviso!',
         'line_2' => 'Su idioma escogido es el: ":language"',

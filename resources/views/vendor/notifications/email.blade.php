@@ -40,7 +40,7 @@
 {{ $salutation }}
 @else
 @lang('notification.regards'),<br>
-{{ config('app.name') }}
+Francisco Ildefonso Lara Casalilla
 @endif
 
 {{-- Subcopy --}}
