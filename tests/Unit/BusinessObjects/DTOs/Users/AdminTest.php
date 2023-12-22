@@ -51,19 +51,12 @@ class AdminTest extends TestCase
 
     public static function providerConstructorData(): array
     {
-        return [
-            [null, null, null, null],
-            [null, null, self::PSSWD, null],
-            [self::USERNAME, null, null, null],
-            [null, self::LANGUAGE, null, null],
-            [null, null, null, self::IDENTIFIER],
-            [null, null, self::PSSWD, self::IDENTIFIER],
-            [null, self::LANGUAGE, null, self::IDENTIFIER],
-            [self::USERNAME, null, null, self::IDENTIFIER],
-            [null, self::LANGUAGE, self::PSSWD, self::IDENTIFIER],
+        return [[null, null, null, null], [null, null, self::PSSWD, null], [self::USERNAME, null, null, null],
+            [null, self::LANGUAGE, null, null], [null, null, null, self::IDENTIFIER],
+            [null, null, self::PSSWD, self::IDENTIFIER], [null, self::LANGUAGE, null, self::IDENTIFIER],
+            [self::USERNAME, null, null, self::IDENTIFIER], [null, self::LANGUAGE, self::PSSWD, self::IDENTIFIER],
             [self::USERNAME, null, self::PSSWD, self::IDENTIFIER],
-            [self::USERNAME, self::LANGUAGE, self::PSSWD, self::IDENTIFIER],
-        ];
+            [self::USERNAME, self::LANGUAGE, self::PSSWD, self::IDENTIFIER]];
     }
 
     public static function providerGetUsername(): array

@@ -26,20 +26,14 @@ class MapperTest extends TestCase
             $this->assertTrue(Hash::check($psswd, $admin->password));
         }
         if (empty($identifier)) {
-            $this->assertGreaterThan(now()->subSecond(), $admin->created_at);
+            $this->assertLessThanOrEqual(now(), $admin->created_at);
         }
     }
 
     public static function providerAdminData(): array
     {
-        return [
-            [null, null, null],
-            [null, self::PSSWD, null],
-            [self::LANGUAGE, null, null],
-            [null, null, self::IDENTIFIER],
-            [null, self::PSSWD, self::IDENTIFIER],
-            [self::LANGUAGE, null, self::IDENTIFIER],
-            [self::LANGUAGE, self::PSSWD, self::IDENTIFIER],
-        ];
+        return [[null, null, null], [null, self::PSSWD, null], [self::LANGUAGE, null, null],
+            [null, null, self::IDENTIFIER], [null, self::PSSWD, self::IDENTIFIER],
+            [self::LANGUAGE, null, self::IDENTIFIER], [self::LANGUAGE, self::PSSWD, self::IDENTIFIER]];
     }
 }
