@@ -6,13 +6,11 @@ use App\BusinessObjects\DTOs\Users\Admin as AdminDTO;
 use App\BusinessObjects\Models\Users\Admin;
 use App\Services\Users\Admins\Mapper;
 use App\Services\Users\Admins\Saver;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
-use Tests\TestCase;
+use Tests\Unit\Services\SaverTest as SaverServiceTest;
 
-class SaverTest extends TestCase
+class SaverTest extends SaverServiceTest
 {
-	use RefreshDatabase;
 	private const PSSWD = 'test_psswd';
 	private const USERNAME = 'test_username';
 	private const LANGUAGE = 'test_language';
