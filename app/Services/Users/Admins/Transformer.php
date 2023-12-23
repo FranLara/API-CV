@@ -9,14 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 class Transformer extends UserTransformer
 {
 
-    public function transform(Model $model): Admin
-    {
-        $admin = new Admin($model->username, $model->language);
-
-        if (!empty($model->id)) {
-            $admin->setIdentifier($model->id);
-        }
-
-        return $admin;
-    }
+	public function transform(Model $model): Admin
+	{
+		return new Admin($model->username, $model->language, null, $model->id);
+	}
 }

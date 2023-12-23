@@ -7,9 +7,9 @@ use App\BusinessObjects\Models\Users\Admin;
 use App\Services\Users\Admins\Mapper;
 use App\Services\Users\Admins\Saver;
 use Illuminate\Support\Facades\Hash;
-use Tests\Unit\Services\SaverTest as SaverServiceTest;
+use Tests\Unit\Services\ServiceTest;
 
-class SaverTest extends SaverServiceTest
+class SaverTest extends ServiceTest
 {
 	private const PSSWD = 'test_psswd';
 	private const USERNAME = 'test_username';
