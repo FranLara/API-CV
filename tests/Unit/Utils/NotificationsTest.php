@@ -8,11 +8,12 @@ use App\Notifications\User\Admin\Created;
 use App\Utils\Notifications as NotificationsUtil;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Notification as FacadeNotification;
-use Tests\Unit\Services\ServiceTest;
+use Tests\TestCase;
 use ReflectionClass;
 
-class NotificationsTest extends ServiceTest
+class NotificationsTest extends TestCase
 {
+	private const LOCALE = 'test_locale';
 
 	/**
 	 * @dataProvider providerNotification
@@ -35,7 +36,7 @@ class NotificationsTest extends ServiceTest
 
 		$method->invokeArgs($notifications, [$notification, $locale, $to]);
 
-		FacadeNotification::assertSentOnDemand(Notification::class, function (Notification $notification, array $channels, object $notifiable) use ($expectedLocale, $expectedTo) {
+		FacadeNotification::assertSentOnDemand(get_class($notification), function (Notification $notification, array $channels, object $notifiable) use ($expectedLocale, $expectedTo) {
 			return ((Str::of($notifiable->routes['mail'])->exactly($expectedTo)) &&
 				(Str::of($notification->locale)->exactly($expectedLocale)));
 		});
@@ -44,6 +45,6 @@ class NotificationsTest extends ServiceTest
 
 	public static function providerNotification(): array
 	{
-		return [[new Created(new Admin())], [new Created(new Admin()), 'test_locale', null, 'test_locale']]; //[], [true], [true, true]];
+		return [[new Created(new Admin())], [new Created(new Admin()), self::LOCALE, null, self::LOCALE]]; //[], [true], [true, true]];
 	}
 }
