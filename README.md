@@ -10,7 +10,7 @@ As you could imagine, this project contains the source code used to develop my i
 English version) and the API that provides all the info related to my CV.
 
 ##### Digging in the repository you'll find references to:
-- <img align="left" alt="Laravel" title="Laravel" width="26px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-plain.svg" style="padding-right:10px;"/> Laravel 10.8
+- <img align="left" alt="Laravel" title="Laravel" width="26px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg" style="padding-right:10px;"/> Laravel 10.8
 - <img align="left" alt="Laravel" title="Laravel" width="26px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-plain.svg" style="padding-right:10px;"/> PHP 8.2
 - <img align="left" alt="MySQL" title="MySQL" width="26px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" style="padding-right:10px;"/> MariaDB 10.6.12
 - <img align="left" alt="Ubuntu" title="Ubuntu" width="26px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ubuntu/ubuntu-plain.svg" style="padding-right:10px;"/> Ubuntu 22.04
