@@ -9,6 +9,6 @@ abstract class Saver implements SaverInterface
 {
     protected Mapper $mapper;
 
-    abstract public function save(DTO $user);
+    abstract public function save(DTO $user): bool;
 }
 

@@ -1,26 +1,20 @@
 <?php
+use App\BusinessObjects\Models\Users\Admin;
+use App\BusinessObjects\Models\Users\Recruiter;
+use App\BusinessObjects\Models\Users\Technician;
 
-use App\Models\Users\Admin;
-use App\Models\Users\Recruiter;
-use App\Models\Users\Technician;
+return [ /*
+ |--------------------------------------------------------------------------
+ | Authentication Defaults
+ |--------------------------------------------------------------------------
+ |
+ | This option controls the default authentication "guard" and password
+ | reset options for your application. You may change these defaults
+ | as required, but they're a perfect start for most applications.
+ |
+ */
 
-return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Authentication Defaults
-    |--------------------------------------------------------------------------
-    |
-    | This option controls the default authentication "guard" and password
-    | reset options for your application. You may change these defaults
-    | as required, but they're a perfect start for most applications.
-    |
-    */
-
-    'defaults' => [
-        'guard'     => 'web.recruiter',
-        'passwords' => 'users',
-    ],
+'defaults' => ['guard' => 'web.recruiter', 'passwords' => 'users',],
 
     /*
     |--------------------------------------------------------------------------
@@ -40,35 +34,12 @@ return [
     */
 
     'guards' => [
-        'web' => [
-            'admin'      => [
-                'driver'   => 'session',
-                'provider' => 'admins',
-            ],
-            'recruiter'  => [
-                'driver'   => 'session',
-                'provider' => 'recruiters',
-            ],
-            'technician' => [
-                'driver'   => 'session',
-                'provider' => 'technicians',
-            ],
-        ],
-        'api' => [
-            'admin'      => [
-                'driver'   => 'jwt',
-                'provider' => 'admins',
-            ],
-            'recruiter'  => [
-                'driver'   => 'jwt',
-                'provider' => 'recruiters',
-            ],
-            'technician' => [
-                'driver'   => 'jwt',
-                'provider' => 'technicians',
-            ],
-        ],
-    ],
+		'web' => ['admin' => ['driver' => 'session', 'provider' => 'admins',],
+			'recruiter' => ['driver' => 'session', 'provider' => 'recruiters',],
+			'technician' => ['driver' => 'session', 'provider' => 'technicians',],],
+		'api' => ['admin' => ['driver' => 'jwt', 'provider' => 'admins',],
+			'recruiter' => ['driver' => 'jwt', 'provider' => 'recruiters',],
+			'technician' => ['driver' => 'jwt', 'provider' => 'technicians',],],],
 
     /*
     |--------------------------------------------------------------------------
@@ -87,20 +58,9 @@ return [
     |
     */
 
-    'providers' => [
-        'admins'      => [
-            'driver' => 'eloquent',
-            'model'  => Admin::class,
-        ],
-        'recruiters'  => [
-            'driver' => 'eloquent',
-            'model'  => Recruiter::class,
-        ],
-        'technicians' => [
-            'driver' => 'eloquent',
-            'model'  => Technician::class,
-        ],
-    ],
+    'providers' => ['admins' => ['driver' => 'eloquent', 'model' => Admin::class,],
+		'recruiters' => ['driver' => 'eloquent', 'model' => Recruiter::class,],
+		'technicians' => ['driver' => 'eloquent', 'model' => Technician::class,],],
 
     /*
     |--------------------------------------------------------------------------
@@ -122,13 +82,7 @@ return [
     */
 
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
-            'table'    => 'password_reset_tokens',
-            'expire'   => 60,
-            'throttle' => 60,
-        ],
-    ],
+		'users' => ['provider' => 'users', 'table' => 'password_reset_tokens', 'expire' => 60, 'throttle' => 60,],],
 
     /*
     |--------------------------------------------------------------------------
@@ -141,6 +95,4 @@ return [
     |
     */
 
-    'password_timeout' => 10800,
-
-];
+    'password_timeout' => 10800,];

@@ -1,7 +1,18 @@
 <?php
+
 return [
+    'regards' => 'Regards',
+    'rights' => 'All rights reserved.',
     'admin' => [
-        'creation' => ['subject' => 'Admin :username created!', 'greeting' => 'Warning!',
-            'password' => 'And which password for it?',
-            'language' => 'Which language would you like to use? (Type the number of the desired one)' . PHP_EOL .
-            '  1.- English (default)' . PHP_EOL . '  2.- Castellano' . PHP_EOL . '  3.- Deutsch' . PHP_EOL]]];
+        'greeting' => 'Warning!',
+        'line_2' => 'Their chosen language is: ":language"',
+        'creation' => [
+            'subject'  => 'Admin :username created!',
+            'line_1' => 'The system recorded a new Admin: ":username"',
+        ],
+        'update' => [
+            'subject'  => 'Admin :username updated!',
+            'line_1' => 'The admin ":username" was updated.',
+        ]
+    ]
+];

@@ -10,9 +10,11 @@ use Illuminate\Support\Facades\Hash;
 
 class Mapper extends UserMapper
 {
-
     public function map(DTO $dto, Model $admin): Admin
     {
+        if (empty($admin->id)) {
+            $admin->created_at = now();
+        }
         if (!empty($dto->getLanguage())) {
             $admin->language = $dto->getLanguage();
         }

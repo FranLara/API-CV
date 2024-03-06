@@ -1,0 +1,44 @@
+<?php
+
+namespace Tests\Feature\Commands\User\Admin;
+
+use App\BusinessObjects\Models\Users\Admin;
+
+class CreateTest extends AdminTest
+{
+	private const USERNAME = 'test_username';
+	private const CREATION_TRANSLATIONS = self::ADMIN_TRANSLATIONS . 'creation.';
+
+	public function testCreate(): void
+	{
+		$this->artisan(self::USER_SIGNATURE . 'create' . self::ADMIN_SIGNATURE)
+			->expectsQuestion(__(self::CREATION_TRANSLATIONS . 'username'), self::USERNAME)
+			->expectsQuestion(__(self::CREATION_TRANSLATIONS . 'password'), 'test_password')
+			->expectsQuestion(__(self::CREATION_TRANSLATIONS . 'language'), 2);
+
+		$this->assertDatabaseCount('jobs', 1);
+		$this->assertDatabaseCount('admins', 1);
+		$this->assertDatabaseHas('admins', ['language' => 'es']);
+	}
+
+	public function testCreateExit(): void
+	{
+		$this->artisan(self::USER_SIGNATURE . 'create' . self::ADMIN_SIGNATURE)->expectsQuestion(__(self::CREATION_TRANSLATIONS .
+			'username'), self::EXIT);
+
+		$this->assertDatabaseCount('admins', 0);
+	}
+
+	public function testCreateExistingUser(): void
+	{
+		Admin::factory()->create(['username' => self::USERNAME]);
+
+		$this->artisan(self::USER_SIGNATURE . 'create' . self::ADMIN_SIGNATURE)
+			->expectsQuestion(__(self::CREATION_TRANSLATIONS . 'username'), self::USERNAME)
+			->expectsOutput(__(self::CREATION_TRANSLATIONS . 'existing', ['username' => self::USERNAME]))
+			->expectsQuestion(__(self::CREATION_TRANSLATIONS . 'username'), self::EXIT);
+
+		$this->assertDatabaseCount('jobs', 0);
+		$this->assertDatabaseCount('admins', 1);
+	}
+}

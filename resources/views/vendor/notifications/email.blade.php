@@ -39,8 +39,8 @@
 @if (! empty($salutation))
 {{ $salutation }}
 @else
-@lang('Regards'),<br>
-{{ config('app.name') }}
+@lang('notification.regards'),<br>
+Francisco Ildefonso Lara Casalilla
 @endif
 
 {{-- Subcopy --}}

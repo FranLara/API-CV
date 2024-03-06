@@ -98,9 +98,10 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'francisco@lara.com'),
+        'name' => env('MAIL_FROM_NAME', 'Fran Lara CV'),
     ],
+
 
     /*
     |--------------------------------------------------------------------------
@@ -119,6 +120,10 @@ return [
         'paths' => [
             resource_path('views/vendor/mail'),
         ],
+    ],
+
+    'notifications' => [
+        'internal' => env('MAIL_INTERNAL_NOTIFICATION','francisco@lara.com')
     ],
 
 ];

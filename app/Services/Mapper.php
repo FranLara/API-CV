@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 interface Mapper
 {
-    public function map(DTO $dto, Model $model);
-}
 
+    public function map(DTO $dto, Model $model): Model;
+}

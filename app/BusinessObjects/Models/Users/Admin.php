@@ -6,8 +6,11 @@ use Database\Factories\AdminFactory;
 
 class Admin extends User
 {
-    protected static function newFactory(): AdminFactory
-    {
-        return AdminFactory::new();
-    }
+	public $timestamps = false;
+	protected $fillable = ['username', 'password', 'language'];
+
+	protected static function newFactory(): AdminFactory
+	{
+		return AdminFactory::new();
+	}
 }
