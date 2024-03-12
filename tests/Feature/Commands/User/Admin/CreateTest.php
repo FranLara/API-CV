@@ -17,8 +17,8 @@ class CreateTest extends AdminTest
 			->expectsQuestion(__(self::CREATION_TRANSLATIONS . 'language'), 2);
 
 		$this->assertDatabaseCount('jobs', 1);
-		$this->assertDatabaseCount('admins', 1);
-		$this->assertDatabaseHas('admins', ['language' => 'es']);
+		$this->assertDatabaseCount('admins', 2);
+		$this->assertDatabaseHas('admins', ['username' => self::USERNAME, 'language' => 'es']);
 	}
 
 	public function testCreateExit(): void
@@ -26,7 +26,7 @@ class CreateTest extends AdminTest
 		$this->artisan(self::USER_SIGNATURE . 'create' . self::ADMIN_SIGNATURE)->expectsQuestion(__(self::CREATION_TRANSLATIONS .
 			'username'), self::EXIT);
 
-		$this->assertDatabaseCount('admins', 0);
+		$this->assertDatabaseCount('admins', 1);
 	}
 
 	public function testCreateExistingUser(): void
@@ -39,6 +39,6 @@ class CreateTest extends AdminTest
 			->expectsQuestion(__(self::CREATION_TRANSLATIONS . 'username'), self::EXIT);
 
 		$this->assertDatabaseCount('jobs', 0);
-		$this->assertDatabaseCount('admins', 1);
+		$this->assertDatabaseCount('admins', 2);
 	}
 }

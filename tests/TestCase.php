@@ -6,12 +6,13 @@ use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication;
+	use CreatesApplication;
+	protected bool $seed = true;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
+	protected function setUp(): void
+	{
+		parent::setUp();
 
-        $this->withoutVite();
-    }
+		$this->withoutVite();
+	}
 }
