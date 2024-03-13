@@ -2,21 +2,27 @@
 
 namespace App\Http\Controllers\API;
 
+use App\BusinessObjects\DTOs\Utils\Resource;
 use App\Http\Controllers\API\API as APIController;
 use Dingo\Api\Http\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class Root extends APIController
 {
+	private const NAME_PARAMETER = 'name';
+	private const TYPE_PARAMETER = 'type';
+	private const STRING_PARAMETER = 'string';
+	private const ENDPOINT_TRANSLATIONS = self::API_TRANSLATIONS . 'endpoints.';
+	private const TOKEN_TRANSLATIONS = self::ENDPOINT_TRANSLATIONS . 'token.';
 
 	public function index(Request $request): Response
 	{
-		$resources = [
-			'Resources' => [
-				'request' => [$this->getResource($request, 'token', Request::METHOD_GET),
-					$this->getResource($request, 'account', Request::METHOD_POST)]]];
+		$resources = $this->getPublicEndpoints($request);
 
-		return $this->response->array($resources);
+		return $this->response->array([
+			'Resources' => $resources->map(fn (Resource $resource) => $resource->getResource())
+				->toArray()]);
 	}
 
 	public function options(): Response
@@ -25,8 +31,14 @@ class Root extends APIController
 			Request::METHOD_OPTIONS, Request::METHOD_POST, Request::METHOD_PATCH]));
 	}
 
-	private function getResource(Request $request, string $resource, string $type): array
+	private function getPublicEndpoints(Request $request): Collection
 	{
-		return [$resource => ['type' => $type, 'endpoint' => $request->getSchemeAndHttpHost() . '/' . $resource]];
+		$resources = collect();
+
+		$resources->push(new Resource($request, 'token', __(self::TOKEN_TRANSLATIONS . 'request'), [
+			[self::NAME_PARAMETER => 'username', self::TYPE_PARAMETER => self::STRING_PARAMETER],
+			[self::NAME_PARAMETER => 'password', self::TYPE_PARAMETER => self::STRING_PARAMETER]]));
+
+		return $resources;
 	}
 }

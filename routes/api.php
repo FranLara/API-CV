@@ -1,10 +1,4 @@
 <?php
-
-/*
- |--------------------------------------------------------------------------
- | API Routes
- |--------------------------------------------------------------------------
- */
 $api->get('', 'App\Http\Controllers\API\Root@index');
 $api->options('allows', 'App\Http\Controllers\API\Root@options');
 
