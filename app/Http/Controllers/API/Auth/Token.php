@@ -3,22 +3,19 @@
 namespace App\Http\Controllers\API\Auth;
 
 use App\Http\Controllers\API\API as APIController;
+use App\Services\Users\Tokener;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\JWT;
 
 class Token extends APIController
 {
 
-	public function request(Request $request)
+	public function request(Request $request, Tokener $tokener, JWT $tokenManager): JsonResponse
 	{
-		$credentials = $request->only([self::USERNAME_PARAMETER, self::PSSWD_PARAMETER]);
-		//return $this->response->
-		//return response()->json(['token_type' => 'bearer', 'expires_in' => auth('api')->guest()
-		//	->factory()
-		//	->getTTL() * 60,
-		//	'access_token' => $tokener->getToken($user, collect($request->get('functionalities'))->all()),]);
+		$token = $tokener->getToken($request->only([self::USERNAME_PARAMETER, self::PSSWD_PARAMETER]));
+		$expiresIn = $tokenManager->setToken($token)->getClaim('exp') - time();
 
-		return response()->json(['access_token' => Auth::guard(self::API_GUARD . 'admin')->attempt($credentials),
-			'token_type' => 'bearer']);
+		return response()->json(['token_type' => 'bearer', 'access_token' => $token, 'expires_in' => $expiresIn]);
 	}
 }

@@ -37,7 +37,7 @@ class Root extends APIController
 
 		$resources->push(new Resource($request, 'token', __(self::TOKEN_TRANSLATIONS . 'request'), [
 			[self::NAME_PARAMETER => self::USERNAME_PARAMETER, self::TYPE_PARAMETER => self::STRING_PARAMETER],
-			[self::NAME_PARAMETER => self::PSSWD_PARAMETER, self::TYPE_PARAMETER => self::STRING_PARAMETER]]));
+			[self::NAME_PARAMETER => self::PSSWD_PARAMETER, self::TYPE_PARAMETER => self::STRING_PARAMETER]], Request::METHOD_POST));
 
 		return $resources;
 	}
