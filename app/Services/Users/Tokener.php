@@ -13,6 +13,15 @@ class Tokener
 	//, 'recruiter', 'technician'];
 	public function getToken(array $credentials): string
 	{
+		if (empty($credentials)) {
+			return $this->getPayload(new Token());
+		}
+
+		return $this->getTokenByRole($credentials);
+	}
+
+	private function getTokenByRole(array $credentials): string
+	{
 		$token = collect(self::ROLES)->map(function (string $role) use ($credentials) {
 			return $this->getPayload(new Token($role, $credentials));
 		})
