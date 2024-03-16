@@ -8,14 +8,22 @@ use App\Http\Controllers\API\API;
 class Tokener
 {
 	private const ROLE_CLAIM = 'role';
-	private const AUTH_GUARD = 'api.';
+	private const ROLES = ['admin'];
 
+	//, 'recruiter', 'technician'];
 	public function getToken(array $credentials): string
 	{
-		$token = $this->getPayload(new Token('admin', $credentials));
+		$token = collect(self::ROLES)->map(function (string $role) use ($credentials) {
+			return $this->getPayload(new Token($role, $credentials));
+		})
+			->filter();
 
-		if (!empty($token)) {
-			return $token;
+		if ($token->count() == 1) {
+			return $token->first();
+		}
+
+		if ($token->count() > 1) {
+			// Send notification of collision
 		}
 
 		return $this->getPayload(new Token());
