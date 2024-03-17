@@ -7,5 +7,5 @@ use App\BusinessObjects\DTOs\DTO;
 interface Saver
 {
 
-    public function save(DTO $dto): bool;
+	public function save(DTO $dto): bool;
 }

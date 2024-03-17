@@ -6,8 +6,9 @@ use Database\Factories\RecruiterFactory;
 
 class Recruiter extends User
 {
-    protected static function newFactory(): RecruiterFactory
-    {
-        return RecruiterFactory::new();
-    }
+
+	protected static function newFactory(): RecruiterFactory
+	{
+		return RecruiterFactory::new();
+	}
 }

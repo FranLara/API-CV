@@ -1,22 +1,19 @@
 <?php
-
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
-return [
+return [ /*
+ |--------------------------------------------------------------------------
+ | Application Name
+ |--------------------------------------------------------------------------
+ |
+ | This value is the name of your application. This value is used when the
+ | framework needs to place the application's name in a notification or
+ | any other location as required by the application or its packages.
+ |
+ */
 
-    /*
-    |--------------------------------------------------------------------------
-    | Application Name
-    |--------------------------------------------------------------------------
-    |
-    | This value is the name of your application. This value is used when the
-    | framework needs to place the application's name in a notification or
-    | any other location as required by the application or its packages.
-    |
-    */
-
-    'name' => env('APP_NAME', 'Fran Lara CV'),
+'name' => env('APP_NAME', 'Fran Lara CV'),
 
     /*
     |--------------------------------------------------------------------------
@@ -57,7 +54,7 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
-    'asset_url' => env('ASSET_URL'),
+	'asset_url' => env('ASSET_URL'),
 
     /*
     |--------------------------------------------------------------------------
@@ -122,9 +119,8 @@ return [
     |
     */
 
-    'key' => env('APP_KEY'),
-
-    'cipher' => 'AES-256-CBC',
+    'key' => env('APP_KEY'), 
+	'cipher' => 'AES-256-CBC',
 
     /*
     |--------------------------------------------------------------------------
@@ -139,10 +135,9 @@ return [
     |
     */
 
-    'maintenance' => [
-        'driver' => 'file',
-        // 'store'  => 'redis',
-    ],
+    'maintenance' => ['driver' => 'file',
+		// 'store'  => 'redis',
+	],
 
     /*
     |--------------------------------------------------------------------------
@@ -155,12 +150,9 @@ return [
     |
     */
 
-    'providers' => ServiceProvider::defaultProviders()->merge([
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
-    ])->toArray(),
+    'providers' => ServiceProvider::defaultProviders()->merge([App\Providers\AppServiceProvider::class,
+		App\Providers\AuthServiceProvider::class, App\Providers\EventServiceProvider::class,
+		App\Providers\RouteServiceProvider::class,])->toArray(),
 
     /*
     |--------------------------------------------------------------------------
@@ -173,8 +165,5 @@ return [
     |
     */
 
-    'aliases' => Facade::defaultAliases()->merge([
-        // 'Example' => App\Facades\Example::class,
-    ])->toArray(),
-
-];
+    'aliases' => Facade::defaultAliases()->merge([ // 'Example' => App\Facades\Example::class,
+	])->toArray(),];

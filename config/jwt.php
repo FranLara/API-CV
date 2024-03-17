@@ -1,22 +1,19 @@
 <?php
+return [ /*
+ |--------------------------------------------------------------------------
+ | JWT Authentication Secret
+ |--------------------------------------------------------------------------
+ |
+ | Don't forget to set this in your .env file, as it will be used to sign
+ | your tokens. A helper command is provided for this:
+ | `php artisan jwt:secret`
+ |
+ | Note: This will be used for Symmetric algorithms only (HMAC),
+ | since RSA and ECDSA use a private/public key combo (See below).
+ |
+ */
 
-return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | JWT Authentication Secret
-    |--------------------------------------------------------------------------
-    |
-    | Don't forget to set this in your .env file, as it will be used to sign
-    | your tokens. A helper command is provided for this:
-    | `php artisan jwt:secret`
-    |
-    | Note: This will be used for Symmetric algorithms only (HMAC),
-    | since RSA and ECDSA use a private/public key combo (See below).
-    |
-    */
-
-    'secret' => env('JWT_SECRET'),
+'secret' => env('JWT_SECRET'),
 
     /*
     |--------------------------------------------------------------------------
@@ -35,20 +32,18 @@ return [
     |
     */
 
-    'keys' => [
+    'keys' => [ /*
+	 |--------------------------------------------------------------------------
+	 | Public Key
+	 |--------------------------------------------------------------------------
+	 |
+	 | A path or resource to your public key.
+	 |
+	 | E.g. 'file://path/to/public/key'
+	 |
+	 */
 
-        /*
-        |--------------------------------------------------------------------------
-        | Public Key
-        |--------------------------------------------------------------------------
-        |
-        | A path or resource to your public key.
-        |
-        | E.g. 'file://path/to/public/key'
-        |
-        */
-
-        'public' => env('JWT_PUBLIC_KEY'),
+	'public' => env('JWT_PUBLIC_KEY'),
 
         /*
         |--------------------------------------------------------------------------
@@ -72,9 +67,7 @@ return [
         |
         */
 
-        'passphrase' => env('JWT_PASSPHRASE'),
-
-    ],
+        'passphrase' => env('JWT_PASSPHRASE'),],
 
     /*
     |--------------------------------------------------------------------------
@@ -135,14 +128,7 @@ return [
     |
     */
 
-    'required_claims' => [
-        'iss',
-        'iat',
-        'exp',
-        'nbf',
-        'sub',
-        'jti',
-    ],
+    'required_claims' => ['iss', 'iat', 'exp', 'nbf', 'sub', 'jti',],
 
     /*
     |--------------------------------------------------------------------------
@@ -157,10 +143,9 @@ return [
     |
     */
 
-    'persistent_claims' => [
-        // 'foo',
-        // 'bar',
-    ],
+    'persistent_claims' => [ // 'foo',
+	// 'bar',
+	],
 
     /*
     |--------------------------------------------------------------------------
@@ -252,18 +237,16 @@ return [
     |
     */
 
-    'providers' => [
+    'providers' => [ /*
+	 |--------------------------------------------------------------------------
+	 | JWT Provider
+	 |--------------------------------------------------------------------------
+	 |
+	 | Specify the provider that is used to create and decode the tokens.
+	 |
+	 */
 
-        /*
-        |--------------------------------------------------------------------------
-        | JWT Provider
-        |--------------------------------------------------------------------------
-        |
-        | Specify the provider that is used to create and decode the tokens.
-        |
-        */
-
-        'jwt' => Tymon\JWTAuth\Providers\JWT\Lcobucci::class,
+	'jwt' => Tymon\JWTAuth\Providers\JWT\Lcobucci::class,
 
         /*
         |--------------------------------------------------------------------------
@@ -285,8 +268,4 @@ return [
         |
         */
 
-        'storage' => Tymon\JWTAuth\Providers\Storage\Illuminate::class,
-
-    ],
-
-];
+        'storage' => Tymon\JWTAuth\Providers\Storage\Illuminate::class,],];

@@ -9,8 +9,9 @@ use Illuminate\View\View;
 
 class Landing extends Controller
 {
-    public function home(): Factory|View
-    {
-        return view('home');
-    }
+
+	public function home(): Factory|View
+	{
+		return view('home');
+	}
 }

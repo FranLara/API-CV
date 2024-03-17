@@ -32,7 +32,7 @@ class Tokener
 		}
 
 		if ($token->count() > 1) {
-			// Send notification of collision
+			// Throw exception of collision
 		}
 
 		return $this->getPayload(new Token());

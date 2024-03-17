@@ -10,26 +10,26 @@ use App\Services\Users\Saver as UserSaver;
 class Saver extends UserSaver
 {
 
-    public function __construct(Mapper $mapper)
-    {
-        $this->mapper = $mapper;
-    }
+	public function __construct(Mapper $mapper)
+	{
+		$this->mapper = $mapper;
+	}
 
-    public function save(DTO $admin): bool
-    {
-        $model = $this->getMappedModel($admin);
+	public function save(DTO $admin): bool
+	{
+		$model = $this->getMappedModel($admin);
 
-        if ($model->isDirty()) {
-            return $model->save();
-        }
+		if ($model->isDirty()) {
+			return $model->save();
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    private function getMappedModel(Admin $admin): AdminModel
-    {
-        $model = AdminModel::firstOrNew(['username' => $admin->getUsername()]);
+	private function getMappedModel(Admin $admin): AdminModel
+	{
+		$model = AdminModel::firstOrNew(['username' => $admin->getUsername()]);
 
-        return $this->mapper->map($admin, $model);
-    }
+		return $this->mapper->map($admin, $model);
+	}
 }

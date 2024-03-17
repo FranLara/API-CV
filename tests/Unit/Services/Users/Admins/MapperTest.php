@@ -28,7 +28,6 @@ class MapperTest extends TestCase
 		if (empty($identifier)) {
 			$this->assertGreaterThan(now()->subMinute(), $admin->created_at);
 		}
-
 	}
 
 	public static function providerAdminData(): array
@@ -36,6 +35,5 @@ class MapperTest extends TestCase
 		return [[null, null, null], [null, self::PSSWD, null], [self::LANGUAGE, null, null],
 			[null, null, self::IDENTIFIER], [null, self::PSSWD, self::IDENTIFIER],
 			[self::LANGUAGE, null, self::IDENTIFIER], [self::LANGUAGE, self::PSSWD, self::IDENTIFIER]];
-
 	}
 }

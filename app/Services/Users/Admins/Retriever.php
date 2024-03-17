@@ -10,24 +10,24 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class Retriever extends UserRetriever
 {
 
-    public function __construct(Transformer $transformer)
-    {
-        $this->transformer = $transformer;
-    }
+	public function __construct(Transformer $transformer)
+	{
+		$this->transformer = $transformer;
+	}
 
-    public function retrieve(int $identifier): Admin
-    {
-        return $this->transformer->transform(AdminModel::findOrFail($identifier));
-    }
+	public function retrieve(int $identifier): Admin
+	{
+		return $this->transformer->transform(AdminModel::findOrFail($identifier));
+	}
 
-    public function retrieveByField(string $field, $value): Admin
-    {
-        $model = AdminModel::firstWhere($field, $value);
+	public function retrieveByField(string $field, $value): Admin
+	{
+		$model = AdminModel::firstWhere($field, $value);
 
-        if (empty($model)) {
-            throw (new ModelNotFoundException())->setModel(AdminModel::class, $value);
-        }
+		if (empty($model)) {
+			throw (new ModelNotFoundException())->setModel(AdminModel::class, $value);
+		}
 
-        return $this->transformer->transform($model);
-    }
+		return $this->transformer->transform($model);
+	}
 }
