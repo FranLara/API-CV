@@ -1,17 +1,17 @@
 <?php
 
-namespace Tests\Unit\Utils\Admins;
+namespace Tests\Unit\Utils;
 
 use App\BusinessObjects\DTOs\Users\Admin;
 use App\Notifications\Notification;
 use App\Notifications\User\Admin\Created;
 use App\Notifications\User\Admin\Updated;
 use App\Utils\Notifications as NotificationsUtil;
-use Illuminate\Support\Facades\Notification as FacadeNotification;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Notification as FacadeNotification;
+use Tests\TestCase;
 use ReflectionClass;
 use ReflectionException;
-use Tests\TestCase;
 
 class NotificationsTest extends TestCase
 {

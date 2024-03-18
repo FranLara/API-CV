@@ -4,6 +4,7 @@ namespace App\Services\Users;
 
 use App\BusinessObjects\DTOs\Utils\Token;
 use App\Http\Controllers\API\API;
+use Illuminate\Support\Facades\Log;
 
 class Tokener
 {
@@ -35,6 +36,8 @@ class Tokener
 			// Throw exception of collision
 		}
 
+		Log::channel('credentials')->notice('The username "{username}" tried to request a token, but it could\'t login.', [
+			'username' => $credentials['username']]);
 		return $this->getPayload(new Token());
 	}
 
