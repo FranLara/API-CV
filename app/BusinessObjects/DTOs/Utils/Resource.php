@@ -24,7 +24,7 @@ class Resource
 
 	public function getResource(): array
 	{
-		$parameters = $this->parameters->toArray();
+		$parameters = $this->parameters->all();
 		$endpoint = $this->host . '/' . $this->path;
 
 		if ($this->parameters->isNotEmpty()) {
