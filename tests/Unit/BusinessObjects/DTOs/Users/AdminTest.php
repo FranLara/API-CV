@@ -15,7 +15,7 @@ class AdminTest extends TestCase
 	/**
 	 * @dataProvider providerConstructorData
 	 */
-	public function testConstructor(?string $username, ?string $language, ?string $psswd, ?int $identifier): void
+	public function testConstructor(?string $username = null, ?string $language = null, ?string $psswd = null, ?int $identifier = null): void
 	{
 		$admin = new Admin($username, $language, $psswd, $identifier);
 
@@ -28,7 +28,7 @@ class AdminTest extends TestCase
 	/**
 	 * @dataProvider providerGetUsername
 	 */
-	public function testGetUsername(?string $username): void
+	public function testGetUsername(string $username = null): void
 	{
 		$admin = new Admin($username);
 
@@ -51,17 +51,17 @@ class AdminTest extends TestCase
 
 	public static function providerConstructorData(): array
 	{
-		return [[null, null, null, null], [null, null, self::PSSWD, null], [self::USERNAME, null, null, null],
-			[null, self::LANGUAGE, null, null], [null, null, null, self::IDENTIFIER],
-			[null, null, self::PSSWD, self::IDENTIFIER], [null, self::LANGUAGE, null, self::IDENTIFIER],
-			[self::USERNAME, null, null, self::IDENTIFIER], [null, self::LANGUAGE, self::PSSWD, self::IDENTIFIER],
+		return [[], [self::USERNAME], [null, self::LANGUAGE], [null, null, self::PSSWD],
+			[null, null, null, self::IDENTIFIER], [null, null, self::PSSWD, self::IDENTIFIER],
+			[null, self::LANGUAGE, null, self::IDENTIFIER], [self::USERNAME, null, null, self::IDENTIFIER],
+			[null, self::LANGUAGE, self::PSSWD, self::IDENTIFIER],
 			[self::USERNAME, null, self::PSSWD, self::IDENTIFIER],
 			[self::USERNAME, self::LANGUAGE, self::PSSWD, self::IDENTIFIER]];
 	}
 
 	public static function providerGetUsername(): array
 	{
-		return [[null], [self::USERNAME]];
+		return [[], [self::USERNAME]];
 	}
 
 	public static function providerSetUsername(): array
