@@ -5,10 +5,11 @@ namespace Tests\Unit\BusinessObjects\DTOs\Utils;
 use App\BusinessObjects\DTOs\Utils\Resource;
 use Illuminate\Http\Request;
 use PHPUnit\Framework\TestCase;
-use Mockery;
+use Tests\Utils\Request as RequestUtils;
 
 class ResourceTest extends TestCase
 {
+	use RequestUtils;
 	private const PATH = 'test_path';
 	private const NAME = 'test_name';
 	private const TYPE_INDEX = 'type';
@@ -23,9 +24,7 @@ class ResourceTest extends TestCase
 	 */
 	public function testGetResource(array $parameters = [], string $type = Request::METHOD_GET): void
 	{
-		$request = Mockery::mock(Request::class, ['getSchemeAndHttpHost' => 'https://domain.test']);
-
-		$resource = (new Resource($request, self::PATH, self::DESCRIPTION, $parameters, $type))->getResource();
+		$resource = (new Resource($this->getRequest(), self::PATH, self::DESCRIPTION, $parameters, $type))->getResource();
 
 		$this->assertIsArray($resource);
 		$this->assertIsArray($resource[self::PATH]);

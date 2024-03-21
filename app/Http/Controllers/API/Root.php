@@ -18,10 +18,10 @@ class Root extends APIController
 
 	public function index(Request $request): Response
 	{
-		$resources = $this->getPublicEndpoints($request);
+		$resources = $this->getPublicResources($request);
 
 		return $this->response->array([
-			'Resources' => $resources->map(fn (Resource $resource) => $resource->getResource())
+			'Resources' => $resources->flatMap(fn (Resource $resource) => $resource->getResource())
 				->toArray()]);
 	}
 
@@ -31,7 +31,7 @@ class Root extends APIController
 			Request::METHOD_OPTIONS, Request::METHOD_POST, Request::METHOD_PATCH]));
 	}
 
-	private function getPublicEndpoints(Request $request): Collection
+	private function getPublicResources(Request $request): Collection
 	{
 		$resources = collect();
 

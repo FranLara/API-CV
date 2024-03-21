@@ -4,14 +4,14 @@ namespace Tests\Unit\Http\Controllers\API\Auth;
 
 use App\Http\Controllers\API\Auth\Token;
 use App\Services\Users\Tokener;
-use Illuminate\Http\Request;
 use PHPUnit\Framework\MockObject\Stub\ReturnSelf;
 use Tests\TestCase;
+use Tests\Utils\Request as RequestUtils;
 use Tymon\JWTAuth\JWT;
-use Mockery;
 
 class TokenTest extends TestCase
 {
+	use RequestUtils;
 	private const TOKEN = 'test_token';
 	private const TYPE_INDEX = 'token_type';
 	private const TOKEN_INDEX = 'access_token';
@@ -19,11 +19,11 @@ class TokenTest extends TestCase
 
 	public function testRequest(): void
 	{
-		$request = Mockery::mock(Request::class, ['validate' => true, 'only' => []]);
 		$tokener = $this->createConfiguredMock(Tokener::class, ['getToken' => self::TOKEN]);
 		$tokenManager = $this->createConfiguredMock(JWT::class, ['setToken' => new ReturnSelf(), 'getClaim' => time()]);
 
-		$data = (new Token())->request($request, $tokener, $tokenManager)->getData(true);
+		$data = (new Token())->request($this->getRequest(), $tokener, $tokenManager)
+			->getData(true);
 
 		$this->assertIsArray($data);
 		$this->assertArrayHasKey(self::TYPE_INDEX, $data);
