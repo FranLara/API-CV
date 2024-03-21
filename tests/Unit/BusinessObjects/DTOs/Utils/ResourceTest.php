@@ -23,10 +23,7 @@ class ResourceTest extends TestCase
 	 */
 	public function testGetResource(array $parameters = [], string $type = Request::METHOD_GET): void
 	{
-		$request = Mockery::mock(Request::class);
-		$request->allows()
-			->getSchemeAndHttpHost()
-			->andReturns('https://domain.test');
+		$request = Mockery::mock(Request::class, ['getSchemeAndHttpHost' => 'https://domain.test']);
 
 		$resource = (new Resource($request, self::PATH, self::DESCRIPTION, $parameters, $type))->getResource();
 
