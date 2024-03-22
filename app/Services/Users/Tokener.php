@@ -3,7 +3,7 @@
 namespace App\Services\Users;
 
 use App\BusinessObjects\DTOs\Utils\Token;
-use App\Http\Controllers\API\API;
+use App\Http\Controllers\API\API as APIController;
 use Illuminate\Support\Facades\Log;
 
 class Tokener
@@ -44,8 +44,8 @@ class Tokener
 	private function getPayload(Token $token): string
 	{
 		$claims = ['sub' => 0, self::ROLE_CLAIM => Token::GUEST_ROLE];
-		$credentials = [API::USERNAME_PARAMETER => env('SUPER_ADMIN_USERNAME'),
-			API::PSSWD_PARAMETER => env('SUPER_ADMIN_PASSWORD')];
+		$credentials = [APIController::USERNAME_PARAMETER => env('SUPER_ADMIN_USERNAME'),
+			APIController::PSSWD_PARAMETER => env('SUPER_ADMIN_PASSWORD')];
 
 		if (!empty($token->getCredentials())) {
 			$credentials = $token->getCredentials();
