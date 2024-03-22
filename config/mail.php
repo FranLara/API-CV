@@ -1,19 +1,16 @@
 <?php
+return [ /*
+ |--------------------------------------------------------------------------
+ | Default Mailer
+ |--------------------------------------------------------------------------
+ |
+ | This option controls the default mailer that is used to send any email
+ | messages sent by your application. Alternative mailers may be setup
+ | and used as needed; however, this mailer will be used by default.
+ |
+ */
 
-return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Default Mailer
-    |--------------------------------------------------------------------------
-    |
-    | This option controls the default mailer that is used to send any email
-    | messages sent by your application. Alternative mailers may be setup
-    | and used as needed; however, this mailer will be used by default.
-    |
-    */
-
-    'default' => env('MAIL_MAILER', 'smtp'),
+'default' => env('MAIL_MAILER', 'smtp'),
 
     /*
     |--------------------------------------------------------------------------
@@ -34,57 +31,29 @@ return [
     */
 
     'mailers' => [
-        'smtp' => [
-            'transport' => 'smtp',
-            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
-            'port' => env('MAIL_PORT', 587),
-            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
-            'username' => env('MAIL_USERNAME'),
-            'password' => env('MAIL_PASSWORD'),
-            'timeout' => null,
-            'local_domain' => env('MAIL_EHLO_DOMAIN'),
-        ],
+		'smtp' => ['transport' => 'smtp', 'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+			'port' => env('MAIL_PORT', 587), 'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+			'username' => env('MAIL_USERNAME'), 'password' => env('MAIL_PASSWORD'), 'timeout' => null,
+			'local_domain' => env('MAIL_EHLO_DOMAIN'),], 
+		'ses' => ['transport' => 'ses',],
 
-        'ses' => [
-            'transport' => 'ses',
-        ],
+		'mailgun' => ['transport' => 'mailgun',
+			// 'client' => [
+			//     'timeout' => 5,
+			// ],
+		], 
+		'postmark' => ['transport' => 'postmark',
+			// 'client' => [
+			//     'timeout' => 5,
+			// ],
+		],
 
-        'mailgun' => [
-            'transport' => 'mailgun',
-            // 'client' => [
-            //     'timeout' => 5,
-            // ],
-        ],
+		'sendmail' => ['transport' => 'sendmail', 'path' => env('MAIL_SENDMAIL_PATH', '/usr/sbin/sendmail -bs -i'),],
 
-        'postmark' => [
-            'transport' => 'postmark',
-            // 'client' => [
-            //     'timeout' => 5,
-            // ],
-        ],
+		'log' => ['transport' => 'log', 'channel' => env('MAIL_LOG_CHANNEL'),], 
+		'array' => ['transport' => 'array',],
 
-        'sendmail' => [
-            'transport' => 'sendmail',
-            'path' => env('MAIL_SENDMAIL_PATH', '/usr/sbin/sendmail -bs -i'),
-        ],
-
-        'log' => [
-            'transport' => 'log',
-            'channel' => env('MAIL_LOG_CHANNEL'),
-        ],
-
-        'array' => [
-            'transport' => 'array',
-        ],
-
-        'failover' => [
-            'transport' => 'failover',
-            'mailers' => [
-                'smtp',
-                'log',
-            ],
-        ],
-    ],
+		'failover' => ['transport' => 'failover', 'mailers' => ['smtp', 'log',],],],
 
     /*
     |--------------------------------------------------------------------------
@@ -97,10 +66,8 @@ return [
     |
     */
 
-    'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'francisco@lara.com'),
-        'name' => env('MAIL_FROM_NAME', 'Fran Lara CV'),
-    ],
+    'from' => ['address' => env('MAIL_FROM_ADDRESS', 'francisco@lara.com'),
+		'name' => env('MAIL_FROM_NAME', 'Fran Lara CV'),],
 
 
     /*
@@ -114,16 +81,7 @@ return [
     |
     */
 
-    'markdown' => [
-        'theme' => 'default',
+    'markdown' => ['theme' => 'default', 
+	'paths' => [resource_path('views/vendor/mail'),],],
 
-        'paths' => [
-            resource_path('views/vendor/mail'),
-        ],
-    ],
-
-    'notifications' => [
-        'internal' => env('MAIL_INTERNAL_NOTIFICATION','francisco@lara.com')
-    ],
-
-];
+	'notifications' => ['internal' => env('MAIL_INTERNAL_NOTIFICATION', 'francisco@lara.com')],];

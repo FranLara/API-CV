@@ -8,5 +8,5 @@ use Illuminate\Notifications\Notification as BaseNotification;
 
 abstract class Notification extends BaseNotification implements ShouldQueue
 {
-    use Queueable;
+	use Queueable;
 }

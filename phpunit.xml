@@ -26,6 +26,9 @@
 		<env name="DB_CONNECTION" value="sqlite" />
 		<env name="MAIL_MAILER" value="array" />
 		<env name="QUEUE_CONNECTION" value="database" />
+		<env name="SUPER_ADMIN_USERNAME" value="test_super_admin_username" />
+		<env name="SUPER_ADMIN_PASSWORD" value="test_super_admin_password" />
+		<env name="SUPER_ADMIN_LANGUAGE" value="test_super_admin_language" />
 		<env name="SESSION_DRIVER" value="array" />
 		<env name="TELESCOPE_ENABLED" value="false" />
 	</php>

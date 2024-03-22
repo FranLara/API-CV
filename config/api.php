@@ -1,24 +1,21 @@
 <?php
+return [ /*
+ |--------------------------------------------------------------------------
+ | Standards Tree
+ |--------------------------------------------------------------------------
+ |
+ | Versioning an API with Dingo revolves around content negotiation and
+ | custom MIME types. A custom type will belong to one of three
+ | standards trees, the Vendor tree (vnd), the Personal tree
+ | (prs), and the Unregistered tree (x).
+ |
+ | By default the Unregistered tree (x) is used, however, should you wish
+ | to you can register your type with the IANA. For more details:
+ | https://tools.ietf.org/html/rfc6838
+ |
+ */
 
-return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Standards Tree
-    |--------------------------------------------------------------------------
-    |
-    | Versioning an API with Dingo revolves around content negotiation and
-    | custom MIME types. A custom type will belong to one of three
-    | standards trees, the Vendor tree (vnd), the Personal tree
-    | (prs), and the Unregistered tree (x).
-    |
-    | By default the Unregistered tree (x) is used, however, should you wish
-    | to you can register your type with the IANA. For more details:
-    | https://tools.ietf.org/html/rfc6838
-    |
-    */
-
-    'standardsTree' => env('API_STANDARDS_TREE', 'x'),
+'standardsTree' => env('API_STANDARDS_TREE', 'x'),
 
     /*
     |--------------------------------------------------------------------------
@@ -136,13 +133,8 @@ return [
     |
     */
 
-    'errorFormat' => [
-        'message' => ':message',
-        'errors' => ':errors',
-        'code' => ':code',
-        'status_code' => ':status_code',
-        'debug' => ':debug',
-    ],
+    'errorFormat' => ['message' => ':message', 'errors' => ':errors', 'code' => ':code',
+		'status_code' => ':status_code', 'debug' => ':debug',],
 
     /*
     |--------------------------------------------------------------------------
@@ -153,9 +145,7 @@ return [
     |
     */
 
-    'middleware' => [
-
-    ],
+    'middleware' => [],
 
     /*
     |--------------------------------------------------------------------------
@@ -167,9 +157,7 @@ return [
     |
     */
 
-    'auth' => [
-    	'jwt' => 'Dingo\Api\Auth\Provider\JWT',
-    ],
+    'auth' => ['jwt' => 'Dingo\Api\Auth\Provider\JWT',],
 
     /*
     |--------------------------------------------------------------------------
@@ -182,9 +170,7 @@ return [
     |
     */
 
-    'throttling' => [
-
-    ],
+    'throttling' => [],
 
     /*
     |--------------------------------------------------------------------------
@@ -213,20 +199,11 @@ return [
 
     'defaultFormat' => env('API_DEFAULT_FORMAT', 'json'),
 
-    'formats' => [
+	'formats' => [
+	'json' => Dingo\Api\Http\Response\Format\Json::class,],
 
-        'json' => Dingo\Api\Http\Response\Format\Json::class,
+	'formatsOptions' => [
 
-    ],
-
-    'formatsOptions' => [
-
-        'json' => [
-            'pretty_print' => env('API_JSON_FORMAT_PRETTY_PRINT_ENABLED', false),
-            'indent_style' => env('API_JSON_FORMAT_INDENT_STYLE', 'space'),
-            'indent_size' => env('API_JSON_FORMAT_INDENT_SIZE', 2),
-        ],
-
-    ],
-
-];
+		'json' => ['pretty_print' => env('API_JSON_FORMAT_PRETTY_PRINT_ENABLED', false),
+			'indent_style' => env('API_JSON_FORMAT_INDENT_STYLE', 'space'),
+			'indent_size' => env('API_JSON_FORMAT_INDENT_SIZE', 2),],],];

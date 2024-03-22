@@ -8,28 +8,24 @@ use Illuminate\Notifications\Messages\MailMessage;
 
 abstract class Admin extends Notification
 {
-    protected const ADMIN_TRANSLATIONS = 'notification.admin.';
+	protected const ADMIN_TRANSLATIONS = 'notification.admin.';
+	protected AdminDTO $admin;
 
-    protected AdminDTO $admin;
+	public function __construct(AdminDTO $admin)
+	{
+		$this->admin = $admin;
+	}
 
-    public function __construct(AdminDTO $admin)
-    {
-        $this->admin = $admin;
-    }
+	public function via(object $notifiable): array
+	{
+		return ['mail'];
+	}
 
-    public function via(object $notifiable): array
-    {
-        return ['mail'];
-    }
+	abstract public function toMail(object $notifiable): MailMessage;
 
-    abstract public function toMail(object $notifiable): MailMessage;
-
-    protected function getLanguage(string $language): string
-    {
-        return match ($language) {
-            'es' => 'Castellano',
-            'de' => 'Deutsch',
-            default => 'English',
-        };
-    }
+	protected function getLanguage(string $language): string
+	{
+		return match ($language) {'es' => 'Castellano','de' => 'Deutsch',default => 'English',
+		};
+	}
 }

@@ -3,29 +3,21 @@
 namespace App\Http\Controllers\API\Auth;
 
 use App\Http\Controllers\API\API as APIController;
-use Dingo\Api\Http\Response;
+use App\Services\Users\Tokener;
 use Illuminate\Http\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
+use Tymon\JWTAuth\JWT;
 
 class Token extends APIController
 {
-    public function guest(): JsonResponse
-    {
-        return response()->json([
-            'token_type'   => 'bearer',
-            'expires_in'   => auth('api')->guest()->factory()->getTTL() * 60,
-            'access_token' => $tokener->getToken($user, collect($request->get('functionalities'))->all()),
-        ]);
-    }
 
-    public function request(): Response
-    {
-        return (new Response([], Response::HTTP_OK))->header('Allow',
-            implode(', ', [Request::METHOD_GET, Request::METHOD_OPTIONS, Request::METHOD_POST]));
-    }
+	public function request(Request $request, Tokener $tokener, JWT $tokenManager): JsonResponse
+	{
+		$request->validate([self::USERNAME_PARAMETER => 'required_with:password',
+			self::PSSWD_PARAMETER => 'required_with:username']);
+		$token = $tokener->getToken($request->only([self::USERNAME_PARAMETER, self::PSSWD_PARAMETER]));
+		$expiresIn = $tokenManager->setToken($token)->getClaim('exp') - time();
 
-    public function registered(): Response
-    {
-
-    }
+		return response()->json(['token_type' => 'bearer', 'access_token' => $token, 'expires_in' => $expiresIn]);
+	}
 }

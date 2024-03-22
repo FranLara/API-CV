@@ -4,15 +4,15 @@ use App\BusinessObjects\Models\Users\Recruiter;
 use App\BusinessObjects\Models\Users\Technician;
 
 return [ /*
- |--------------------------------------------------------------------------
- | Authentication Defaults
- |--------------------------------------------------------------------------
- |
- | This option controls the default authentication "guard" and password
- | reset options for your application. You may change these defaults
- | as required, but they're a perfect start for most applications.
- |
- */
+           |--------------------------------------------------------------------------
+           | Authentication Defaults
+           |--------------------------------------------------------------------------
+           |
+           | This option controls the default authentication "guard" and password
+           | reset options for your application. You may change these defaults
+           | as required, but they're a perfect start for most applications.
+           |
+           */
 
 'defaults' => ['guard' => 'web.recruiter', 'passwords' => 'users',],
 
@@ -37,9 +37,10 @@ return [ /*
 		'web' => ['admin' => ['driver' => 'session', 'provider' => 'admins',],
 			'recruiter' => ['driver' => 'session', 'provider' => 'recruiters',],
 			'technician' => ['driver' => 'session', 'provider' => 'technicians',],],
-		'api' => ['admin' => ['driver' => 'jwt', 'provider' => 'admins',],
-			'recruiter' => ['driver' => 'jwt', 'provider' => 'recruiters',],
-			'technician' => ['driver' => 'jwt', 'provider' => 'technicians',],],],
+		'api' => ['guest' => ['driver' => 'jwt', 'provider' => 'admins'],
+			'admin' => ['driver' => 'jwt', 'provider' => 'admins'],
+			'recruiter' => ['driver' => 'jwt', 'provider' => 'recruiters'],
+			'technician' => ['driver' => 'jwt', 'provider' => 'technicians'],],],
 
     /*
     |--------------------------------------------------------------------------
