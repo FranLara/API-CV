@@ -6,6 +6,7 @@ namespace App\Services\Users;
 use App\BusinessObjects\DTOs\Utils\Token;
 use App\Http\Controllers\API\API as APIController;
 use Illuminate\Support\Facades\Log;
+use function collect;
 
 class Tokener
 {
@@ -53,6 +54,12 @@ class Tokener
 			$claims = [self::ROLE_CLAIM => $token->getRole()];
 		}
 
-		return auth('api.' . $token->getRole())->claims($claims)->attempt($credentials);
+		$token = auth('api.' . $token->getRole())->claims($claims)->attempt($credentials);
+
+		if (strval($token)) {
+			return $token;
+		}
+
+		return '';
 	}
 }
