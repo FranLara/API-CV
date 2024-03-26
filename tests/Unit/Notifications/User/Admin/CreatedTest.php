@@ -1,12 +1,13 @@
 <?php
+declare(strict_types = 1);
 
 namespace Unit\Notifications\User\Admin;
 
 use App\BusinessObjects\DTOs\Users\Admin;
 use App\Notifications\User\Admin\Created;
 use Illuminate\Support\Facades\Lang;
-use stdClass;
 use Tests\TestCase;
+use stdClass;
 
 class CreatedTest extends TestCase
 {
