@@ -1,10 +1,11 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\Notifications\User\Admin;
 
-use App\BusinessObjects\DTOs\Users\Admin as AdminDTO;
 use App\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
+use App\BusinessObjects\DTOs\Users\Admin as AdminDTO;
 
 abstract class Admin extends Notification
 {

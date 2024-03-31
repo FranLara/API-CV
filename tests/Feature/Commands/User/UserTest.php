@@ -1,13 +1,12 @@
 <?php
+declare(strict_types = 1);
 
 namespace Tests\Feature\Commands\User;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\Feature\FeatureTest;
 
-abstract class UserTest extends TestCase
+abstract class UserTest extends FeatureTest
 {
-	use RefreshDatabase;
 	protected const EXIT = 'exit';
 	protected const USER_SIGNATURE = 'user:';
 	protected const TRANSLATIONS = 'command.user.';
