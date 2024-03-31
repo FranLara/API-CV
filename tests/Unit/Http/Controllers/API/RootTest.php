@@ -58,7 +58,8 @@ class RootTest extends APIController
 		$data = $this->controller->options($this->getRequest());
 
 		$this->assertEquals(Response::HTTP_OK, $data->getStatusCode());
-		$this->assertSame('GET, OPTIONS, POST, PATCH', $data->headers->get('Allow'));
+		$this->assertSame(implode(', ', [Request::METHOD_GET, Request::METHOD_OPTIONS, Request::METHOD_POST,
+			Request::METHOD_PATCH]), $data->headers->get('Allow'));
 	}
 
 	protected function setUp(): void
