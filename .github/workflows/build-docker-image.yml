@@ -1,5 +1,5 @@
 name: Build And Publish Docker Image
-run-name: ${{github.actor}} builds and publishes a new docker image for ${{vars.API_CV}} from the branch ${{github.head_ref}}
+run-name: ${{github.actor}} builds and publishes a new docker image for ${{vars.PROJECT}} from the branch ${{github.head_ref}}
 
 on:
   workflow_call:
@@ -56,7 +56,7 @@ jobs:
         id: cache-dockerfile
         uses: actions/cache@v4
         with:
-          key: cache-${{vars.API_CV}}-dockerfile-${{inputs.tag}}-${{hashFiles('docker/Dockerfile')}}
+          key: cache-${{vars.PROJECT}}-dockerfile-${{inputs.tag}}-${{hashFiles('docker/Dockerfile')}}
           path: docker/Dockerfile
 
       - name: Determine if docker folder have changed

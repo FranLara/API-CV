@@ -62,5 +62,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           retention-days: 1
-          name: ${{env.REPORT_PATH}}-suites-${{vars.API_CV}}-${{inputs.branch}}
+          name: ${{env.REPORT_PATH}}-suites-${{vars.PROJECT}}-${{inputs.branch}}
           path: ${{env.REPORT_PATH}}

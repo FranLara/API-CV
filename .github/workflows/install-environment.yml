@@ -32,7 +32,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           retention-days: 1
-          name: default-environment-${{vars.API_CV}}-${{inputs.branch}}
+          name: default-environment-${{vars.PROJECT}}-${{inputs.branch}}
           path: |
             .env
             test-reports

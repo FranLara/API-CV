@@ -34,7 +34,7 @@ jobs:
       - name: Get cached Composer libraries
         uses: actions/cache@v4
         with:
-          key: cache-${{vars.API_CV}}-composer-${{hashFiles('composer.lock')}}
+          key: cache-${{vars.PROJECT}}-composer-${{hashFiles('composer.lock')}}
           path: vendor
 
       - name: Check Composer library security
@@ -64,7 +64,7 @@ jobs:
         uses: actions/cache@v4
         if: ${{steps.folder-change.outputs.folder-changed == 'true'}}
         with:
-          key: cache-${{vars.API_CV_PROJECT}}-composer-${{hashFiles('composer.lock')}}
+          key: cache-${{vars.PROJECT}}-composer-${{hashFiles('composer.lock')}}
           path: vendor
 
       - name: Check code quality
