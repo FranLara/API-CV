@@ -1,0 +1,93 @@
+name: Build And Publish Docker Image
+run-name: ${{github.actor}} builds and publishes a new docker image for ${{vars.API_CV}} from the branch ${{github.head_ref}}
+
+on:
+  workflow_call:
+    inputs:
+      tag:
+        type: string
+        required: true
+  workflow_dispatch:
+    inputs:
+      tag:
+        type: string
+        required: true
+        description: Image tag
+
+env:
+  DOCKER_IMAGE: ${{vars.REGISTRY}}/${{github.repository}}:${{inputs.tag}}
+
+jobs:
+  check-image-exists:
+    name: Docker Image Check
+    runs-on: ubuntu-latest
+    outputs:
+      image-exists: ${{steps.docker-image-exists.outputs.image-exists}}
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          username: ${{github.actor}}
+          registry: ${{vars.REGISTRY}}
+          password: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Determine if docker image exists
+        id: docker-image-exists
+        run: |
+          if docker pull ${{env.DOCKER_IMAGE}} 2>&1 | grep -q "manifest unknown"; then
+            echo "image-exists=false" >> $GITHUB_OUTPUT
+          fi
+
+  check-file-changes:
+    name: Docker Config Check
+    runs-on: ubuntu-latest
+    outputs:
+      config-changed: ${{steps.docker-config-changed.outputs.config-changed}}
+    steps:
+      - name: Checkout to find changes
+        uses: actions/checkout@v4
+
+      - name: Cache Dockerfile
+        id: cache-dockerfile
+        uses: actions/cache@v4
+        with:
+          key: cache-${{vars.API_CV}}-dockerfile-${{inputs.tag}}-${{hashFiles('docker/Dockerfile')}}
+          path: docker/Dockerfile
+
+      - name: Determine if docker folder have changed
+        id: docker-config-changed
+        if: ${{steps.cache-dockerfile.outputs.cache-hit != 'true'}}
+        run: echo "config-changed=true" >> $GITHUB_OUTPUT
+
+  build-and-push-image:
+    name: Image Build And Push
+    runs-on: ubuntu-latest
+    needs: [check-file-changes,check-image-exists]
+    if: ${{needs.check-file-changes.outputs.config-changed == 'true' || needs.check-image-exists.outputs.image-exists == 'false'}}
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          username: ${{github.actor}}
+          registry: ${{vars.REGISTRY}}
+          password: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: "{{defaultContext}}:docker"
+          push: true
+          tags: ${{env.DOCKER_IMAGE}}

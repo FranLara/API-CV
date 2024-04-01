@@ -1,0 +1,66 @@
+name: Test Selected Suite
+run-name: ${{github.actor}} tests Suite ${{inputs.suite-name}}
+
+on:
+  workflow_call:
+    inputs:
+      suite-name:
+        type: string
+        required: true
+      report-name:
+        type: string
+        required: true
+      image-tag:
+        type: string
+        required: true
+      branch:
+        type: string
+        required: true
+  workflow_dispatch:
+    inputs:
+      suite-name:
+        type: string
+        required: true
+        description: Suite name to test
+      report-name:
+        type: string
+        required: true
+        description: Report name to store
+      branch:
+        type: string
+        required: true
+        description: Branch name
+env:
+  XDEBUG_MODE: coverage
+  REPORT_PATH: test-reports
+
+jobs:
+  test-suite:
+    name: ${{inputs.suite_name}} Suite Tests
+    runs-on: ubuntu-latest
+    container: ${{vars.REGISTRY}}/${{github.repository}}:${{inputs.image-tag}}
+
+    steps:
+      - name: Checkout to test
+        uses: actions/checkout@v4
+
+      - name: Get cached Composer libraries
+        uses: actions/cache@v4
+        with:
+          key: cache-${{vars.AP_CV}}-composer-${{hashFiles('composer.lock')}}
+          path: vendor
+
+      - name: Download artifact with file and folder
+        uses: actions/download-artifact@v4
+        with:
+          name: default-environment-${{vars.AP_CV}}-${{inputs.branch}}
+
+      - name: Run tests
+        run: php vendor/bin/phpunit --testsuite="${{inputs.suite-name}}" --coverage-php="${{env.REPORT_PATH}}/clover/${{inputs.report-name}}-coverage.xml" --log-junit="${{env.REPORT_PATH}}/junit/${{inputs.report-name}}-junit.xml"
+
+      - name: Archive test results
+        uses: actions/upload-artifact@v4
+        with:
+          retention-days: 1
+          name: ${{env.REPORT_PATH}}-suites-${{vars.API_CV}}-${{inputs.branch}}
+          path: ${{env.REPORT_PATH}}

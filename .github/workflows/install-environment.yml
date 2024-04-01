@@ -1,0 +1,38 @@
+name: Install Environment
+run-name: ${{github.actor}} prepare the environment to test the ${{github.event_name}} of the branch ${{github.head_ref}}
+
+on:
+  workflow_call:
+    inputs:
+      branch:
+        type: string
+        required: true
+  workflow_dispatch:
+    inputs:
+      branch:
+        type: string
+        required: true
+        description: Branch name
+
+jobs:
+  install-environment:
+    name: Environment Installation
+    runs-on: ubuntu-latest
+    container: laravelsail/php83-composer
+    steps:
+      - name: Checkout to prepare environment
+        uses: actions/checkout@v4
+
+      - name: Copy .env and create test result folder
+        run: |
+          mv .env.example .env
+          mkdir -p test-reports
+
+      - name: Archive file and folder
+        uses: actions/upload-artifact@v4
+        with:
+          retention-days: 1
+          name: default-environment-${{vars.API_CV}}-${{inputs.branch}}
+          path: |
+            .env
+            test-reports
