@@ -24,7 +24,7 @@ class RetrieverTest extends ServiceTest
 	{
 		$this->expectException(ModelNotFoundException::class);
 
-		$this->retriever->retrieve(1);
+		$this->retriever->retrieve('test_id');
 	}
 
 	public function testRetrieveByField(): void

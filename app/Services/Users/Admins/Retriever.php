@@ -16,7 +16,7 @@ class Retriever extends UserRetriever
 		$this->transformer = $transformer;
 	}
 
-	public function retrieve(int $identifier): Admin
+	public function retrieve(string $identifier): Admin
 	{
 		return $this->transformer->transform(AdminModel::findOrFail($identifier));
 	}

@@ -10,7 +10,7 @@ abstract class User extends DTO
 	protected ?string $psswd;
 	protected ?string $language;
 
-	public function __construct(?int $identifier = null, ?string $psswd = null, ?string $language = null)
+	public function __construct(?string $identifier = null, ?string $psswd = null, ?string $language = null)
 	{
 		parent::__construct($identifier);
 
