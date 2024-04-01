@@ -10,7 +10,7 @@ abstract class Retriever implements RetrieverInterface
 {
 	protected Transformer $transformer;
 
-	abstract public function retrieve(int $identifier): User;
+	abstract public function retrieve(string $identifier): User;
 
 	abstract public function retrieveByField(string $field, $value): User;
 }

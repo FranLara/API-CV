@@ -5,19 +5,19 @@ namespace App\BusinessObjects\DTOs;
 
 abstract class DTO
 {
-	protected ?int $identifier;
+	protected ?string $identifier;
 
-	public function __construct(?int $identifier = null)
+	public function __construct(?string $identifier = null)
 	{
 		$this->identifier = $identifier;
 	}
 
-	public function getIdentifier(): ?int
+	public function getIdentifier(): ?string
 	{
 		return $this->identifier;
 	}
 
-	public function setIdentifier(int $identifier): void
+	public function setIdentifier(string $identifier): void
 	{
 		$this->identifier = $identifier;
 	}
