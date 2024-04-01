@@ -14,8 +14,9 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 abstract class User extends Model implements JWTSubject, AuthenticableContract
 {
 	use Notifiable, HasFactory, Authenticatable, HasUuids;
-	protected $fillable = ['email'];
+	protected $fillable = ['email', 'password', 'language'];
 	protected $hidden = ['password'];
+	public $timestamps = false;
 
 	public function getJWTIdentifier()
 	{

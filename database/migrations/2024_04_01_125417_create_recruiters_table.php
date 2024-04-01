@@ -11,6 +11,7 @@ return new class() extends Migration {
 			$table->uuid('id')->primary();
 			$table->string('email')->unique();
 			$table->string('password');
+			$table->string('language');
 			$table->string('linkedin_profile');
 			$table->unsignedSmallInteger('new_password_account_requests');
 			$table->timestamp('created_at')->useCurrent();
