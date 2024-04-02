@@ -15,20 +15,10 @@ on:
         description: Image tag
 
 jobs:
-  lower-repository:
-    name: Lower Repository Name
-    runs-on: ubuntu-latest
-    steps:
-      - name: Downcase repository value and create docker image
-        run: |
-          echo "REPO=${GITHUB_REPOSITORY,,}" >> "$GITHUB_ENV"
-          echo "DOCKER_IMAGE=${{vars.REGISTRY}}/$REPO:${{inputs.tag}}" >> "$GITHUB_ENV"
-          
   cache-libraries:
     name: Cache Libraries
-    needs: lower-repository
     runs-on: ubuntu-latest
-    container: $DOCKER_IMAGE
+    container: ${{vars.REGISTRY}}/${{vars.REPOSITORY}}:${{inputs.image-tag}}
     steps:
       - name: Checkout to cache
         uses: actions/checkout@v4

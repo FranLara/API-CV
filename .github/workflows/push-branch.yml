@@ -8,27 +8,8 @@ on:
       - master
       
 jobs:
-  lower-repository:
-    name: Lower Repository Name
-    runs-on: ubuntu-latest
-    steps:
-      - name: Downcase repository value and create docker image
-        run: |
-          echo "REPO_SITORY=Hola" >> $GITHUB_ENV
-          
-  docker-image-name:
-    name: Add New Docker Image
-    needs: lower-repository
-    runs-on: ubuntu-latest
-    steps:
-      - name: Create docker image
-        run: |
-          echo "${{env.REPO_SITORY}}"
-          echo "DOCKER_IMAGE=${{vars.REGISTRY}}/${{env.REPO}}:${{github.ref_name}}" >> $GITHUB_ENV
-  
   build-image:
     name: Docker Image Creation
-    needs: docker-image-name
     uses: ./.github/workflows/build-docker-image.yml
     with:
       tag: ${{github.ref_name}}
@@ -44,7 +25,7 @@ jobs:
     name: Check Composer Security
     runs-on: ubuntu-latest
     needs: install-libraries
-    container: $DOCKER_IMAGE
+    container: ${{vars.REGISTRY}}/${{vars.REPOSITORY}}:${{github.ref_name}}
 
     steps:
       - name: Checkout to check library security

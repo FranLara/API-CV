@@ -14,6 +14,9 @@ on:
         required: true
         description: Image tag
 
+env:
+  DOCKER_IMAGE: ${{vars.REGISTRY}}/${{vars.REPOSITORY}}:${{inputs.tag}}
+
 jobs:
   check-image-exists:
     name: Docker Image Check
@@ -26,11 +29,6 @@ jobs:
       packages: write
 
     steps:
-      - name: Downcase repository value and create docker image
-        run: |
-          echo "REPO=Hola Mundo" >> $GITHUB_ENV
-          echo "DOCKER_IMAGE=${{vars.REGISTRY}}/${{env.REPO}}:${{inputs.tag}}" >> $GITHUB_ENV
-    
       - name: Log in to the Container registry
         uses: docker/login-action@v3
         with:
@@ -41,8 +39,6 @@ jobs:
       - name: Determine if docker image exists
         id: docker-image-exists
         run: |
-          echo ${{env.REPO}}
-          echo ${{env.DOCKER_IMAGE}}
           if docker pull ${{env.DOCKER_IMAGE}} 2>&1 | grep -q "manifest unknown"; then
             echo "image-exists=false" >> $GITHUB_OUTPUT
           fi
