@@ -7,7 +7,7 @@ use Database\Factories\AdminFactory;
 
 class Admin extends User
 {
-	protected $fillable = ['username'];
+	protected $fillable = ['username', 'password', 'language'];
 
 	protected static function newFactory(): AdminFactory
 	{

@@ -23,7 +23,7 @@ class SaverTest extends ServiceTest
 	{
 		$mapper = $this->createConfiguredMock(Mapper::class, ['map' => $this->getAdmin($existing, $modified)]);
 		(new Saver($mapper))->save(new AdminDTO());
-		$admin = Admin::find(1);
+		$admin = Admin::all()->first();
 
 		$this->assertSame(self::USERNAME, $admin->username);
 		$this->assertSame($this->getExpectedField(self::LANGUAGE, $modified), $admin->language);

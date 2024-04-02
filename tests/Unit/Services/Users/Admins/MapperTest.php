@@ -11,14 +11,14 @@ use Tests\TestCase;
 
 class MapperTest extends TestCase
 {
-	private const IDENTIFIER = 31;
 	private const PSSWD = 'test_psswd';
 	private const LANGUAGE = 'test_language';
+	private const IDENTIFIER = 'test_identifier';
 
 	/**
 	 * @dataProvider providerAdminData
 	 */
-	public function testMap(?string $language, ?string $psswd, ?int $identifier): void
+	public function testMap(?string $language, ?string $psswd, ?string $identifier): void
 	{
 		$admin = (new Mapper())->map(new AdminDTO(null, $language, $psswd, $identifier), new Admin());
 
