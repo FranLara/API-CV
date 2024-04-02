@@ -41,6 +41,7 @@ jobs:
       - name: Determine if docker image exists
         id: docker-image-exists
         run: |
+          echo ${{env.DOCKER_IMAGE}}
           if docker pull ${{env.DOCKER_IMAGE}} 2>&1 | grep -q "manifest unknown"; then
             echo "image-exists=false" >> $GITHUB_OUTPUT
           fi
