@@ -91,3 +91,5 @@ jobs:
           context: "{{defaultContext}}:infrastructure/docker"
           push: true
           tags: ${{env.DOCKER_IMAGE}}
+          build-args: |
+            WWWGROUP=98
