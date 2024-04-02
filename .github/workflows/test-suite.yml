@@ -47,13 +47,13 @@ jobs:
       - name: Get cached Composer libraries
         uses: actions/cache@v4
         with:
-          key: cache-${{vars.AP_CV}}-composer-${{hashFiles('composer.lock')}}
+          key: cache-${{vars.PROJECT}}-composer-${{hashFiles('composer.lock')}}
           path: vendor
 
       - name: Download artifact with file and folder
         uses: actions/download-artifact@v4
         with:
-          name: default-environment-${{vars.AP_CV}}-${{inputs.branch}}
+          name: default-environment-${{vars.PROJECT}}-${{inputs.branch}}
 
       - name: Run tests
         run: php vendor/bin/phpunit --testsuite="${{inputs.suite-name}}" --coverage-php="${{env.REPORT_PATH}}/clover/${{inputs.report-name}}-coverage.xml" --log-junit="${{env.REPORT_PATH}}/junit/${{inputs.report-name}}-junit.xml"
