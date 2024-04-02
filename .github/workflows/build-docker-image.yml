@@ -1,5 +1,5 @@
 name: Build And Publish Docker Image
-run-name: ${{github.actor}} builds and publishes a new docker image for ${{vars.PROJECT}} from the branch ${{github.ref}}
+run-name: ${{github.actor}} builds and publishes a new docker image for ${{vars.PROJECT}} from the branch ${{github.ref_name}}
 
 on:
   workflow_call:

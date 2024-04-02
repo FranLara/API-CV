@@ -1,5 +1,5 @@
 name: Install Environment
-run-name: ${{github.actor}} prepare the environment to test the ${{github.event_name}} of the branch ${{github.ref}}
+run-name: ${{github.actor}} prepare the environment to test the ${{github.event_name}} of the branch ${{github.ref_name}}
 
 on:
   workflow_call:
