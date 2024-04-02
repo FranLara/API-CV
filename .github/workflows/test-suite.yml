@@ -38,7 +38,7 @@ jobs:
   test-suite:
     name: ${{inputs.suite_name}} Suite Tests
     runs-on: ubuntu-latest
-    container: ${{vars.REGISTRY}}/${{github.repository}}:${{inputs.image-tag}}
+    container: ${{vars.REGISTRY}}/${{tolower(github.repository)}}:${{inputs.image-tag}}
 
     steps:
       - name: Checkout to test

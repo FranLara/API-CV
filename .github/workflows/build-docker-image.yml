@@ -15,7 +15,7 @@ on:
         description: Image tag
 
 env:
-  DOCKER_IMAGE: ${{vars.REGISTRY}}/${{github.repository}}:${{inputs.tag}}
+  DOCKER_IMAGE: ${{vars.REGISTRY}}/${{tolower(github.repository)}}:${{inputs.tag}}
 
 jobs:
   check-image-exists:

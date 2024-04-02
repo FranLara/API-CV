@@ -18,7 +18,7 @@ jobs:
   cache-libraries:
     name: Cache Libraries
     runs-on: ubuntu-latest
-    container: ${{vars.REGISTRY}}/${{github.repository}}:${{inputs.image-tag}}
+    container: ${{vars.REGISTRY}}/${{tolower(github.repository)}}:${{inputs.image-tag}}
     steps:
       - name: Checkout to cache
         uses: actions/checkout@v4
