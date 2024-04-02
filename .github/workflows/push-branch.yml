@@ -14,14 +14,22 @@ jobs:
     steps:
       - name: Downcase repository value and create docker image
         run: |
-          echo "REPO=Hola" >> "$GITHUB_ENV"
-          echo "DOCKER_IMAGE=${{vars.REGISTRY}}/${{env.REPO}}:${{github.ref_name}}" >> "$GITHUB_ENV"
-          echo "Image ${{env.DOCKER_IMAGE}}"
+          echo "REPO=Hola" >> $GITHUB_ENV
+          echo "DOCKER_IMAGE=${{vars.REGISTRY}}/${{env.REPO}}:${{github.ref_name}}" >> $GITHUB_ENV
+          
+  docker-image-name:
+    name: Add New Docker Image
+    needs: lower-repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create docker image
+        run: |
           echo "Repo ${{env.REPO}}"
+          echo "DOCKER_IMAGE=${{vars.REGISTRY}}/${{env.REPO}}:${{github.ref_name}}" >> $GITHUB_ENV
   
   build-image:
     name: Docker Image Creation
-    needs: lower-repository
+    needs: docker-image-name
     uses: ./.github/workflows/build-docker-image.yml
     with:
       tag: ${{github.ref_name}}
