@@ -28,7 +28,7 @@ jobs:
     name: Cache Libraries
     needs: lower-repository
     runs-on: ubuntu-latest
-    container: ${{env.DOCKER_IMAGE}}
+    container: ${{DOCKER_IMAGE}}
     steps:
       - name: Checkout to cache
         uses: actions/checkout@v4
