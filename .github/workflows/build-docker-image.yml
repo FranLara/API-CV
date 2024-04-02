@@ -88,6 +88,6 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: "{{defaultContext}}:docker"
+          context: "{{defaultContext}}:infrastructure/docker"
           push: true
           tags: ${{env.DOCKER_IMAGE}}
