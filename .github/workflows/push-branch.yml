@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Downcase repository value and create docker image
         run: |
-          echo "REPO=${$GITHUB_REPOSITORY@L}" >> $GITHUB_ENV
+          echo "REPO=Hola" >> $GITHUB_ENV
           echo "DOCKER_IMAGE=${{vars.REGISTRY}}/${{env.REPO}}:${{github.ref_name}}" >> $GITHUB_ENV
   
   build-image:
