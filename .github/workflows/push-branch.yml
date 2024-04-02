@@ -1,5 +1,5 @@
 name: Push Branch
-run-name: ${{github.actor}} made a ${{github.event_name}} for the branch ${{github.head_ref}}
+run-name: ${{github.actor}} made a ${{github.event_name}} for the branch ${{github.ref}}
 
 on:
   workflow_dispatch:
@@ -12,20 +12,20 @@ jobs:
     name: Docker Image Creation
     uses: ./.github/workflows/build-docker-image.yml
     with:
-      tag: ${{github.head_ref}}
+      tag: ${{github.ref}}
 
   install-libraries:
     name: Library Caching
     needs: build-image
     uses: ./.github/workflows/cache-libraries.yml
     with:
-      image-tag: ${{github.head_ref}}
+      image-tag: ${{github.ref}}
 
   check-security:
     name: Check Composer Security
     runs-on: ubuntu-latest
     needs: install-libraries
-    container: ${{vars.REGISTRY}}/${{github.repository}}:${{github.head_ref}}
+    container: ${{vars.REGISTRY}}/${{github.repository}}:${{github.ref}}
 
     steps:
       - name: Checkout to check library security
@@ -76,7 +76,7 @@ jobs:
     needs: install-libraries
     uses: ./.github/workflows/install-environment.yml
     with:
-      branch: ${{github.head_ref}}
+      branch: ${{github.ref}}
 
   test-unit:
     name: Unit Test Suite
@@ -85,8 +85,8 @@ jobs:
     with:
       report-name: unit-tests
       suite-name: Unit
-      branch: ${{github.head_ref}}
-      image-tag: ${{github.head_ref}}
+      branch: ${{github.ref}}
+      image-tag: ${{github.ref}}
 
   test-feature:
     name: Feature Test Suite
@@ -95,5 +95,5 @@ jobs:
     with:
       report-name: feature-tests
       suite-name: Feature
-      branch: ${{github.head_ref}}
-      image-tag: ${{github.head_ref}}
+      branch: ${{github.ref}}
+      image-tag: ${{github.ref}}
