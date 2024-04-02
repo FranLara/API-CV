@@ -23,7 +23,7 @@ jobs:
     steps:
       - name: Create docker image
         run: |
-          echo "$REPO""
+          echo "${{REPO}}"
           echo "DOCKER_IMAGE=${{vars.REGISTRY}}/${{env.REPO}}:${{github.ref_name}}" >> $GITHUB_ENV
   
   build-image:
