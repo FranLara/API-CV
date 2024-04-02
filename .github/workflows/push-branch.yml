@@ -16,6 +16,8 @@ jobs:
         run: |
           echo "REPO=Hola" >> $GITHUB_ENV
           echo "DOCKER_IMAGE=${{vars.REGISTRY}}/${{env.REPO}}:${{github.ref_name}}" >> $GITHUB_ENV
+          echo "Image" ${{env.DOCKER_IMAGE}}
+          echo "Repo" ${{env.REPO}}
   
   build-image:
     name: Docker Image Creation
