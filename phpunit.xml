@@ -31,5 +31,6 @@
 		<env name="SUPER_ADMIN_LANGUAGE" value="test_super_admin_language" />
 		<env name="SESSION_DRIVER" value="array" />
 		<env name="TELESCOPE_ENABLED" value="false" />
+		<env name="JWT_SECRET" value="The_Secret_JWT#For_Testing#Is_This_One" />
 	</php>
 </phpunit>
