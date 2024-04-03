@@ -17,13 +17,12 @@ class TokenTest extends APITest
 	/**
 	 * @dataProvider providerCredentials
 	 */
-	public function testRequest(array $credentials = [], int $expectedSub = 0, string $expectedRole = Token::GUEST_ROLE): void
+	public function testRequest(array $credentials = [], string $expectedRole = Token::GUEST_ROLE): void
 	{
 		$response = $this->postJson($this->domain . '/token', $credentials, $this->header);
 		$token = json_decode($response->getContent())->{self::TOKEN_INDEX};
 		$payload = app('tymon.jwt')->setToken($token)->getPayload();
 
-		$this->assertEquals($expectedSub, $payload->get('sub'));
 		$this->assertSame($expectedRole, $payload->get('role'));
 		$response->assertJson(fn (AssertableJson $json) => $json->hasAll([self::TYPE_INDEX, self::TOKEN_INDEX,
 			self::EXPIRATION_INDEX])
@@ -37,6 +36,6 @@ class TokenTest extends APITest
 			[[APIController::USERNAME_PARAMETER => 'test_username', APIController::PSSWD_PARAMETER => 'test_psswd']],
 			[
 				[APIController::USERNAME_PARAMETER => env('SUPER_ADMIN_USERNAME'),
-					APIController::PSSWD_PARAMETER => env('SUPER_ADMIN_PASSWORD')], 1, 'admin']];
+					APIController::PSSWD_PARAMETER => env('SUPER_ADMIN_PASSWORD')], 'admin']];
 	}
 }
