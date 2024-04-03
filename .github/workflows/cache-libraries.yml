@@ -1,0 +1,37 @@
+name: Cache Libraries
+run-name: ${{github.actor}} caches libraries for ${{vars.PROJECT}}
+
+on:
+  workflow_call:
+    inputs:
+      image-tag:
+        type: string
+        required: true
+  workflow_dispatch:
+    inputs:
+      image-tag:
+        type: string
+        required: true
+        description: Image tag
+
+jobs:
+  cache-libraries:
+    name: Cache Libraries
+    runs-on: ubuntu-latest
+    container: ${{vars.REGISTRY}}/${{vars.REPOSITORY}}:${{inputs.image-tag}}
+    steps:
+      - name: Checkout to cache
+        uses: actions/checkout@v4
+
+      - name: Cache Composer libraries
+        id: cache-composer
+        uses: actions/cache@v4
+        with:
+          key: cache-${{vars.PROJECT}}-composer-${{hashFiles('composer.lock')}}
+          path: vendor
+
+      - name: Install Composer libraries
+        if: ${{steps.cache-composer.outputs.cache-hit != 'true'}}
+        run: |
+          composer self-update
+          composer install -o --no-scripts

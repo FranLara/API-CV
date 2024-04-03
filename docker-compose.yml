@@ -6,7 +6,7 @@ services:
             dockerfile: Dockerfile
             args:
                 WWWGROUP: '${APP_WWWGROUP}'
-        image: franlara-8.2/cv
+        image: franlara-8.3/cv
         domainname: franciscolaracasalilla.local
         extra_hosts:
             - 'host.docker.internal:host-gateway'

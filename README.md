@@ -11,10 +11,10 @@ English version) and the API that provides all the info related to my CV.
 
 ##### Digging in the repository you'll find references to:
 - <img align="left" alt="Laravel" title="Laravel" width="26px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg" style="padding-right:10px;"/> Laravel 10.8
-- <img align="left" alt="Laravel" title="Laravel" width="26px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-plain.svg" style="padding-right:10px;"/> PHP 8.2
+- <img align="left" alt="Laravel" title="Laravel" width="26px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-plain.svg" style="padding-right:10px;"/> PHP 8.3
 - <img align="left" alt="MySQL" title="MySQL" width="26px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" style="padding-right:10px;"/> MariaDB 10.6.12
 - <img align="left" alt="Ubuntu" title="Ubuntu" width="26px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ubuntu/ubuntu-plain.svg" style="padding-right:10px;"/> Ubuntu 22.04
-- <img align="left" alt="Composer" title="Composer" width="26px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/composer/composer-original.svg" style="padding-right:10px;"/> Composer 2.6.5
+- <img align="left" alt="Composer" title="Composer" width="26px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/composer/composer-original.svg" style="padding-right:10px;"/> Composer 2.7.2
 - <img align="left" alt="Docker" title="Docker" width="26px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" style="padding-right:10px;"/> Docker implementations
 - <img align="left" alt="GitHub" title="GitHub" width="26px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" style="padding-right:10px;"/> GitHub actions
 - Among other ones...

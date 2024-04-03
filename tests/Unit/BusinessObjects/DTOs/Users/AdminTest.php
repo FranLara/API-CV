@@ -8,15 +8,15 @@ use PHPUnit\Framework\TestCase;
 
 class AdminTest extends TestCase
 {
-	private const IDENTIFIER = 31;
 	private const PSSWD = 'test_psswd';
 	private const USERNAME = 'test_username';
 	private const LANGUAGE = 'test_language';
+	private const IDENTIFIER = 'test_identifier';
 
 	/**
 	 * @dataProvider providerConstructorData
 	 */
-	public function testConstructor(?string $username = null, ?string $language = null, ?string $psswd = null, ?int $identifier = null): void
+	public function testConstructor(?string $username = null, ?string $language = null, ?string $psswd = null, ?string $identifier = null): void
 	{
 		$admin = new Admin($username, $language, $psswd, $identifier);
 

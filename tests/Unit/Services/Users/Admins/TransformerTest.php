@@ -9,14 +9,14 @@ use Tests\TestCase;
 
 class TransformerTest extends TestCase
 {
-	private const IDENTIFIER = 31;
 	private const USERNAME = 'test_username';
 	private const LANGUAGE = 'test_language';
+	private const IDENTIFIER = 'test_identifier';
 
 	/**
 	 * @dataProvider providerAdminData
 	 */
-	public function testTransform(?string $username, ?string $language, ?int $identifier): void
+	public function testTransform(?string $username, ?string $language, ?string $identifier): void
 	{
 		$admin = (new Transformer())->transform($this->getModel($username, $language, $identifier));
 
@@ -32,7 +32,7 @@ class TransformerTest extends TestCase
 			[null, self::LANGUAGE, self::IDENTIFIER], [self::USERNAME, self::LANGUAGE, self::IDENTIFIER],];
 	}
 
-	private function getModel(?string $username, ?string $language, ?int $identifier): AdminModel
+	private function getModel(?string $username, ?string $language, ?string $identifier): AdminModel
 	{
 		$model = new AdminModel();
 		$model->id = $identifier;

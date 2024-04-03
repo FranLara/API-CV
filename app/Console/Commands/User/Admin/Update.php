@@ -68,7 +68,7 @@ class Update extends AdminCommand
 		}
 	}
 
-	private function getDefLang(string $language): string
+	private function getDefLang(string $language): int
 	{
 		return match ($language) {'es' => 2,'de' => 3,default => 1,
 		};
