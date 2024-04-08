@@ -23,7 +23,7 @@ class AdminTest extends TestCase
 		$this->assertSame($psswd, $admin->getPsswd());
 		$this->assertSame($username, $admin->getUsername());
 		$this->assertSame($language, $admin->getLanguage());
-		$this->assertEquals($identifier, $admin->getIdentifier());
+		$this->assertSame($identifier, $admin->getIdentifier());
 	}
 
 	/**

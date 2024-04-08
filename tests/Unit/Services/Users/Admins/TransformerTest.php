@@ -16,19 +16,19 @@ class TransformerTest extends TestCase
 	/**
 	 * @dataProvider providerAdminData
 	 */
-	public function testTransform(?string $username, ?string $language, ?string $identifier): void
+	public function testTransform(?string $username = null, ?string $language = null, ?string $identifier = null): void
 	{
 		$admin = (new Transformer())->transform($this->getModel($username, $language, $identifier));
 
 		$this->assertSame($username, $admin->getUsername());
 		$this->assertSame($language, $admin->getLanguage());
-		$this->assertEquals($identifier, $admin->getIdentifier());
+		$this->assertSame($identifier, $admin->getIdentifier());
 	}
 
 	public static function providerAdminData(): array
 	{
-		return [[null, null, null], [self::USERNAME, null, null], [null, self::LANGUAGE, null],
-			[null, null, self::IDENTIFIER], [self::USERNAME, null, self::IDENTIFIER],
+		return [[], [self::USERNAME], [null, self::LANGUAGE], [null, null, self::IDENTIFIER],
+			[self::USERNAME, self::LANGUAGE], [self::USERNAME, null, self::IDENTIFIER],
 			[null, self::LANGUAGE, self::IDENTIFIER], [self::USERNAME, self::LANGUAGE, self::IDENTIFIER],];
 	}
 
