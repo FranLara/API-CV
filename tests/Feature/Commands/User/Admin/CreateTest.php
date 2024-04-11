@@ -13,9 +13,9 @@ class CreateTest extends AdminTest
 	public function testCreate(): void
 	{
 		$this->artisan(self::USER_SIGNATURE . 'create' . self::ADMIN_SIGNATURE)
-			->expectsQuestion(__(self::CREATION_TRANSLATIONS . 'username'), self::USERNAME)
+			->expectsQuestion(__(self::CREATION_TRANSLATIONS . 'username.label'), self::USERNAME)
 			->expectsQuestion(__(self::CREATION_TRANSLATIONS . 'password'), 'test_password')
-			->expectsQuestion(__(self::CREATION_TRANSLATIONS . 'language'), 2);
+			->expectsQuestion(__(self::CREATION_TRANSLATIONS . 'language'), 'es');
 
 		$this->assertDatabaseCount('jobs', 1);
 		$this->assertDatabaseCount('admins', 2);
@@ -25,7 +25,7 @@ class CreateTest extends AdminTest
 	public function testCreateExit(): void
 	{
 		$this->artisan(self::USER_SIGNATURE . 'create' . self::ADMIN_SIGNATURE)->expectsQuestion(__(self::CREATION_TRANSLATIONS .
-			'username'), self::EXIT);
+			'username.label'), self::EXIT);
 
 		$this->assertDatabaseCount('admins', 1);
 	}
@@ -35,9 +35,9 @@ class CreateTest extends AdminTest
 		Admin::factory()->create(['username' => self::USERNAME]);
 
 		$this->artisan(self::USER_SIGNATURE . 'create' . self::ADMIN_SIGNATURE)
-			->expectsQuestion(__(self::CREATION_TRANSLATIONS . 'username'), self::USERNAME)
+			->expectsQuestion(__(self::CREATION_TRANSLATIONS . 'username.label'), self::USERNAME)
 			->expectsOutput(__(self::CREATION_TRANSLATIONS . 'existing', ['username' => self::USERNAME]))
-			->expectsQuestion(__(self::CREATION_TRANSLATIONS . 'username'), self::EXIT);
+			->expectsQuestion(__(self::CREATION_TRANSLATIONS . 'username.label'), self::EXIT);
 
 		$this->assertDatabaseCount('jobs', 0);
 		$this->assertDatabaseCount('admins', 2);

@@ -11,6 +11,8 @@ use App\Services\Users\Admins\Saver;
 use App\Utils\Notifications as NotificationUtils;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
+use function Laravel\Prompts\password;
+use function Laravel\Prompts\text;
 
 class Create extends AdminCommand
 {
@@ -28,7 +30,8 @@ class Create extends AdminCommand
 	public function handle(Saver $saver, Retriever $retriever): void
 	{
 		do {
-			$username = $this->ask(__(self::CREATION_TRANSLATIONS . 'username'));
+			$username = text(label: __(self::CREATION_TRANSLATIONS . 'username.label'), required: true, hint: __(self::CREATION_TRANSLATIONS .
+				'username.hint'));
 		} while ((!$this->isUsernameUnique($retriever, $username)) && (!Str::of($username)->exactly(self::EXIT)));
 
 		if (!Str::of($username)->lower()->exactly(self::EXIT)) {
@@ -52,10 +55,10 @@ class Create extends AdminCommand
 
 	private function createAdmin(Saver $saver, string $username): void
 	{
-		$psswrd = $this->secret(__(self::CREATION_TRANSLATIONS . 'password'));
-		$language = $this->ask(__(self::CREATION_TRANSLATIONS . 'language'), 1);
+		$psswrd = password(label: __(self::CREATION_TRANSLATIONS . 'password'), required: true);
+		$language = $this->getLanguage(__(self::CREATION_TRANSLATIONS . 'language'), 'en');
 
-		$admin = new Admin($username, $this->getLanguage($language), $psswrd);
+		$admin = new Admin($username, $language, $psswrd);
 
 		$userSaved = $saver->save($admin);
 
