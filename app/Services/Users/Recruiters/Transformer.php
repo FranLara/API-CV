@@ -12,6 +12,6 @@ class Transformer extends UserTransformer
 
 	public function transform(Model $model): Recruiter
 	{
-		return new Recruiter($model->email, $model->language, null, $model->linkedin_profile, $model->id);
+		return new Recruiter($model->email, $model->name, $model->language, null, $model->linkedin_profile, $model->id);
 	}
 }

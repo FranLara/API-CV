@@ -17,6 +17,9 @@ class Mapper extends UserMapper
 		if (empty($recruiter->id)) {
 			$recruiter->created_at = now();
 		}
+		if (!empty($dto->getName())) {
+			$recruiter->name = $dto->getName();
+		}
 		if (!empty($dto->getLanguage())) {
 			$recruiter->language = $dto->getLanguage();
 		}

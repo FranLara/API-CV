@@ -12,6 +12,7 @@ use Tests\Unit\Services\ServiceTest;
 
 class SaverTest extends ServiceTest
 {
+	private const NAME = 'test_name';
 	private const EMAIL = 'test_email';
 	private const PSSWD = 'test_psswd';
 	private const LANGUAGE = 'test_language';
@@ -27,6 +28,7 @@ class SaverTest extends ServiceTest
 		$recruiter = Recruiter::whereEmail(self::EMAIL)->first();
 
 		$this->assertSame(self::EMAIL, $recruiter->email);
+		$this->assertSame($this->getExpectedField(self::NAME, $modified), $recruiter->name);
 		$this->assertSame($this->getExpectedField(self::LANGUAGE, $modified), $recruiter->language);
 		$this->assertTrue(Hash::check($this->getExpectedField(self::PSSWD, $modified), $recruiter->password));
 		$this->assertSame($this->getExpectedField(self::LINKEDIN_PROFILE, $modified), $recruiter->linkedin_profile);
@@ -39,14 +41,15 @@ class SaverTest extends ServiceTest
 
 	private function getRecruiter(bool $existing, bool $modified): Recruiter
 	{
-		$default = ['email' => self::EMAIL, 'language' => self::LANGUAGE, 'linkedin_profile' => self::LINKEDIN_PROFILE,
-			'password' => Hash::make(self::PSSWD)];
+		$default = ['email' => self::EMAIL, 'name' => self::NAME, 'language' => self::LANGUAGE,
+			'linkedin_profile' => self::LINKEDIN_PROFILE, 'password' => Hash::make(self::PSSWD)];
 		$recruiter = new Recruiter($default);
 
 		if ($existing) {
 			$recruiter = Recruiter::factory()->create($default);
 		}
 		if ($modified) {
+			$recruiter->name = self::NAME . '_mod';
 			$recruiter->language = self::LANGUAGE . '_mod';
 			$recruiter->password = Hash::make(self::PSSWD . '_mod');
 			$recruiter->linkedin_profile = self::LINKEDIN_PROFILE . '_mod';

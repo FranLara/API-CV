@@ -34,11 +34,7 @@ class TransformerTest extends TestCase
 
 	private function getModel(?string $username, ?string $language, ?string $identifier): AdminModel
 	{
-		$model = new AdminModel();
-		$model->id = $identifier;
-		$model->username = $username;
-		$model->language = $language;
-
-		return $model;
+		$admin = ['username' => $username, 'language' => $language, 'id' => $identifier];
+		return new AdminModel($admin);
 	}
 }
