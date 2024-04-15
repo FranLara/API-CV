@@ -16,6 +16,7 @@ class RootTest extends APITest
 	private const ENDPOINT_INDEX = 'endpointExample';
 	private const ENDPOINT_TRANSLATIONS = self::API_TRANSLATIONS . 'endpoints.';
 	private const TOKEN_TRANSLATIONS = self::ENDPOINT_TRANSLATIONS . 'token.';
+	private const ACCOUNT_TRANSLATIONS = self::ENDPOINT_TRANSLATIONS . 'account.';
 	private array $parameterIndexes = [self::TYPE_INDEX, self::NAME_INDEX];
 	private array $resourceIndexes = [self::TYPE_INDEX, self::DESCRIPTION_INDEX, self::PARAMETER_INDEX,
 		self::ENDPOINT_INDEX];
@@ -32,7 +33,25 @@ class RootTest extends APITest
 			->has(self::PARAMETER_INDEX . '.1', fn (AssertableJson $parameter) => $parameter->hasAll($this->parameterIndexes)
 			->where(self::NAME_INDEX, 'password')
 			->where(self::TYPE_INDEX, self::STRING_TYPE))
-			->where(self::ENDPOINT_INDEX, $this->domain . '/token?username=username&password=password'))));
+			->where(self::ENDPOINT_INDEX, $this->domain . '/token?username=username&password=password'))
+			->has('account', fn (AssertableJson $account) => $account->hasAll($this->resourceIndexes)
+			->where(self::TYPE_INDEX, Request::METHOD_POST)
+			->where(self::DESCRIPTION_INDEX, __(self::ACCOUNT_TRANSLATIONS . 'request'))
+			->has(self::PARAMETER_INDEX, 4)
+			->has(self::PARAMETER_INDEX . '.0', fn (AssertableJson $parameter) => $parameter->hasAll($this->parameterIndexes)
+			->where(self::NAME_INDEX, 'email')
+			->where(self::TYPE_INDEX, self::STRING_TYPE))
+			->has(self::PARAMETER_INDEX . '.1', fn (AssertableJson $parameter) => $parameter->hasAll($this->parameterIndexes)
+			->where(self::NAME_INDEX, 'name')
+			->where(self::TYPE_INDEX, self::STRING_TYPE))
+			->has(self::PARAMETER_INDEX . '.2', fn (AssertableJson $parameter) => $parameter->hasAll($this->parameterIndexes)
+			->where(self::NAME_INDEX, 'language')
+			->where(self::TYPE_INDEX, self::STRING_TYPE))
+			->has(self::PARAMETER_INDEX . '.3', fn (AssertableJson $parameter) => $parameter->hasAll($this->parameterIndexes)
+			->where(self::NAME_INDEX, 'linkedin_profile')
+			->where(self::TYPE_INDEX, self::STRING_TYPE))
+			->where(self::ENDPOINT_INDEX, $this->domain .
+			'/account?email=email&name=name&language=language&linkedin_profile=linkedin_profile'))));
 	}
 
 	public function testOptions(): void
