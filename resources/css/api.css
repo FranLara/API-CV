@@ -1,4 +1,4 @@
-.bodyHome {
+.bgHome {
 	margin: 0;
 	padding: 0;
 	background-image: linear-gradient(to top, rgba(0, 0, 0, 1) 35%,
@@ -14,7 +14,7 @@
 	color: #00a859;
 }
 
-.warning{
+.welcome{
 	text-align: center;
 	font-size: x-large;
 }
