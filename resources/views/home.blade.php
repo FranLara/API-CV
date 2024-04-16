@@ -7,7 +7,6 @@
 'resources/js/api.js'])
 </head>
 <body class="bodyHome">
-
-
+    <div id="warning" class="warning"></div>
 </body>
 </html>
