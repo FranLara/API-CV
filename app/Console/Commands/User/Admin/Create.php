@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Console\Commands\User\Admin;
 
@@ -11,59 +12,60 @@ use App\Services\Users\Admins\Saver;
 use App\Utils\Notifications as NotificationUtils;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
+
 use function Laravel\Prompts\password;
 use function Laravel\Prompts\text;
 
 class Create extends AdminCommand
 {
-	use NotificationUtils;
-	private const CREATION_TRANSLATIONS = self::ADMIN_TRANSLATIONS . 'creation.';
-	protected $description = 'This command creates an admin user asking by keyboard the username and the password.';
+    use NotificationUtils;
 
-	public function __construct()
-	{
-		$this->signature = self::USER_SIGNATURE . 'create' . self::ADMIN_SIGNATURE;
+    private const string CREATION_TRANSLATIONS = self::ADMIN_TRANSLATIONS . 'creation.';
+    protected $description = 'This command creates an admin user asking by keyboard the username and the password.';
 
-		parent::__construct();
-	}
+    public function __construct()
+    {
+        $this->signature = self::USER_SIGNATURE . 'create' . self::ADMIN_SIGNATURE;
 
-	public function handle(Saver $saver, Retriever $retriever): void
-	{
-		do {
-			$username = text(label: __(self::CREATION_TRANSLATIONS . 'username.label'), required: true, hint: __(self::CREATION_TRANSLATIONS .
-				'username.hint'));
-		} while ((!$this->isUsernameUnique($retriever, $username)) && (!Str::of($username)->exactly(self::EXIT)));
+        parent::__construct();
+    }
 
-		if (!Str::of($username)->lower()->exactly(self::EXIT)) {
-			$this->createAdmin($saver, $username);
-		}
-	}
+    public function handle(Saver $saver, Retriever $retriever): void
+    {
+        do {
+            $username = text(label: __(self::CREATION_TRANSLATIONS . 'username.label'), required: true,
+                hint: __(self::CREATION_TRANSLATIONS . 'username.hint'));
+        } while ((!$this->isUsernameUnique($retriever, $username)) && (!Str::of($username)->exactly(self::EXIT)));
 
-	private function isUsernameUnique(Retriever $retriever, string $username): bool
-	{
-		try {
-			$retriever->retrieveByField('username', $username);
-		}
-		catch (ModelNotFoundException) {
-			return true;
-		}
+        if (!Str::of($username)->lower()->exactly(self::EXIT)) {
+            $this->createAdmin($saver, $username);
+        }
+    }
 
-		$this->error(__(self::CREATION_TRANSLATIONS . 'existing', ['username' => $username]));
+    private function isUsernameUnique(Retriever $retriever, string $username): bool
+    {
+        try {
+            $retriever->retrieveByField('username', $username);
+        } catch (ModelNotFoundException) {
+            return true;
+        }
 
-		return false;
-	}
+        $this->error(__(self::CREATION_TRANSLATIONS . 'existing', ['username' => $username]));
 
-	private function createAdmin(Saver $saver, string $username): void
-	{
-		$psswrd = password(label: __(self::CREATION_TRANSLATIONS . 'password'), required: true);
-		$language = $this->getLanguage(__(self::CREATION_TRANSLATIONS . 'language'), 'en');
+        return false;
+    }
 
-		$admin = new Admin($username, $language, $psswrd);
+    private function createAdmin(Saver $saver, string $username): void
+    {
+        $psswrd = password(label: __(self::CREATION_TRANSLATIONS . 'password'), required: true);
+        $language = $this->getLanguage(__(self::CREATION_TRANSLATIONS . 'language'), 'en');
 
-		$userSaved = $saver->save($admin);
+        $admin = new Admin($username, $language, $psswrd);
 
-		if ($userSaved) {
-			$this->sendMailNotification(new Created($admin), $admin->getLanguage());
-		}
-	}
+        $userSaved = $saver->save($admin);
+
+        if ($userSaved) {
+            $this->sendMailNotification(new Created($admin), $admin->getLanguage());
+        }
+    }
 }
