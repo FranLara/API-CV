@@ -7,6 +7,7 @@ use App\BusinessObjects\DTOs\DTO;
 use App\BusinessObjects\DTOs\Users\Recruiter;
 use App\BusinessObjects\Models\Users\Recruiter as RecruiterModel;
 use App\Services\Users\Saver as UserSaver;
+use Override;
 
 class Saver extends UserSaver
 {
@@ -16,9 +17,10 @@ class Saver extends UserSaver
 		$this->mapper = $mapper;
 	}
 
-	public function save(DTO $admin): bool
+	#[Override]
+    public function save(DTO $recruiter): bool
 	{
-		$model = $this->getMappedModel($admin);
+		$model = $this->getMappedModel($recruiter);
 
 		if ($model->isDirty()) {
 			return $model->save();
