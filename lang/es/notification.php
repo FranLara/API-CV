@@ -21,6 +21,11 @@ return [
                 'subject' => '¡Un nuevo reclutador :email creado!',
                 'line_1'  => 'La plataforma ha registrado un nuevo reclutador: ":email"',
             ],
+            'psswd'    => [
+                'subject'  => '¡El usuario para la API del CV de Fran Lara ha sido!',
+                'greeting' => 'Bienvenido/a',
+                'line_1'   => 'The API recorded a new Recruiter: ":email"',
+            ],
         ]
     ]
 ];

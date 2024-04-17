@@ -18,6 +18,11 @@ return [
                 'subject' => 'Recruiter :email created!',
                 'line_1'  => 'The API recorded a new Recruiter: ":email"',
             ],
+            'psswd'    => [
+                'subject'  => 'User for Fran Lara CV API created!',
+                'greeting' => 'Welcome',
+                'line_1'   => 'The API recorded a new Recruiter: ":email"',
+            ],
         ]
     ]
 ];
