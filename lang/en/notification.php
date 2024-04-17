@@ -14,7 +14,10 @@ return [
             'update'   => ['subject' => 'Admin :username updated!', 'line_1' => 'The admin ":username" was updated.',]
         ],
         'recruiter' => [
-            'greeting' => 'Warning!',
+            'creation' => [
+                'subject' => 'Recruiter :email created!',
+                'line_1'  => 'The API recorded a new Recruiter: ":email"',
+            ],
         ]
     ]
 ];

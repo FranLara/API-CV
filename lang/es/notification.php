@@ -16,6 +16,11 @@ return [
                 'line_1'  => 'El administrador ":username" fue actualizado.',
             ]
         ],
-        'recruiter' => ['greeting' => '¡Aviso!',]
+        'recruiter' => [
+            'creation' => [
+                'subject' => '¡Un nuevo reclutador :email creado!',
+                'line_1'  => 'La plataforma ha registrado un nuevo reclutador: ":email"',
+            ],
+        ]
     ]
 ];
