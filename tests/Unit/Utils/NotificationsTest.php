@@ -4,9 +4,11 @@ declare(strict_types = 1);
 namespace Tests\Unit\Utils;
 
 use App\BusinessObjects\DTOs\Users\Admin;
+use App\BusinessObjects\DTOs\Users\Recruiter;
 use App\Notifications\Notification;
-use App\Notifications\User\Admin\Created;
+use App\Notifications\User\Admin\Created as AdminCreated;
 use App\Notifications\User\Admin\Updated;
+use App\Notifications\User\Recruiter\Created as RecruiterCreated;
 use App\Utils\Notifications as NotificationsUtil;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Notification as FacadeNotification;
@@ -50,8 +52,9 @@ class NotificationsTest extends TestCase
 
 	public static function providerNotification(): array
 	{
-		return [[new Created(new Admin())], [new Updated(new Admin())],
-			[new Created(new Admin()), self::LOCALE, null, self::LOCALE],
+		return [[new AdminCreated(new Admin())], [new RecruiterCreated(new Recruiter())], [new Updated(new Admin())],
+			[new AdminCreated(new Admin()), self::LOCALE, null, self::LOCALE],
+			[new RecruiterCreated(new Recruiter()), self::LOCALE, null, self::LOCALE],
 			[new Updated(new Admin()), self::LOCALE, null, self::LOCALE]];
 	}
 }

@@ -3,12 +3,11 @@ declare(strict_types = 1);
 
 namespace App\Notifications\User\Recruiter;
 
-use App\Notifications\User\Admin\Admin;
 use Illuminate\Notifications\Messages\MailMessage;
 
 class Created extends Recruiter
 {
-	private const string CREATION_TRANSLATIONS = self::RECRUITER_TRANSLATIONS . 'creation.';
+	private const CREATION_TRANSLATIONS = self::RECRUITER_TRANSLATIONS . 'creation.';
 
 	public function toMail(object $notifiable): MailMessage
 	{

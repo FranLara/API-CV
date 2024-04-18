@@ -1,12 +1,12 @@
 <?php
 declare(strict_types = 1);
 
-namespace Tests\Unit\Notifications\User\Admin;
+namespace Tests\Unit\Notifications\User\Recruiter;
 
-use App\Notifications\User\Admin\Created;
+use App\Notifications\User\Recruiter\Created;
 use stdClass;
 
-class CreatedTest extends AdminTest
+class CreatedTest extends RecruiterTest
 {
 
 	/**
@@ -14,7 +14,7 @@ class CreatedTest extends AdminTest
 	 */
 	public function testToMail(string $language, string $expectedSubject, string $expectedGreeting, string $expectedFirstLine, string $expectedSecondLine): void
 	{
-		$mail = (new Created($this->getAdmin($language)))->toMail(new stdClass());
+		$mail = (new Created($this->getRecruiter($language)))->toMail(new stdClass());
 
 		$this->assertSame($expectedSubject, $mail->subject);
 		$this->assertSame($expectedGreeting, $mail->greeting);
@@ -25,10 +25,10 @@ class CreatedTest extends AdminTest
 	public static function providerMailData(): array
 	{
 		return [
-			['en', 'Admin ' . self::USERNAME . ' created!', 'Warning!',
-				'The system recorded a new Admin: "' . self::USERNAME . '"', 'Their chosen language is: "English"'],
-			['es', '¡Un nuevo administrador ' . self::USERNAME . ' creado!', '¡Aviso!',
-				'La plataforma ha registrado un nuevo administrador: "' . self::USERNAME . '"',
+			['en', 'Recruiter ' . self::EMAIL . ' created!', 'Warning!',
+				'The API recorded a new Recruiter: "' . self::EMAIL . '"', 'Their chosen language is: "English"'],
+			['es', '¡Un nuevo reclutador ' . self::EMAIL . ' creado!', '¡Aviso!',
+				'La API ha registrado un nuevo reclutador: "' . self::EMAIL . '"',
 				'Su idioma escogido es el: "Castellano"'],];
 	}
 }
