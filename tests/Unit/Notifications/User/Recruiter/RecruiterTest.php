@@ -9,11 +9,12 @@ use Tests\TestCase;
 
 class RecruiterTest extends TestCase
 {
+	protected const PSSWD = 'test_password';
 	protected const EMAIL = 'test_email@email.com';
 
 	protected function getRecruiter(string $language): Recruiter
 	{
-		$recruiter = new Recruiter(self::EMAIL, 'test_name', $language, 'test_password', 'test_linkedin_profile.com');
+		$recruiter = new Recruiter(self::EMAIL, 'test_name', $language, self::PSSWD, 'test_linkedin_profile.com');
 		Lang::setLocale($recruiter->getLanguage());
 
 		return $recruiter;

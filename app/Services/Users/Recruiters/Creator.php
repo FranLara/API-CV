@@ -1,6 +1,5 @@
 <?php
-
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Services\Users\Recruiters;
 
@@ -12,26 +11,25 @@ use Illuminate\Support\Str;
 
 class Creator
 {
-    use NotificationUtils;
+	use NotificationUtils;
+	private Saver $saver;
 
-    private Saver $saver;
+	public function __construct(Saver $saver)
+	{
+		$this->saver = $saver;
+	}
 
-    public function __construct(Saver $saver)
-    {
-        $this->saver = $saver;
-    }
+	public function create(Recruiter $recruiter): void
+	{
+		$recruiter->setPsswd(Str::random());
 
-    public function create(Recruiter $recruiter): bool
-    {
-        $recruiter->setPsswd(Str::random());
+		$userSaved = $this->saver->save($recruiter);
 
-        $userSaved = $this->saver->save($recruiter);
+		if (empty($userSaved)) {
+			// TODO Throw Exception
+		}
 
-        if (empty($userSaved)) {
-            // TODO Throw Exception
-        }
-
-        $this->sendMailNotification(new Created($recruiter));
-        $this->sendMailNotification(new Psswd($recruiter), $recruiter->getLanguage(), $recruiter->getEmail());
-    }
+		$this->sendMailNotification(new Created($recruiter));
+		$this->sendMailNotification(new Psswd($recruiter), $recruiter->getLanguage(), $recruiter->getEmail());
+	}
 }

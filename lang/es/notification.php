@@ -9,5 +9,10 @@ return ['regards' => 'Un saludo', 'rights' => 'Todos los derechos reservados.',
 		'recruiter' => [
 			'creation' => ['subject' => '¡Un nuevo reclutador :email creado!',
 				'line_1' => 'La API ha registrado un nuevo reclutador: ":email"',],
-			'psswd' => ['subject' => '¡El usuario para la API del CV de Fran Lara ha sido creado!',
-				'greeting' => 'Bienvenido/a', 'line_1' => 'The API recorded a new Recruiter: ":email"',],]]];
+			'psswd' => ['subject' => 'User for Fran Lara CV API created!', 'greeting' => 'Welcome',
+				'line_1' => 'Your user to call the Fran Lara CV API has been created.',
+				'line_2' => 'To make the calls to authenticated endpoints, you will need to request and use a JWT.',
+				'line_3' => 'To request a JWT you need to call this endpoint :endpoint with the following credentials:',
+				'line_4' => 'Username: :username', 'line_5' => 'Passsword: :psswd',
+				'line_6' => 'Do not forget to add to request header "Authorization: Bearer " and the JWT.',
+				'salutation' => 'If you have any doubt, do not hesitate to ask me writing to :email']]]];

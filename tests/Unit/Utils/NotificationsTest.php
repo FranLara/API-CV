@@ -19,6 +19,7 @@ use ReflectionException;
 class NotificationsTest extends TestCase
 {
 	private const LOCALE = 'test_locale';
+	private const TO = 'test_to@email.com';
 
 	/**
 	 * @dataProvider providerNotification
