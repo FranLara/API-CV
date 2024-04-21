@@ -26,9 +26,10 @@ class CreatedTest extends RecruiterTest
 	{
 		return [
 			['en', 'Recruiter ' . self::EMAIL . ' created!', 'Warning!',
-				'The API recorded a new Recruiter: "' . self::EMAIL . '"', 'Their chosen language is: "English"'],
+				'The API recorded a new Recruiter: "' . self::EMAIL .
+				'" with this LinkedIn profile "test_linkedin_profile.com"', 'Their chosen language is: "English"'],
 			['es', '¡Un nuevo reclutador ' . self::EMAIL . ' creado!', '¡Aviso!',
-				'La API ha registrado un nuevo reclutador: "' . self::EMAIL . '"',
-				'Su idioma escogido es el: "Castellano"'],];
+				'La API ha registrado un nuevo reclutador: "' . self::EMAIL .
+				'" con este perfil de LinkedIn "test_linkedin_profile.com"', 'Su idioma escogido es el: "Castellano"'],];
 	}
 }

@@ -7,7 +7,7 @@ use App\BusinessObjects\DTOs\Users\Recruiter;
 use Illuminate\Support\Facades\Lang;
 use Tests\TestCase;
 
-class RecruiterTest extends TestCase
+abstract class RecruiterTest extends TestCase
 {
 	protected const PSSWD = 'test_password';
 	protected const EMAIL = 'test_email@email.com';
