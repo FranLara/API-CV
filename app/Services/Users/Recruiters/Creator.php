@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace App\Services\Users\Recruiters;
 
 use App\BusinessObjects\DTOs\Users\Recruiter;
+use App\Exceptions\Services\RecruiterCreationException;
 use App\Notifications\User\Recruiter\Created;
 use App\Notifications\User\Recruiter\Psswd;
 use App\Utils\Notifications as NotificationUtils;
@@ -26,7 +27,7 @@ class Creator
 		$userSaved = $this->saver->save($recruiter);
 
 		if (empty($userSaved)) {
-			// TODO Throw Exception
+			throw new RecruiterCreationException($recruiter);
 		}
 
 		$this->sendMailNotification(new Created($recruiter));
