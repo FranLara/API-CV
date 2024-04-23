@@ -13,14 +13,14 @@ use Tests\Unit\Services\ServiceTest;
 
 class TokenerTest extends ServiceTest
 {
-	private const roleCreation = [Token::RECRUITER_ROLE];
+	private const array ROLE_CREATION = [Token::RECRUITER_ROLE];
 
 	/**
 	 * @dataProvider providerCredentials
 	 */
 	public function testGetToken(array $credentials = [], string $expectedRole = Token::GUEST_ROLE): void
 	{
-		if (in_array($expectedRole, self::roleCreation)) {
+		if (in_array($expectedRole, self::ROLE_CREATION)) {
 			$this->createUser($credentials, $expectedRole);
 		}
 

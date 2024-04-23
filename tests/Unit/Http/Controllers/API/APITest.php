@@ -9,5 +9,6 @@ use Tests\Utils\Request as RequestUtils;
 abstract class APITest extends TestCase
 {
 	use RequestUtils;
-	protected const API_TRANSLATIONS = 'api.';
+
+	protected const string API_TRANSLATIONS = 'api.';
 }

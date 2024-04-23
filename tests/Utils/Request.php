@@ -8,8 +8,7 @@ use Mockery;
 
 trait Request
 {
-
-	public function getRequest(): LaravelRequest
+	protected function getRequest(): LaravelRequest
 	{
 		$mockedFunctions = ['validate' => true, 'only' => [], 'getSchemeAndHttpHost' => 'https://domain.test'];
 

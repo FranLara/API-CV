@@ -5,15 +5,15 @@ namespace Tests\Unit\Services\Users\Recruiters;
 
 use App\BusinessObjects\Models\Users\Recruiter as RecruiterModel;
 use App\Services\Users\Recruiters\Transformer;
-use Tests\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class TransformerTest extends TestCase
 {
-	private const NAME = 'test_name';
-	private const EMAIL = 'test_email';
-	private const LANGUAGE = 'test_language';
-	private const IDENTIFIER = 'test_identifier';
-	private const LINKEDIN_PROFILE = 'test_linkedin_profile';
+	private const string NAME = 'test_name';
+	private const string EMAIL = 'test_email';
+	private const string LANGUAGE = 'test_language';
+	private const string IDENTIFIER = 'test_identifier';
+	private const string LINKEDIN_PROFILE = 'test_linkedin_profile';
 
 	/**
 	 * @dataProvider providerRecruiterData

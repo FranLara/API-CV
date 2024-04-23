@@ -4,16 +4,17 @@ declare(strict_types = 1);
 namespace Tests\Unit\Notifications\User\Recruiter;
 
 use App\Notifications\User\Recruiter\Psswd;
+use Illuminate\Support\Facades\Lang;
 use stdClass;
 
 class PsswdTest extends RecruiterTest
 {
-
 	/**
 	 * @dataProvider providerMailData
 	 */
 	public function testToMail(string $language, string $expectedSubject, string $expectedGreeting, string $expectedFirstLine, string $expectedSecondLine, string $expectedThirdLine, string $expectedForthLine, string $expectedFifthLine, string $expectedSixthLine, string $expectedSeventhLine): void
 	{
+        Lang::setLocale($language);
 		$mail = (new Psswd($this->getRecruiter($language)))->toMail(new stdClass());
 
 		$this->assertSame($expectedSubject, $mail->subject);

@@ -9,12 +9,11 @@ use Tests\TestCase;
 
 class LandingTest extends TestCase
 {
-
 	public function testHome(): void
 	{
 		$home = (new Landing())->home();
 
-		self::assertInstanceOf(View::class, $home);
-		self::assertSame('home', $home->getName());
+		$this->assertInstanceOf(View::class, $home);
+		$this->assertSame('home', $home->getName());
 	}
 }
