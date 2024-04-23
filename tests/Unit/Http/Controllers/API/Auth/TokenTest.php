@@ -7,10 +7,10 @@ namespace Tests\Unit\Http\Controllers\API\Auth;
 use App\Http\Controllers\API\Auth\Token;
 use App\Services\Users\Tokener;
 use PHPUnit\Framework\MockObject\Stub\ReturnSelf;
-use Tests\Unit\Http\Controllers\API\APITest as APIController;
+use Tests\Unit\Http\Controllers\API\APITest;
 use Tymon\JWTAuth\JWT;
 
-class TokenTest extends APIController
+class TokenTest extends APITest
 {
     private const string TOKEN = 'test_token';
     private const string TYPE_INDEX = 'token_type';

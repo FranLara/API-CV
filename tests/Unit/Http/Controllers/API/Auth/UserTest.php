@@ -1,37 +1,47 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Tests\Unit\Http\Controllers\API\Auth;
 
-use App\Http\Controllers\API\Auth\Token;
-use App\Services\Users\Tokener;
-use PHPUnit\Framework\MockObject\Stub\ReturnSelf;
-use Tests\TestCase;
-use Tests\Utils\Request as RequestUtils;
-use Tymon\JWTAuth\JWT;
+use App\BusinessObjects\DTOs\Users\Recruiter;
+use App\Exceptions\Controllers\UserCreationException;
+use App\Exceptions\Services\RecruiterCreationException;
+use App\Http\Controllers\API\Auth\User;
+use App\Services\Users\Recruiters\Creator;
+use Dingo\Api\Http\Response;
+use Exception;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Tests\Unit\Http\Controllers\API\APITest;
 
-class UserTest extends TestCase
+class UserTest extends APITest
 {
-	use RequestUtils;
-	private const TOKEN = 'test_token';
-	private const TYPE_INDEX = 'token_type';
-	private const TOKEN_INDEX = 'access_token';
-	private const EXPIRATION_INDEX = 'expires_in';
+    public function testRequest(): void
+    {
+        $data = (new User())->request($this->getRequest(), $this->createMock(Creator::class));
 
-	public function testRequest(): void
-	{
-		$tokener = $this->createConfiguredMock(Tokener::class, ['getToken' => self::TOKEN]);
-		$tokenManager = $this->createConfiguredMock(JWT::class, ['setToken' => new ReturnSelf(), 'getClaim' => time()]);
+        $this->assertEquals(Response::HTTP_CREATED, $data->getStatusCode());
+    }
 
-		$data = (new Token())->request($this->getRequest(), $tokener, $tokenManager)
-			->getData(true);
+    /**
+     * @dataProvider providerException
+     */
+    public function testRequestException(Exception $expectedException, Exception $exception): void
+    {
+        $this->expectException(get_class($expectedException));
 
-		$this->assertIsArray($data);
-		$this->assertArrayHasKey(self::TYPE_INDEX, $data);
-		$this->assertArrayHasKey(self::TOKEN_INDEX, $data);
-		$this->assertSame('bearer', $data[self::TYPE_INDEX]);
-		$this->assertArrayHasKey(self::EXPIRATION_INDEX, $data);
-		$this->assertSame(self::TOKEN, $data[self::TOKEN_INDEX]);
-		$this->assertLessThanOrEqual(0, $data[self::EXPIRATION_INDEX]);
-	}
+        $creator = $this->createMock(Creator::class);
+        $creator->method('create')->willThrowException($exception);
+        (new User())->request($this->getRequest(), $creator);
+    }
+
+    public static function providerException(): array
+    {
+        $recruiterException = new RecruiterCreationException(new Recruiter());
+
+        return [
+            [new HttpException(Response::HTTP_BAD_REQUEST), new Exception()],
+            [new UserCreationException($recruiterException), $recruiterException],
+        ];
+    }
 }
