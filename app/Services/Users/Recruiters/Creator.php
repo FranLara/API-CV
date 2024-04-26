@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 class Creator
 {
 	use NotificationUtils;
+
 	private Saver $saver;
 
 	public function __construct(Saver $saver)
@@ -20,7 +21,10 @@ class Creator
 		$this->saver = $saver;
 	}
 
-	public function create(Recruiter $recruiter): void
+    /**
+     * @throws RecruiterCreationException
+     */
+    public function create(Recruiter $recruiter): void
 	{
 		$recruiter->setPsswd(Str::random());
 

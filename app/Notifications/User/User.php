@@ -16,6 +16,7 @@ abstract class User extends Notification
 
     public function __construct(UserDTO $user)
     {
+        parent::__construct();
         $this->user = $user;
     }
 
