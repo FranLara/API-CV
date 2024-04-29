@@ -14,8 +14,8 @@ class Token extends APIController
 
 	public function request(Request $request, Tokener $tokener, JWT $tokenManager): JsonResponse
 	{
-		$request->validate([self::USERNAME_PARAMETER => 'required_with:password',
-			self::PSSWD_PARAMETER => 'required_with:username']);
+		$request->validate([self::USERNAME_PARAMETER => 'required_with:' . self::PSSWD_PARAMETER,
+			self::PSSWD_PARAMETER => 'required_with:' . self::USERNAME_PARAMETER]);
 		$token = $tokener->getToken($request->only([self::USERNAME_PARAMETER, self::PSSWD_PARAMETER]));
 		$expiresIn = $tokenManager->setToken($token)->getClaim('exp') - time();
 

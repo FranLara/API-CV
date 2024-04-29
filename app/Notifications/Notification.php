@@ -10,4 +10,10 @@ use Illuminate\Notifications\Notification as BaseNotification;
 abstract class Notification extends BaseNotification implements ShouldQueue
 {
 	use Queueable;
+
+    public function __construct(){
+        $this->onQueue('notifications');
+    }
+
+    protected const string NOTIFICATION_TRANSLATIONS = 'notification.';
 }

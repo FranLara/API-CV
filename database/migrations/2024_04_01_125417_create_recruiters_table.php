@@ -10,10 +10,11 @@ return new class() extends Migration {
 		Schema::create('recruiters', function (Blueprint $table) {
 			$table->uuid('id')->primary();
 			$table->string('email')->unique();
+			$table->string('name');
 			$table->string('password');
 			$table->string('language');
-			$table->string('linkedin_profile');
-			$table->unsignedSmallInteger('new_password_account_requests');
+			$table->string('linkedin_profile')->nullable();
+			$table->unsignedSmallInteger('new_password_account_requests')->default(0);
 			$table->timestamp('created_at')->useCurrent();
 		});
 	}

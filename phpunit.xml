@@ -20,11 +20,13 @@
 	</testsuites>
 	<php>
 		<env name="APP_ENV" value="testing" />
+		<env name="API_DOMAIN" value="https://domain.test" />
 		<env name="BCRYPT_ROUNDS" value="4" />
 		<env name="CACHE_DRIVER" value="array" />
 		<env name="DB_DATABASE" value=":memory:" />
 		<env name="DB_CONNECTION" value="sqlite" />
 		<env name="MAIL_MAILER" value="array" />
+		<env name="MAIL_CONTACT" value="contact@notification.com" />
 		<env name="QUEUE_CONNECTION" value="database" />
 		<env name="SUPER_ADMIN_USERNAME" value="test_super_admin_username" />
 		<env name="SUPER_ADMIN_PASSWORD" value="test_super_admin_password" />

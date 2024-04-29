@@ -11,7 +11,16 @@ if [ $# -gt 0 ]; then
         docker compose down
 
     elif [[ "$1" == "rebuild" ]]; then
+        cd infrastructure/docker/config/nginx/certs/
+        openssl genrsa -out franciscolaracasalilla.key 2048
+        openssl req -new -key franciscolaracasalilla.key -out franciscolaracasalilla.csr -config franciscolaracasalilla.conf
+        openssl x509 -req -days 365 -in franciscolaracasalilla.csr -signkey franciscolaracasalilla.key -out franciscolaracasalilla.crt
+        cd ../../../../..
         docker compose up -d --build
+        cd infrastructure/docker/config/nginx/certs/
+        rm franciscolaracasalilla.csr
+        rm franciscolaracasalilla.key
+        rm franciscolaracasalilla.crt
 
     elif [[ "$1" == "npm" ]]; then
         shift 1
@@ -22,7 +31,6 @@ if [ $# -gt 0 ]; then
         docker compose exec franlara.cv node "$@"
 
     elif [[ "$1" == "compile" ]]; then
-        shift 1
         docker compose exec franlara.cv npm run build
 
     elif [[ "$1" == "composer" ]]; then

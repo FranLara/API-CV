@@ -7,7 +7,7 @@ use Database\Factories\RecruiterFactory;
 
 class Recruiter extends User
 {
-	protected $fillable = ['email', 'password', 'language', 'linkedin_profile'];
+	protected $fillable = ['id', 'email', 'name', 'password', 'language', 'linkedin_profile'];
 
 	protected static function newFactory(): RecruiterFactory
 	{

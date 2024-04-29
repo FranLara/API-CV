@@ -18,7 +18,7 @@ class MapperTest extends TestCase
 	/**
 	 * @dataProvider providerAdminData
 	 */
-	public function testMap(?string $language, ?string $psswd, ?string $identifier): void
+	public function testMap(?string $language = null, ?string $psswd = null, ?string $identifier = null): void
 	{
 		$admin = (new Mapper())->map(new AdminDTO(null, $language, $psswd, $identifier), new Admin());
 
@@ -33,8 +33,8 @@ class MapperTest extends TestCase
 
 	public static function providerAdminData(): array
 	{
-		return [[null, null, null], [null, self::PSSWD, null], [self::LANGUAGE, null, null],
-			[null, null, self::IDENTIFIER], [null, self::PSSWD, self::IDENTIFIER],
+		return [[], [self::LANGUAGE], [null, self::PSSWD], [null, null, self::IDENTIFIER],
+			[self::LANGUAGE, self::PSSWD], [null, self::PSSWD, self::IDENTIFIER],
 			[self::LANGUAGE, null, self::IDENTIFIER], [self::LANGUAGE, self::PSSWD, self::IDENTIFIER]];
 	}
 }

@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Console\Commands\User\Admin;
 
@@ -12,65 +13,63 @@ use App\Utils\Notifications as NotificationUtils;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
 
+use function Laravel\Prompts\password;
+use function Laravel\Prompts\text;
+
 class Update extends AdminCommand
 {
-	use NotificationUtils;
-	private const UPDATE_TRANSLATIONS = self::ADMIN_TRANSLATIONS . 'update.';
-	protected $description = 'This command updates an admin user asking by keyboard the username and the new password.';
+    use NotificationUtils;
 
-	public function __construct()
-	{
-		$this->signature = self::USER_SIGNATURE . 'update' . self::ADMIN_SIGNATURE;
+    private const string UPDATE_TRANSLATIONS = self::ADMIN_TRANSLATIONS . 'update.';
+    protected $description = 'This command updates an admin user asking by keyboard the username and the new password.';
 
-		parent::__construct();
-	}
+    public function __construct()
+    {
+        $this->signature = self::USER_SIGNATURE . 'update' . self::ADMIN_SIGNATURE;
 
-	public function handle(Saver $saver, Retriever $retriever): void
-	{
-		do {
-			$admin = $this->getAdmin($retriever);
-		} while ((!Str::of($admin->getUsername())->lower()->exactly(self::EXIT)) && (empty($admin->getIdentifier())));
+        parent::__construct();
+    }
 
-		if (!empty($admin->getIdentifier())) {
-			$this->updateAdmin($saver, $admin);
-		}
-	}
+    public function handle(Saver $saver, Retriever $retriever): void
+    {
+        do {
+            $admin = $this->getAdmin($retriever);
+        } while ((!Str::of($admin->getUsername())->lower()->exactly(self::EXIT)) && (empty($admin->getIdentifier())));
 
-	private function getAdmin(Retriever $retriever): Admin
-	{
-		$username = $this->ask(__(self::UPDATE_TRANSLATIONS . 'username'));
+        if (!empty($admin->getIdentifier())) {
+            $this->updateAdmin($saver, $admin);
+        }
+    }
 
-		if (Str::of($username)->lower()->exactly(self::EXIT)) {
-			return new Admin($username);
-		}
+    private function getAdmin(Retriever $retriever): Admin
+    {
+        $username = text(label: __(self::UPDATE_TRANSLATIONS . 'username.label'), required: true,
+            hint: __(self::UPDATE_TRANSLATIONS . 'username.hint'));
 
-		try {
-			return $retriever->retrieveByField('username', $username);
-		}
-		catch (ModelNotFoundException) {
-			$this->error(__(self::UPDATE_TRANSLATIONS . 'non_existing', ['username' => $username]));
-		}
+        if (Str::of($username)->lower()->exactly(self::EXIT)) {
+            return new Admin($username);
+        }
 
-		return new Admin();
-	}
+        try {
+            return $retriever->retrieveByField('username', $username);
+        } catch (ModelNotFoundException) {
+            $this->error(__(self::UPDATE_TRANSLATIONS . 'non_existing', ['username' => $username]));
+        }
 
-	private function updateAdmin(Saver $saver, Admin $admin): void
-	{
-		$admin->setPsswd($this->secret(__(self::UPDATE_TRANSLATIONS . 'password')));
-		$language = $this->ask(__(self::UPDATE_TRANSLATIONS . 'language'), $this->getDefLang($admin->getLanguage()));
+        return new Admin();
+    }
 
-		$admin->setLanguage($this->getLanguage($language));
+    private function updateAdmin(Saver $saver, Admin $admin): void
+    {
+        $admin->setPsswd(password(label: __(self::UPDATE_TRANSLATIONS . 'password'), required: true));
+        $language = $this->getLanguage(__(self::UPDATE_TRANSLATIONS . 'language'), $admin->getLanguage());
 
-		$userSaved = $saver->save($admin);
+        $admin->setLanguage($language);
 
-		if ($userSaved) {
-			$this->sendMailNotification(new Updated($admin), $admin->getLanguage());
-		}
-	}
+        $userSaved = $saver->save($admin);
 
-	private function getDefLang(string $language): int
-	{
-		return match ($language) {'es' => 2,'de' => 3,default => 1,
-		};
-	}
+        if ($userSaved) {
+            $this->sendMailNotification(new Updated($admin), $admin->getLanguage());
+        }
+    }
 }

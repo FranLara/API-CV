@@ -15,9 +15,9 @@ class UpdateTest extends AdminTest
 		Admin::factory()->create(['username' => self::USERNAME]);
 
 		$this->artisan(self::USER_SIGNATURE . 'update' . self::ADMIN_SIGNATURE)
-			->expectsQuestion(__(self::UPDATE_TRANSLATIONS . 'username'), self::USERNAME)
+			->expectsQuestion(__(self::UPDATE_TRANSLATIONS . 'username.label'), self::USERNAME)
 			->expectsQuestion(__(self::UPDATE_TRANSLATIONS . 'password'), 'test_password')
-			->expectsQuestion(__(self::UPDATE_TRANSLATIONS . 'language'), 1);
+			->expectsQuestion(__(self::UPDATE_TRANSLATIONS . 'language'), 'en');
 
 		$this->assertDatabaseCount('jobs', 1);
 		$this->assertDatabaseCount('admins', 2);
@@ -27,7 +27,7 @@ class UpdateTest extends AdminTest
 	public function testUpdateExit(): void
 	{
 		$this->artisan(self::USER_SIGNATURE . 'update' . self::ADMIN_SIGNATURE)->expectsQuestion(__(self::UPDATE_TRANSLATIONS .
-			'username'), self::EXIT);
+			'username.label'), self::EXIT);
 
 		$this->assertDatabaseCount('admins', 1);
 	}
@@ -35,9 +35,9 @@ class UpdateTest extends AdminTest
 	public function testCreateNonExistingUser(): void
 	{
 		$this->artisan(self::USER_SIGNATURE . 'update' . self::ADMIN_SIGNATURE)
-			->expectsQuestion(__(self::UPDATE_TRANSLATIONS . 'username'), self::USERNAME)
+			->expectsQuestion(__(self::UPDATE_TRANSLATIONS . 'username.label'), self::USERNAME)
 			->expectsOutput(__(self::UPDATE_TRANSLATIONS . 'non_existing', ['username' => self::USERNAME]))
-			->expectsQuestion(__(self::UPDATE_TRANSLATIONS . 'username'), self::EXIT);
+			->expectsQuestion(__(self::UPDATE_TRANSLATIONS . 'username.label'), self::EXIT);
 
 		$this->assertDatabaseCount('admins', 1);
 	}

@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Tests\Utils;
 
@@ -8,12 +9,16 @@ use Mockery;
 
 trait Request
 {
+    protected function getRequest(): LaravelRequest
+    {
+        $mockedFunctions = [
+            'get'                  => '',
+            'only'                 => [],
+            'validate'             => true,
+            'getSchemeAndHttpHost' => 'https://domain.test',
+        ];
 
-	public function getRequest(): LaravelRequest
-	{
-		$mockedFunctions = ['validate' => true, 'only' => [], 'getSchemeAndHttpHost' => 'https://domain.test'];
-
-		return Mockery::mock(LaravelRequest::class, $mockedFunctions);
-	}
+        return Mockery::mock(LaravelRequest::class, $mockedFunctions);
+    }
 }
 

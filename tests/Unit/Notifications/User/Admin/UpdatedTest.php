@@ -1,15 +1,12 @@
 <?php
 declare(strict_types = 1);
 
-namespace Unit\Notifications\User\Admin;
+namespace Tests\Unit\Notifications\User\Admin;
 
-use App\BusinessObjects\DTOs\Users\Admin;
 use App\Notifications\User\Admin\Updated;
-use Illuminate\Support\Facades\Lang;
-use Tests\TestCase;
 use stdClass;
 
-class UpdatedTest extends TestCase
+class UpdatedTest extends AdminTest
 {
 
 	/**
@@ -17,10 +14,7 @@ class UpdatedTest extends TestCase
 	 */
 	public function testToMail(string $language, string $expectedSubject, string $expectedGreeting, string $expectedFirstLine, string $expectedSecondLine): void
 	{
-		$admin = new Admin('test_username', $language);
-		Lang::setLocale($admin->getLanguage());
-
-		$mail = (new Updated($admin))->toMail(new stdClass());
+		$mail = (new Updated($this->getAdmin($language)))->toMail(new stdClass());
 
 		$this->assertSame($expectedSubject, $mail->subject);
 		$this->assertSame($expectedGreeting, $mail->greeting);
@@ -31,9 +25,9 @@ class UpdatedTest extends TestCase
 	public static function providerMailData(): array
 	{
 		return [
-			['en', 'Admin test_username updated!', 'Warning!', 'The admin "test_username" was updated.',
-				'Their chosen language is: "English"'],
-			['es', '¡Administrador test_username actualizado!', '¡Aviso!',
-				'El administrador "test_username" fue actualizado.', 'Su idioma escogido es el: "Castellano"'],];
+			['en', 'Admin ' . self::USERNAME . ' updated!', 'Warning!',
+				'The admin "' . self::USERNAME . '" was updated.', 'Their chosen language is: "English"'],
+			['es', '¡Administrador ' . self::USERNAME . ' actualizado!', '¡Aviso!',
+				'El administrador "' . self::USERNAME . '" fue actualizado.', 'Su idioma escogido es el: "Castellano"'],];
 	}
 }

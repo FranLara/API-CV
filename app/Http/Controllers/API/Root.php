@@ -11,11 +11,11 @@ use Illuminate\Support\Collection;
 
 class Root extends APIController
 {
-	private const NAME_PARAMETER = 'name';
 	private const TYPE_PARAMETER = 'type';
 	private const STRING_PARAMETER = 'string';
 	private const ENDPOINT_TRANSLATIONS = self::API_TRANSLATIONS . 'endpoints.';
 	private const TOKEN_TRANSLATIONS = self::ENDPOINT_TRANSLATIONS . 'token.';
+	private const ACCOUNT_TRANSLATIONS = self::ENDPOINT_TRANSLATIONS . 'account.';
 
 	public function index(Request $request): Response
 	{
@@ -39,6 +39,11 @@ class Root extends APIController
 		$resources->push(new Resource($request, 'token', __(self::TOKEN_TRANSLATIONS . 'request'), [
 			[self::NAME_PARAMETER => self::USERNAME_PARAMETER, self::TYPE_PARAMETER => self::STRING_PARAMETER],
 			[self::NAME_PARAMETER => self::PSSWD_PARAMETER, self::TYPE_PARAMETER => self::STRING_PARAMETER]], Request::METHOD_POST));
+		$resources->push(new Resource($request, 'account', __(self::ACCOUNT_TRANSLATIONS . 'request'), [
+			[self::NAME_PARAMETER => self::EMAIL_PARAMETER, self::TYPE_PARAMETER => self::STRING_PARAMETER],
+			[self::NAME_PARAMETER => self::NAME_PARAMETER, self::TYPE_PARAMETER => self::STRING_PARAMETER],
+			[self::NAME_PARAMETER => self::LANGUAGE_PARAMETER, self::TYPE_PARAMETER => self::STRING_PARAMETER],
+			[self::NAME_PARAMETER => self::LINKEDIN_PARAMETER, self::TYPE_PARAMETER => self::STRING_PARAMETER],], Request::METHOD_POST));
 
 		return $resources;
 	}

@@ -2,7 +2,12 @@ import './bootstrap';
 import Typed from 'typed.js';
 import.meta.glob(['../images/**']);
 
-const typed = new Typed('#element', {
-  strings: ['<i>First</i> sentence.', '&amp; a second sentence.'],
-  typeSpeed: 50,
+const typed = new Typed('#welcome', {
+  strings: [''],
+  typeSpeed: 300,
+  loop: true
 });
+
+window.setWelcomeMessage = function(message) {
+  typed.strings = [message];
+}
