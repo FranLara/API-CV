@@ -18,9 +18,9 @@ class UserTest extends APITest
 	/**
 	 * @dataProvider providerCredentials
 	 */
-	public function testRequest(array $credentials = [], int $expectedStatusCode = Response::HTTP_OK, string $expectedRole = Token::GUEST_ROLE): void
+	public function testRequest(array $user = [], int $expectedStatusCode = Response::HTTP_OK, string $expectedRole = Token::GUEST_ROLE): void
 	{
-		$response = $this->post($this->domain . '/account', $credentials, $this->header);
+		$response = $this->post($this->domain . '/account', $user, $this->getHeader());
 		$this->assertEquals($expectedStatusCode, $response->getStatusCode());
 
 		if ($response->getStatusCode() == Response::HTTP_OK) {
