@@ -16,14 +16,13 @@ use Throwable;
 
 class User extends APIController
 {
-
     public function request(Request $request, Creator $creator): Response
     {
         $rules = [
             self::EMAIL_PARAMETER    => self::REQUIRED_VALIDATION . '|email|unique:recruiters,email',
             // TODO Add unique to technicians
             self::NAME_PARAMETER     => self::REQUIRED_VALIDATION,
-            self::LANGUAGE_PARAMETER => Rule::in(['en', 'es']),
+            self::LANGUAGE_PARAMETER => [self::REQUIRED_VALIDATION, Rule::in(['en', 'es'])],
             self::LINKEDIN_PARAMETER => 'sometimes|url'
         ];
         $request->validate($rules);
@@ -36,7 +35,7 @@ class User extends APIController
         } catch (RecruiterCreationException $exception) {
             throw new UserCreationException($exception);
         } catch (Throwable $exception) {
-            $this->response->errorBadRequest($exception->getMessage());
+            $this->response->errorInternal($exception->getMessage());
         }
 
         return $this->response->created();

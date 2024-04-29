@@ -40,7 +40,7 @@ class UserTest extends APITest
         $recruiterException = new RecruiterCreationException(new Recruiter());
 
         return [
-            [new HttpException(Response::HTTP_BAD_REQUEST), new Exception()],
+            [new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR), new Exception()],
             [new UserCreationException($recruiterException), $recruiterException],
         ];
     }

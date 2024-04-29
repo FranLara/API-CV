@@ -1,47 +1,44 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Tests\Feature\Controllers\API\Auth;
 
-use App\BusinessObjects\DTOs\Utils\Token;
 use App\Http\Controllers\API\API as APIController;
 use Dingo\Api\Http\Response;
-use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\Feature\Controllers\API\APITest;
 
 class UserTest extends APITest
 {
-	private const TYPE_INDEX = 'token_type';
-	private const TOKEN_INDEX = 'access_token';
-	private const EXPIRATION_INDEX = 'expires_in';
+    /**
+     * @dataProvider providerUsers
+     */
+    public function testRequest(int $expectedStatusCode = Response::HTTP_UNPROCESSABLE_ENTITY, string $email = ''): void
+    {
+        $response = $this->post($this->domain . '/account', $this->getUser($email), $this->getHeader());
 
-	/**
-	 * @dataProvider providerCredentials
-	 */
-	public function testRequest(array $user = [], int $expectedStatusCode = Response::HTTP_OK, string $expectedRole = Token::GUEST_ROLE): void
-	{
-		$response = $this->post($this->domain . '/account', $user, $this->getHeader());
-		$this->assertEquals($expectedStatusCode, $response->getStatusCode());
+        $this->assertEquals($expectedStatusCode, $response->getStatusCode());
 
-		if ($response->getStatusCode() == Response::HTTP_OK) {
-			$token = json_decode($response->getContent())->{self::TOKEN_INDEX};
-			$payload = app('tymon.jwt')->setToken($token)->getPayload();
+        if ($response->getStatusCode() == Response::HTTP_CREATED) {
+            $this->assertDatabaseCount('jobs', 2);
+            $this->assertDatabaseCount('recruiters', 1);
+            $this->assertDatabaseHas('recruiters', ['email' => $email]);
+            $this->assertDatabaseHas('jobs', ['queue' => 'notifications']);
+        }
+    }
 
-			$this->assertSame($expectedRole, $payload->get('role'));
-			$response->assertJson(fn (AssertableJson $json) => $json->hasAll([self::TYPE_INDEX, self::TOKEN_INDEX,
-				self::EXPIRATION_INDEX])
-				->where(self::TYPE_INDEX, 'bearer')
-				->where(self::EXPIRATION_INDEX, 3600));
-		}
-	}
+    public static function providerUsers(): array
+    {
+        return [[], [Response::HTTP_CREATED, 'test@recruiter.com']];
+    }
 
-	public static function providerCredentials(): array
-	{
-		return [[], [[APIController::PSSWD_PARAMETER => 'test_psswd'], Response::HTTP_UNPROCESSABLE_ENTITY],
-			[[APIController::USERNAME_PARAMETER => 'test_username'], Response::HTTP_UNPROCESSABLE_ENTITY],
-			[[APIController::USERNAME_PARAMETER => 'test_username', APIController::PSSWD_PARAMETER => 'test_psswd']],
-			[
-				[APIController::USERNAME_PARAMETER => env('SUPER_ADMIN_USERNAME'),
-					APIController::PSSWD_PARAMETER => env('SUPER_ADMIN_PASSWORD')], Response::HTTP_OK, 'admin']];
-	}
+    private function getUser(string $email): array
+    {
+        return [
+            APIController::EMAIL_PARAMETER    => $email,
+            APIController::LINKEDIN_PARAMETER => fake()->url,
+            APIController::NAME_PARAMETER     => fake()->name,
+            APIController::LANGUAGE_PARAMETER => collect(['es', 'en'])->random(),
+        ];
+    }
 }
