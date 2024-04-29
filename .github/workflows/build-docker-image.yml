@@ -75,6 +75,16 @@ jobs:
       packages: write
 
     steps:
+      - name: Checkout to generate certificate
+        uses: actions/checkout@v4
+
+      - name: Generate certificate OpenSSL
+        run: |
+          cd infrastructure/docker/config/nginx/certs/
+          openssl genrsa -out franciscolaracasalilla.key 2048
+          openssl req -new -key franciscolaracasalilla.key -out franciscolaracasalilla.csr -config franciscolaracasalilla.conf
+          openssl x509 -req -days 365 -in franciscolaracasalilla.csr -signkey franciscolaracasalilla.key -out franciscolaracasalilla.crt
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -89,6 +99,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: "{{defaultContext}}:infrastructure/docker"
+          file: Dockerfile.test
           push: true
           tags: ${{env.DOCKER_IMAGE}}
           build-args: |
