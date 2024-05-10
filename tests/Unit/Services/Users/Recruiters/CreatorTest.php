@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Services\Users\Recruiters;
@@ -18,8 +19,8 @@ class CreatorTest extends ServiceTest
     {
         $this->getCreator(true)->create(new Recruiter());
 
-        $this->assertDatabaseCount('jobs', 2);
-        $this->assertDatabaseHas('jobs', ['queue' => 'notifications']);
+        $this->assertDatabaseCount('jobs', 1);
+        $this->assertDatabaseHas('jobs', ['queue' => 'listeners']);
     }
 
     public function testCreateRecruiterCreationException(): void

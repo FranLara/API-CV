@@ -20,10 +20,10 @@ class UserTest extends APITest
         $this->assertEquals($expectedStatusCode, $response->getStatusCode());
 
         if ($response->getStatusCode() == Response::HTTP_CREATED) {
-            $this->assertDatabaseCount('jobs', 2);
+            $this->assertDatabaseCount('jobs', 1);
             $this->assertDatabaseCount('recruiters', 1);
+            $this->assertDatabaseHas('jobs', ['queue' => 'listeners']);
             $this->assertDatabaseHas('recruiters', ['email' => $email]);
-            $this->assertDatabaseHas('jobs', ['queue' => 'notifications']);
         }
     }
 
