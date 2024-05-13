@@ -4,24 +4,17 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Listeners;
 
+use App\BusinessObjects\DTOs\Users\Recruiter;
 use App\Events\RecruiterCreated as RecruiterCreatedEvent;
-use App\Notifications\User\Recruiter\Created;
-use App\Notifications\User\Recruiter\Psswd;
-use App\Utils\Notifications as NotificationUtils;
-use Illuminate\Contracts\Events\ShouldHandleEventsAfterCommit;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Tests\TestCase;
+use App\Listeners\RecruiterCreated;
 
-class RecruiterCreatedTest extends TestCase
+class RecruiterCreatedTest extends ListenerTest
 {
-    use NotificationUtils;
-
-    public string $queue = 'listeners';
-
-    public function handle(RecruiterCreatedEvent $event): void
+    public function testHandle(): void
     {
-        $recruiter = $event->recruiter;
-        $this->sendMailNotification(new Created($recruiter));
-        $this->sendMailNotification(new Psswd($recruiter), $recruiter->getLanguage(), $recruiter->getEmail());
+        (new RecruiterCreated())->handle(new RecruiterCreatedEvent(new Recruiter()));
+
+        $this->assertDatabaseCount('jobs', 2);
+        $this->assertDatabaseHas('jobs', ['queue' => 'notifications']);
     }
 }
