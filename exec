@@ -10,7 +10,7 @@ if [ $# -gt 0 ]; then
     elif [[ "$1" == "stop" ]]; then
         docker compose down
 
-    elif [[ "$1" == "rebuild" ]]; then
+    elif [[ "$1" == "build" ]]; then
         cd infrastructure/docker/config/nginx/certs/
         openssl genrsa -out franciscolaracasalilla.key 2048
         openssl req -new -key franciscolaracasalilla.key -out franciscolaracasalilla.csr -config franciscolaracasalilla.conf

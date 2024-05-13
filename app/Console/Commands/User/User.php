@@ -7,7 +7,7 @@ use Illuminate\Console\Command;
 
 abstract class User extends Command
 {
-	protected const EXIT = 'exit';
-	protected const USER_SIGNATURE = 'user:';
-	protected const TRANSLATIONS = 'command.user.';
+	protected const string EXIT = 'exit';
+	protected const string USER_SIGNATURE = 'user:';
+	protected const string TRANSLATIONS = 'command.user.';
 }

@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 abstract class AdminTest extends TestCase
 {
-	protected const USERNAME = 'test_username';
+	protected const string USERNAME = 'test_username';
 
 	protected function getAdmin(string $language): Admin
 	{

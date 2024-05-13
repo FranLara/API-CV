@@ -2,7 +2,7 @@ services:
     franlara.cv:
         build:
             context: ./infrastructure/docker
-            dockerfile: Dockerfile
+            dockerfile: Dockerfile.dev
             args:
                 WWWGROUP: '${APP_WWWGROUP}'
         image: franlara-8.3/cv

@@ -23,11 +23,11 @@ class Create extends AdminCommand
     private const string CREATION_TRANSLATIONS = self::ADMIN_TRANSLATIONS . 'creation.';
     protected $description = 'This command creates an admin user asking by keyboard the username and the password.';
 
-    public function __construct()
+    public function __construct(Saver $saver, Retriever $retriever)
     {
         $this->signature = self::USER_SIGNATURE . 'create' . self::ADMIN_SIGNATURE;
 
-        parent::__construct();
+        parent::__construct($saver, $retriever);
     }
 
     public function handle(Saver $saver, Retriever $retriever): void
@@ -35,17 +35,17 @@ class Create extends AdminCommand
         do {
             $username = text(label: __(self::CREATION_TRANSLATIONS . 'username.label'), required: true,
                 hint: __(self::CREATION_TRANSLATIONS . 'username.hint'));
-        } while ((!$this->isUsernameUnique($retriever, $username)) && (!Str::of($username)->exactly(self::EXIT)));
+        } while ((!$this->isUsernameUnique($username)) && (!Str::of($username)->exactly(self::EXIT)));
 
         if (!Str::of($username)->lower()->exactly(self::EXIT)) {
-            $this->createAdmin($saver, $username);
+            $this->createAdmin($username);
         }
     }
 
-    private function isUsernameUnique(Retriever $retriever, string $username): bool
+    private function isUsernameUnique(string $username): bool
     {
         try {
-            $retriever->retrieveByField('username', $username);
+            $this->retriever->retrieveByField('username', $username);
         } catch (ModelNotFoundException) {
             return true;
         }
@@ -55,14 +55,14 @@ class Create extends AdminCommand
         return false;
     }
 
-    private function createAdmin(Saver $saver, string $username): void
+    private function createAdmin(string $username): void
     {
         $psswrd = password(label: __(self::CREATION_TRANSLATIONS . 'password'), required: true);
         $language = $this->getLanguage(__(self::CREATION_TRANSLATIONS . 'language'), 'en');
 
         $admin = new Admin($username, $language, $psswrd);
 
-        $userSaved = $saver->save($admin);
+        $userSaved = $this->saver->save($admin);
 
         if ($userSaved) {
             $this->sendMailNotification(new Created($admin), $admin->getLanguage());

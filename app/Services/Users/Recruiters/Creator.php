@@ -1,40 +1,41 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Services\Users\Recruiters;
 
 use App\BusinessObjects\DTOs\Users\Recruiter;
+use App\Events\RecruiterCreated;
 use App\Exceptions\Services\RecruiterCreationException;
-use App\Notifications\User\Recruiter\Created;
-use App\Notifications\User\Recruiter\Psswd;
 use App\Utils\Notifications as NotificationUtils;
 use Illuminate\Support\Str;
 
 class Creator
 {
-	use NotificationUtils;
+    use NotificationUtils;
 
-	private Saver $saver;
+    private Saver $saver;
 
-	public function __construct(Saver $saver)
-	{
-		$this->saver = $saver;
-	}
+    public function __construct(Saver $saver)
+    {
+        $this->saver = $saver;
+    }
 
     /**
      * @throws RecruiterCreationException
      */
     public function create(Recruiter $recruiter): void
-	{
-		$recruiter->setPsswd(Str::random());
+    {
+        $recruiter->setPsswd(Str::random());
 
-		$userSaved = $this->saver->save($recruiter);
+        $userSaved = $this->saver->save($recruiter);
 
-		if (empty($userSaved)) {
-			throw new RecruiterCreationException($recruiter);
-		}
+        if (empty($userSaved)) {
+            throw new RecruiterCreationException($recruiter);
+        }
 
-		$this->sendMailNotification(new Created($recruiter));
-		$this->sendMailNotification(new Psswd($recruiter), $recruiter->getLanguage(), $recruiter->getEmail());
-	}
+        event(new RecruiterCreated($recruiter));
+        //$this->sendMailNotification(new Created($recruiter));
+        //$this->sendMailNotification(new Psswd($recruiter), $recruiter->getLanguage(), $recruiter->getEmail());
+    }
 }

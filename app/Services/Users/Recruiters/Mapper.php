@@ -14,9 +14,9 @@ class Mapper extends UserMapper
 
 	public function map(DTO $dto, Model $recruiter): Recruiter
 	{
-		if (empty($recruiter->id)) {
-			$recruiter->created_at = now();
-		}
+        if (empty($recruiter->id)) {
+            $recruiter->created_at = now();
+        }
 		if (!empty($dto->getName())) {
 			$recruiter->name = $dto->getName();
 		}
