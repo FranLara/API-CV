@@ -7,22 +7,25 @@ use App\BusinessObjects\DTOs\Users\Recruiter as RecruiterDTO;
 use App\BusinessObjects\Models\Users\Recruiter;
 use App\Services\Users\Recruiters\Mapper;
 use App\Services\Users\Recruiters\Saver;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Hash;
 use Tests\Unit\Services\ServiceTest;
 
 class SaverTest extends ServiceTest
 {
-	private const NAME = 'test_name';
-	private const EMAIL = 'test_email';
-	private const PSSWD = 'test_psswd';
-	private const LANGUAGE = 'test_language';
-	private const LINKEDIN_PROFILE = 'test_linkedin_profile';
+	private const string NAME = 'test_name';
+	private const string EMAIL = 'test_email';
+	private const string PSSWD = 'test_psswd';
+	private const string LANGUAGE = 'test_language';
+	private const string LINKEDIN_PROFILE = 'test_linkedin_profile';
 
 	/**
 	 * @dataProvider providerUser
 	 */
 	public function testSave(bool $existing = false, bool $modified = false): void
 	{
+        Event::fake();
+
 		$mapper = $this->createConfiguredMock(Mapper::class, ['map' => $this->getRecruiter($existing, $modified)]);
 		(new Saver($mapper))->save(new RecruiterDTO());
 		$recruiter = Recruiter::whereEmail(self::EMAIL)->first();
