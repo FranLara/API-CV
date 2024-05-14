@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->uuid('id')->primary();
             $table->uuid('entity_id');
             $table->string('type', 310);
-            $table->text('value_payload');
+            $table->json('value_payload');
             $table->timestamp('created_at')->useCurrent();
         });
     }
