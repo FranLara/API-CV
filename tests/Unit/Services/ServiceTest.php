@@ -6,8 +6,8 @@ namespace Tests\Unit\Services;
 
 use App\Events\ModelSaved;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
-use Event;
 
 abstract class ServiceTest extends TestCase
 {

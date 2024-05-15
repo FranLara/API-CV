@@ -10,7 +10,7 @@ use App\Listeners\ModelSaved;
 use App\Services\Changelogs\Mapper;
 use App\Services\Changelogs\Saver;
 use Illuminate\Database\Eloquent\Model;
-use Event;
+use Illuminate\Support\Facades\Event;
 
 class ModelSavedTest extends ListenerTest
 {

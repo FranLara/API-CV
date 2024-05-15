@@ -6,7 +6,7 @@ namespace Tests\Feature\Commands\User\Admin;
 
 use App\BusinessObjects\Models\Users\Admin;
 use App\Events\ModelSaved;
-use Event;
+use Illuminate\Support\Facades\Event;
 
 class CreateTest extends AdminTest
 {
