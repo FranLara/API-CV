@@ -15,6 +15,8 @@ class Changelog extends Model
 
     public $timestamps = false;
 
+    protected $fillable = ['type', 'entity_id', 'value_payload'];
+
     protected static function newFactory(): ChangelogFactory
     {
         return ChangelogFactory::new();

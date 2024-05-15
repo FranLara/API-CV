@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Tests\Feature\Commands\User\Admin;
 
 use App\BusinessObjects\Models\Users\Admin;
+use App\Events\ModelSaved;
+use Illuminate\Support\Facades\Event;
 
 class CreateTest extends AdminTest
 {
@@ -18,7 +20,7 @@ class CreateTest extends AdminTest
              ->expectsQuestion(__(self::CREATION_TRANSLATIONS . 'password'), 'test_password')
              ->expectsQuestion(__(self::CREATION_TRANSLATIONS . 'language'), 'es');
 
-        $this->assertDatabaseCount('jobs', 1);
+        $this->assertDatabaseCount('jobs', 2);
         $this->assertDatabaseCount('admins', 2);
         $this->assertDatabaseHas('admins', ['username' => self::USERNAME, 'language' => 'es']);
     }
@@ -33,6 +35,8 @@ class CreateTest extends AdminTest
 
     public function testCreateExistingUser(): void
     {
+    	Event::fake([ModelSaved::class]);
+
         Admin::factory()->create(['username' => self::USERNAME]);
 
         $this->artisan(self::USER_SIGNATURE . 'create' . self::ADMIN_SIGNATURE)

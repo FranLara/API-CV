@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace App\BusinessObjects\Models\Users;
 
+use App\Events\ModelSaved;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticableContract;
 use Illuminate\Database\Eloquent\Model;
@@ -14,8 +15,12 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 abstract class User extends Model implements JWTSubject, AuthenticableContract
 {
 	use Notifiable, HasFactory, Authenticatable, HasUuids;
-	protected $hidden = ['password'];
+
 	public $timestamps = false;
+
+	protected $hidden = ['password'];
+
+	protected $dispatchesEvents = ['saved' => ModelSaved::class];
 
 	public function getJWTIdentifier()
 	{

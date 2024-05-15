@@ -1,12 +1,17 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\BusinessObjects\DTOs;
 
 class Changelog extends DTO
 {
-    public function __construct(private string $entityId, private string $type, private string $valuePayload)
-    {
+    public function __construct(
+        private readonly string $type,
+        private readonly string $entityId,
+        private readonly string $valuePayload
+    ) {
+
     }
 
     public function getType(): string

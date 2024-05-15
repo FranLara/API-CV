@@ -20,7 +20,7 @@ class UpdateTest extends AdminTest
              ->expectsQuestion(__(self::UPDATE_TRANSLATIONS . 'password'), 'test_password')
              ->expectsQuestion(__(self::UPDATE_TRANSLATIONS . 'language'), 'en');
 
-        $this->assertDatabaseCount('jobs', 1);
+        $this->assertDatabaseCount('jobs', 3);
         $this->assertDatabaseCount('admins', 2);
         $this->assertDatabaseHas('admins', ['username' => self::USERNAME, 'language' => 'en']);
     }
@@ -33,7 +33,7 @@ class UpdateTest extends AdminTest
         $this->assertDatabaseCount('admins', 1);
     }
 
-    public function testCreateNonExistingUser(): void
+    public function testUpdateNonExistingUser(): void
     {
         $this->artisan(self::USER_SIGNATURE . 'update' . self::ADMIN_SIGNATURE)
              ->expectsQuestion(__(self::UPDATE_TRANSLATIONS . 'username.label'), self::USERNAME)
