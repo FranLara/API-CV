@@ -22,7 +22,7 @@ class TokenTest extends APITest
         $tokener = $this->createConfiguredMock(Tokener::class, ['getToken' => self::TOKEN]);
         $tokenManager = $this->createConfiguredMock(JWT::class, ['setToken' => new ReturnSelf(), 'getClaim' => time()]);
 
-        $data = (new Token())->request($this->getRequest(), $tokener, $tokenManager)->getData(true);
+        $data = (new Token($tokenManager))->request($this->getRequest(), $tokener)->getData(true);
 
         $this->assertIsArray($data);
         $this->assertArrayHasKey(self::TYPE_INDEX, $data);

@@ -6,5 +6,5 @@ $api->post('token', 'App\Http\Controllers\API\Auth\Token@request');
 $api->post('account', 'App\Http\Controllers\API\Auth\User@request');
 
 $api->group(['middleware' => 'api.auth'], function ($api) {
-	// Endpoints registered here will have the "foo" middleware applied.
+    $api->get('token', 'App\Http\Controllers\API\Auth\Token@refresh');
 });

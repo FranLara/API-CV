@@ -40,6 +40,23 @@ class TokenTest extends APITest
         }
     }
 
+    public function testRefresh(): void {
+        $response = $this->getJson($this->domain . '/token', $this->getHeader());
+        $this->assertEquals(200, $response->getStatusCode());
+
+        if ($response->getStatusCode() == Response::HTTP_OK) {
+            $token = json_decode($response->getContent())->{self::TOKEN_INDEX};
+            $payload = app('tymon.jwt')->setToken($token)->getPayload();
+
+            $this->assertSame('$expectedRole', $payload->get('role'));
+            $response->assertJson(fn(AssertableJson $json) => $json->hasAll([
+                self::TYPE_INDEX,
+                self::TOKEN_INDEX,
+                self::EXPIRATION_INDEX
+            ])->where(self::TYPE_INDEX, 'bearer')->where(self::EXPIRATION_INDEX, 3600));
+        }
+    }
+
     public static function providerCredentials(): array
     {
         return [
