@@ -6,9 +6,9 @@ namespace Tests\Unit\Http\Controllers\API\Auth;
 
 use App\Http\Controllers\API\Auth\Token;
 use App\Services\Users\Tokener;
+use PHPOpenSourceSaver\JWTAuth\JWT;
 use PHPUnit\Framework\MockObject\Stub\ReturnSelf;
 use Tests\Unit\Http\Controllers\API\APITest;
-use Tymon\JWTAuth\JWT;
 
 class TokenTest extends APITest
 {

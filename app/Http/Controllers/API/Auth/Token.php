@@ -8,7 +8,7 @@ use App\Http\Controllers\API\API as APIController;
 use App\Services\Users\Tokener;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Tymon\JWTAuth\JWT;
+use PHPOpenSourceSaver\JWTAuth\JWT;
 
 class Token extends APIController
 {
@@ -27,9 +27,9 @@ class Token extends APIController
         return $this->getResponse($token);
     }
 
-    public function refresh(): JsonResponse
+    public function refresh(Request $request): JsonResponse
     {
-        $token = $this->tokenManager->refresh();
+    	$token = $this->tokenManager->setToken($request->bearerToken())->refresh();
         $token = $this->tokenManager->setToken($token)->claims(['exp' => time() + 1860])->getToken()->get();
 
         return $this->getResponse($token);

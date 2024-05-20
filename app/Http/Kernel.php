@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace App\Http;
 
 use App\Http\Middleware\Authenticate;
-use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\PreventRequestsDuringMaintenance;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustHosts;
 use App\Http\Middleware\TrustProxies;
 use App\Http\Middleware\ValidateSignature;
-use App\Http\Middleware\VerifyCsrfToken;
+use App\Http\Middleware\Api\Authenticate as ApiAuthenticate;
+use App\Http\Middleware\Web\EncryptCookies;
+use App\Http\Middleware\Web\VerifyCsrfToken;
 use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
 use Illuminate\Auth\Middleware\Authorize;
 use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
@@ -63,7 +64,7 @@ class Kernel extends HttpKernel
             SubstituteBindings::class,
         ],
 
-        'api' => [ThrottleRequests::class . ':api', SubstituteBindings::class],
+        'api' => ['api.throttle', SubstituteBindings::class],
     ];
 
     /**
@@ -84,5 +85,6 @@ class Kernel extends HttpKernel
         'signed'           => ValidateSignature::class,
         'throttle'         => ThrottleRequests::class,
         'verified'         => EnsureEmailIsVerified::class,
+    	'api.cv.auth' 	   => ApiAuthenticate::class,
     ];
 }
