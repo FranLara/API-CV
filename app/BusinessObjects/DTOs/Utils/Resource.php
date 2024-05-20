@@ -5,6 +5,7 @@ namespace App\BusinessObjects\DTOs\Utils;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use function collect;
 
 class Resource
 {
@@ -26,7 +27,7 @@ class Resource
 	public function getResource(): array
 	{
 		$parameters = $this->parameters->all();
-		$endpoint = $this->host . '/' . $this->path;
+		$endpoint = $this->host . '/' . explode(' ', $this->path)[0];
 
 		if ($this->parameters->isNotEmpty()) {
 			$endpoint .= '?' . $this->getParameterForEndpointExample($this->parameters->shift());

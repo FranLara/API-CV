@@ -23,7 +23,7 @@ class RootTest extends APITest
     private const string TOKEN_TRANSLATIONS = self::ENDPOINT_TRANSLATIONS . 'token.';
     private const string ACCOUNT_TRANSLATIONS = self::ENDPOINT_TRANSLATIONS . 'account.';
     private const array PUBLIC_RESOURCES_TO_CHECK = [
-        self::TOKEN_PATH   => [
+        self::TOKEN_PATH.' (POST)'   => [
             self::TYPE_INDEX        => Request::METHOD_POST,
             self::PARAMETER_INDEX   => 2,
             self::DESCRIPTION_INDEX => self::TOKEN_TRANSLATIONS . 'request',
@@ -36,6 +36,15 @@ class RootTest extends APITest
             self::ENDPOINT_INDEX    => 'https://domain.test/account?email=email&name=name&language=language&linkedin_profile=linkedin_profile'
         ]
     ];
+    private const array TOKENED_RESOURCES_TO_CHECK = [
+    	self::TOKEN_PATH.' (GET)'   => [
+    		self::TYPE_INDEX        => Request::METHOD_GET,
+    		self::PARAMETER_INDEX   => 0,
+    		self::DESCRIPTION_INDEX => self::TOKEN_TRANSLATIONS . 'refresh',
+    		self::ENDPOINT_INDEX    => 'https://domain.test/token'
+    	]
+    ];
+
     private Root $controller;
 
     public function testIndex(): void
@@ -46,13 +55,13 @@ class RootTest extends APITest
         $this->assertIsArray($index[self::RESOURCES]);
         $this->assertArrayHasKey(self::RESOURCES, $index);
 
-        $resources = self::PUBLIC_RESOURCES_TO_CHECK;
+        $resources = array_merge(self::PUBLIC_RESOURCES_TO_CHECK, self::TOKENED_RESOURCES_TO_CHECK);
 
         collect($resources)->each(function (array $config, string $resource) use ($index) {
             $this->assertResources($index[self::RESOURCES][$resource], $config);
         });
 
-        $tokenPath = $index[self::RESOURCES][self::TOKEN_PATH];
+        $tokenPath = $index[self::RESOURCES][self::TOKEN_PATH.' (POST)'];
         $this->assertSame('username', $tokenPath[self::PARAMETER_INDEX][0][self::NAME_INDEX]);
         $this->assertSame('password', $tokenPath[self::PARAMETER_INDEX][1][self::NAME_INDEX]);
         $this->assertSame(self::STRING_TYPE, $tokenPath[self::PARAMETER_INDEX][0][self::TYPE_INDEX]);

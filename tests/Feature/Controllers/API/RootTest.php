@@ -29,7 +29,7 @@ class RootTest extends APITest
     public function testIndex(): void
     {
         $this->getJson($this->domain, $this->getHeader())->assertJson(fn(AssertableJson $json
-        ) => $json->has('Resources', fn(AssertableJson $resources) => $resources->has('token',
+        ) => $json->has('Resources', fn(AssertableJson $resources) => $resources->has('token (POST)',
             fn(AssertableJson $token) => $token->hasAll($this->resourceIndexes)
                                                ->where(self::TYPE_INDEX, Request::METHOD_POST)
                                                ->where(self::DESCRIPTION_INDEX,
@@ -89,7 +89,9 @@ class RootTest extends APITest
                                                                                                                     self::STRING_TYPE))
                                                                                                  ->where(self::ENDPOINT_INDEX,
                                                                                                      $this->domain
-                                                                                                     . '/account?email=email&name=name&language=language&linkedin_profile=linkedin_profile'))));
+                                                                                                 	. '/account?email=email&name=name&language=language&linkedin_profile=linkedin_profile'))->has('token (GET)',fn(AssertableJson $token) => $token->hasAll($this->resourceIndexes)->where(self::TYPE_INDEX, Request::METHOD_GET)->where(self::DESCRIPTION_INDEX,
+                                                                                                 		__(self::TOKEN_TRANSLATIONS . 'refresh'))->where(self::ENDPOINT_INDEX,
+                                                                                                 			$this->domain . '/token'))));
     }
 
     public function testOptions(): void
