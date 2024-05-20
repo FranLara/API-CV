@@ -41,7 +41,8 @@ class TokenTest extends APITest
     }
 
     public function testRefresh(): void {
-        $response = $this->getJson($this->domain . '/token', $this->getHeader());
+    	$authorization = ['Authorization' => 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2RvbWFpbi50ZXN0L3Rva2VuIiwiaWF0IjoxNzE2MjM3MTk5LCJleHAiOjE3MTYyNDA3OTksIm5iZiI6MTcxNjIzNzE5OSwianRpIjoiWFlnMDJLUmtOdHlLM0V2MiIsInN1YiI6IjljMTc0MmRjLTU0OTctNDRhOS04MDNlLTY4YjAxNjhjOTkwNSIsInBydiI6IjUxNzNmZTRmMjM1MTc2NDk3M2JiNmVmMDRlMmUxMGFkYTA0YTVhMGUiLCJyb2xlIjoiYWRtaW4ifQ.6Qq89HswSzJlJnSUUvTr2FVvD3jKfhNFZ-FRGyPbj94'];
+    	$response = $this->getJson($this->domain . '/token', $this->getHeader($authorization));
         $this->assertEquals(200, $response->getStatusCode());
 
         if ($response->getStatusCode() == Response::HTTP_OK) {
