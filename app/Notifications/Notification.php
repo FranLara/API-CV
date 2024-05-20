@@ -11,9 +11,9 @@ abstract class Notification extends BaseNotification implements ShouldQueue
 {
 	use Queueable;
 
+	protected const string NOTIFICATION_TRANSLATIONS = 'notification.';
+
     public function __construct(){
         $this->onQueue('notifications');
     }
-
-    protected const string NOTIFICATION_TRANSLATIONS = 'notification.';
 }
