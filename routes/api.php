@@ -6,7 +6,7 @@ $api->group(['middleware' => 'api', 'limit' => 60], function ($api) {
 	$api->post('token', 'App\Http\Controllers\API\Auth\Token@request');
 	$api->post('account', 'App\Http\Controllers\API\Auth\User@request');
 
-	$api->group(['middleware' => 'api.cv.auth:admin'], function ($api) {
+	$api->group(['middleware' => 'api.cv.auth'], function ($api) {
 		$api->get('token', 'App\Http\Controllers\API\Auth\Token@refresh');
 	});
 });

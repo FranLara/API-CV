@@ -9,6 +9,8 @@ use App\Services\Users\Tokener;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use PHPOpenSourceSaver\JWTAuth\JWT;
+use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class Token extends APIController
 {
@@ -29,8 +31,18 @@ class Token extends APIController
 
     public function refresh(Request $request): JsonResponse
     {
-    	$token = $this->tokenManager->setToken($request->bearerToken())->refresh();
-        $token = $this->tokenManager->setToken($token)->claims(['exp' => time() + 1860])->getToken()->get();
+    	try {
+    		$token = $this->tokenManager->setToken($request->bearerToken())->refresh();
+    	} catch (JWTException $exception) {
+    		throw new UnauthorizedHttpException('jwt-auth', $exception->getMessage(), $exception, $exception->getCode());
+    	}
+
+    	$payload = $this->tokenManager->setToken($token)->getPayload()->toArray();
+    	$payload['exp'] = time() + 1860;
+
+    	$payload = $this->tokenManager->manager()->getPayloadFactory()->customClaims($payload)->make();
+
+    	$token = $this->tokenManager->manager()->encode($payload)->get();
 
         return $this->getResponse($token);
     }
