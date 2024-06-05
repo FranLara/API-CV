@@ -32,4 +32,20 @@ class TokenTest extends APITest
         $this->assertSame(self::TOKEN, $data[self::TOKEN_INDEX]);
         $this->assertLessThanOrEqual(0, $data[self::EXPIRATION_INDEX]);
     }
+
+    public function testRefresh(): void
+    {
+        $tokener = $this->createConfiguredMock(Tokener::class, ['getToken' => self::TOKEN]);
+        $tokenManager = $this->createConfiguredMock(JWT::class, ['setToken' => new ReturnSelf(), 'getClaim' => time()]);
+
+        $data = (new Token($tokenManager))->request($this->getRequest(), $tokener)->getData(true);
+
+        $this->assertIsArray($data);
+        $this->assertArrayHasKey(self::TYPE_INDEX, $data);
+        $this->assertArrayHasKey(self::TOKEN_INDEX, $data);
+        $this->assertSame('bearer', $data[self::TYPE_INDEX]);
+        $this->assertArrayHasKey(self::EXPIRATION_INDEX, $data);
+        $this->assertSame(self::TOKEN, $data[self::TOKEN_INDEX]);
+        $this->assertLessThanOrEqual(0, $data[self::EXPIRATION_INDEX]);
+    }
 }
