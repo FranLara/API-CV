@@ -17,6 +17,7 @@ class RootTest extends APITest
     private const string STRING_TYPE = 'string';
     private const string RESOURCES = 'Resources';
     private const string ACCOUNT_PATH = 'account';
+    private const string DOMAIN = 'https://domain.test/';
     private const string PARAMETER_INDEX = 'parameters';
     private const string DESCRIPTION_INDEX = 'description';
     private const string ENDPOINT_INDEX = 'endpointExample';
@@ -28,13 +29,14 @@ class RootTest extends APITest
             self::TYPE_INDEX        => Request::METHOD_POST,
             self::PARAMETER_INDEX   => 2,
             self::DESCRIPTION_INDEX => self::TOKEN_TRANSLATIONS . 'request',
-            self::ENDPOINT_INDEX    => 'https://domain.test/token?username=username&password=password'
+            self::ENDPOINT_INDEX    => self::DOMAIN . 'token?username=username&password=password'
         ],
         self::ACCOUNT_PATH           => [
             self::TYPE_INDEX        => Request::METHOD_POST,
             self::PARAMETER_INDEX   => 4,
             self::DESCRIPTION_INDEX => self::ACCOUNT_TRANSLATIONS . 'request',
-            self::ENDPOINT_INDEX    => 'https://domain.test/account?email=email&name=name&language=language&linkedin_profile=linkedin_profile'
+            self::ENDPOINT_INDEX    => self::DOMAIN
+                                       . 'account?email=email&name=name&language=language&linkedin_profile=linkedin_profile'
         ]
     ];
     private const array TOKENED_RESOURCES_TO_CHECK = [
@@ -42,7 +44,7 @@ class RootTest extends APITest
             self::TYPE_INDEX        => Request::METHOD_GET,
             self::PARAMETER_INDEX   => 0,
             self::DESCRIPTION_INDEX => self::TOKEN_TRANSLATIONS . 'refresh',
-            self::ENDPOINT_INDEX    => 'https://domain.test/token'
+            self::ENDPOINT_INDEX    => self::DOMAIN . 'token'
         ]
     ];
 
