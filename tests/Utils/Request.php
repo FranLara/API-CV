@@ -9,14 +9,14 @@ use Mockery;
 
 trait Request
 {
-    protected function getRequest(): LaravelRequest
+    protected function getRequest(array $additionalFunctions = []): LaravelRequest
     {
-        $mockedFunctions = [
+        $mockedFunctions = array_merge([
             'get'                  => '',
             'only'                 => [],
             'validate'             => true,
             'getSchemeAndHttpHost' => 'https://domain.test',
-        ];
+        ], $additionalFunctions);
 
         return Mockery::mock(LaravelRequest::class, $mockedFunctions);
     }
