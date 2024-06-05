@@ -52,11 +52,11 @@ class TokenTest extends APITest
     /**
      * @dataProvider providerRole
      */
-    public function testRefresh(string $role = Token::GUEST_ROLE): void
+    public function testRefresh(int $expectedStatusCode = Response::HTTP_UNAUTHORIZED, string $role = null): void
     {
         $authorization = ['Authorization' => 'Bearer ' . $this->getToken($role)];
         $response = $this->getJson($this->domain . '/token', $this->getHeader($authorization));
-        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals($expectedStatusCode, $response->getStatusCode());
 
         if ($response->getStatusCode() == Response::HTTP_OK) {
             $response->assertJson(fn(AssertableJson $json) => $json->hasAll([
@@ -81,7 +81,12 @@ class TokenTest extends APITest
 
     public static function providerRole(): array
     {
-        return [[], [Token::ADMIN_ROLE], [Token::RECRUITER_ROLE]];
+        return [
+            [],
+            [Response::HTTP_OK, Token::GUEST_ROLE],
+            [Response::HTTP_OK, Token::ADMIN_ROLE],
+            [Response::HTTP_OK, Token::RECRUITER_ROLE],
+        ];
     }
 
     private function getCredentials(string $role = Token::GUEST_ROLE): array
@@ -98,8 +103,12 @@ class TokenTest extends APITest
         return $this->postJson($this->domain . '/token', $credentials, $this->getHeader());
     }
 
-    private function getToken(string $role): string
+    private function getToken(?string $role): string
     {
+        if (empty($role)) {
+            return 'test_token';
+        }
+
         return json_decode($this->getTokenResponse($this->getCredentials($role))->getContent())->{self::TOKEN_INDEX};
     }
 
