@@ -32,6 +32,7 @@ class UserTest extends APITest
 
         $creator = $this->createMock(Creator::class);
         $creator->method('create')->willThrowException($exception);
+
         (new User())->request($this->getRequest(), $creator);
     }
 

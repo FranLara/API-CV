@@ -11,14 +11,15 @@ use Tests\Utils\Request as RequestUtils;
 class ResourceTest extends TestCase
 {
 	use RequestUtils;
-	private const PATH = 'test_path';
-	private const NAME = 'test_name';
-	private const TYPE_INDEX = 'type';
-	private const NAME_INDEX = 'name';
-	private const PARAMETER_INDEX = 'parameters';
-	private const DESCRIPTION = 'test_description';
-	private const DESCRIPTION_INDEX = 'description';
-	private const ENDPOINT_INDEX = 'endpointExample';
+
+	private const string PATH = 'test_path';
+	private const string NAME = 'test_name';
+	private const string TYPE_INDEX = 'type';
+	private const string NAME_INDEX = 'name';
+	private const string PARAMETER_INDEX = 'parameters';
+	private const string DESCRIPTION = 'test_description';
+	private const string DESCRIPTION_INDEX = 'description';
+	private const string ENDPOINT_INDEX = 'endpointExample';
 
 	/**
 	 * @dataProvider providerGetResource
