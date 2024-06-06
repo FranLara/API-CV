@@ -11,8 +11,8 @@ use function collect;
 
 class Tokener
 {
-	private const ROLE_CLAIM = 'role';
-	private const ROLES = [Token::ADMIN_ROLE, Token::RECRUITER_ROLE];
+	private const string ROLE_CLAIM = 'role';
+	private const array ROLES = [Token::ADMIN_ROLE, Token::RECRUITER_ROLE];
 
 	//, 'technician'];
 	public function getToken(array $credentials): string

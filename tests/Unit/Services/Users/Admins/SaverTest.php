@@ -12,9 +12,9 @@ use Tests\Unit\Services\ServiceTest;
 
 class SaverTest extends ServiceTest
 {
-	private const PSSWD = 'test_psswd';
-	private const USERNAME = 'test_username';
-	private const LANGUAGE = 'test_language';
+	private const string PSSWD = 'test_psswd';
+	private const string USERNAME = 'test_username';
+	private const string LANGUAGE = 'test_language';
 
 	/**
 	 * @dataProvider providerUser
