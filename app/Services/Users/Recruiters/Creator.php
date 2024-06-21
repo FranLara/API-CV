@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace App\Services\Users\Recruiters;
 
 use App\BusinessObjects\DTOs\Users\Recruiter;
-use App\Events\RecruiterCreated;
+use App\Events\Users\Recruiters\Created as RecruiterCreatedEvent;
 use App\Exceptions\Services\RecruiterCreationException;
 use App\Utils\Notifications as NotificationUtils;
 use Illuminate\Support\Str;
@@ -32,6 +32,6 @@ class Creator
 			throw new RecruiterCreationException($recruiter);
 		}
 
-		event(new RecruiterCreated($recruiter));
+		event(new RecruiterCreatedEvent($recruiter));
 	}
 }

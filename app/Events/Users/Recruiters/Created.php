@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Events;
+namespace App\Events\Users\Recruiters;
 
 use App\BusinessObjects\DTOs\Users\Recruiter;
 
-class RecruiterCreated
+class Created
 {
     public function __construct(public Recruiter $recruiter)
     {
