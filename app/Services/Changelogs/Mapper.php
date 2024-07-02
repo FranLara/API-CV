@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Mapper implements MapperInterface
 {
-
     public function map(DTO $dto, Model $changelog): Changelog
     {
         $changelog->created_at = now();

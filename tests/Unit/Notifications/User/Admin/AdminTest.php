@@ -13,7 +13,7 @@ abstract class AdminTest extends TestCase
 
 	protected function getAdmin(string $language): Admin
 	{
-		$admin = new Admin(self::USERNAME, $language);
+		$admin = new Admin(username: self::USERNAME, language: $language);
 		Lang::setLocale($admin->getLanguage());
 
 		return $admin;

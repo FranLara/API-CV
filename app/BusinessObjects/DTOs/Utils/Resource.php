@@ -18,8 +18,8 @@ class Resource
     private Collection $parameters;
 
     public function __construct(
-        Request $request,
         string $path,
+        Request $request,
         string $description,
         array $parameters = [],
         string $type = Request::METHOD_GET

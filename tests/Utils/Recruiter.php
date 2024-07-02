@@ -13,7 +13,8 @@ trait Recruiter
 
     protected function getRecruiter(string $language = 'en'): RecruiterDTO
     {
-        return new RecruiterDTO(self::EMAIL, 'test_name', $language, self::PSSWD, 'test_linkedin_profile.com');
+        return new RecruiterDTO(name: 'test_name', email: self::EMAIL, psswd: self::PSSWD, language: $language,
+            linkedinProfile: 'test_linkedin_profile.com');
     }
 }
 

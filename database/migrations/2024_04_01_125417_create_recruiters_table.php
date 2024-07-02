@@ -14,7 +14,6 @@ return new class() extends Migration {
 			$table->string('password');
 			$table->string('language');
 			$table->string('linkedin_profile')->nullable();
-			$table->unsignedSmallInteger('new_password_account_requests')->default(0);
 			$table->timestamp('created_at')->useCurrent();
 		});
 	}

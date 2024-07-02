@@ -23,13 +23,13 @@ class MapperTest extends TestCase
      */
     public function testMap(
         ?string $name = null,
-        ?string $language = null,
         ?string $psswd = null,
-        ?string $linkedinProfile = null,
-        ?string $identifier = null
+        ?string $language = null,
+        ?string $identifier = null,
+        ?string $linkedinProfile = null
     ): void {
-        $recruiter = (new Mapper())->map(new RecruiterDTO(null, $name, $language, $psswd, $linkedinProfile,
-            $identifier), new Recruiter());
+        $recruiter = (new Mapper())->map(new RecruiterDTO(identifier: $identifier, name: $name, psswd: $psswd,
+            language: $language, linkedinProfile: $linkedinProfile,), new Recruiter());
 
         $this->assertSame($name, $recruiter->name);
         $this->assertSame($language, $recruiter->language);
@@ -47,38 +47,38 @@ class MapperTest extends TestCase
         return [
             [],
             [self::NAME],
-            [null, self::LANGUAGE],
-            [null, null, self::PSSWD],
-            [null, null, null, self::LINKEDIN_PROFILE],
-            [null, null, null, null, self::IDENTIFIER],
+            [null, self::PSSWD],
+            [null, null, self::LANGUAGE],
+            [null, null, null, self::IDENTIFIER],
+            [null, null, null, null, self::LINKEDIN_PROFILE],
 
-            [self::NAME, self::LANGUAGE],
-            [self::NAME, null, self::PSSWD],
-            [self::NAME, null, null, self::LINKEDIN_PROFILE],
-            [self::NAME, null, null, null, self::IDENTIFIER],
+            [self::NAME, self::PSSWD],
+            [self::NAME, null, self::LANGUAGE],
+            [self::NAME, null, null, self::IDENTIFIER],
+            [self::NAME, null, null, null, self::LINKEDIN_PROFILE],
 
-            [null, self::LANGUAGE, self::PSSWD],
-            [null, self::LANGUAGE, null, self::LINKEDIN_PROFILE],
-            [null, self::LANGUAGE, null, null, self::IDENTIFIER],
-            [null, null, self::PSSWD, self::LINKEDIN_PROFILE],
-            [null, null, self::PSSWD, null, self::IDENTIFIER],
+            [null, self::PSSWD, self::LANGUAGE],
+            [null, self::PSSWD, null, self::IDENTIFIER],
+            [null, self::PSSWD, null, null, self::LINKEDIN_PROFILE],
+            [null, null, self::LANGUAGE, self::IDENTIFIER],
+            [null, null, self::LANGUAGE, null, self::LINKEDIN_PROFILE],
 
-            [null, null, null, self::LINKEDIN_PROFILE, self::IDENTIFIER],
-            [self::NAME, self::LANGUAGE, self::PSSWD],
-            [self::NAME, self::LANGUAGE, null, self::LINKEDIN_PROFILE],
-            [self::NAME, self::LANGUAGE, null, null, self::IDENTIFIER],
+            [null, null, null, self::IDENTIFIER, self::LINKEDIN_PROFILE],
+            [self::NAME, self::PSSWD, self::LANGUAGE],
+            [self::NAME, self::PSSWD, null, self::LINKEDIN_PROFILE],
+            [self::NAME, self::PSSWD, null, null, self::LINKEDIN_PROFILE],
 
-            [null, self::LANGUAGE, self::PSSWD, self::LINKEDIN_PROFILE],
-            [null, self::LANGUAGE, self::PSSWD, null, self::IDENTIFIER],
+            [null, self::PSSWD, self::LANGUAGE, self::IDENTIFIER],
+            [null, self::PSSWD, self::LANGUAGE, null, self::LINKEDIN_PROFILE],
 
-            [null, null, self::PSSWD, self::LINKEDIN_PROFILE, self::IDENTIFIER],
+            [null, null, self::LANGUAGE, self::IDENTIFIER, self::LINKEDIN_PROFILE],
 
-            [self::NAME, self::LANGUAGE, self::PSSWD, self::LINKEDIN_PROFILE],
-            [self::NAME, self::LANGUAGE, self::PSSWD, null, self::IDENTIFIER],
+            [self::NAME, self::PSSWD, self::LANGUAGE, self::IDENTIFIER],
+            [self::NAME, self::PSSWD, self::LANGUAGE, null, self::LINKEDIN_PROFILE],
 
-            [null, self::LANGUAGE, self::PSSWD, self::LINKEDIN_PROFILE, self::IDENTIFIER],
+            [null, self::PSSWD, self::LANGUAGE, self::IDENTIFIER, self::LINKEDIN_PROFILE],
 
-            [self::NAME, self::LANGUAGE, self::PSSWD, self::LINKEDIN_PROFILE, self::IDENTIFIER]
+            [self::NAME, self::PSSWD, self::LANGUAGE, self::IDENTIFIER, self::LINKEDIN_PROFILE]
         ];
     }
 }

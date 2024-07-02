@@ -12,11 +12,9 @@ use Illuminate\Support\Str;
 class Creator
 {
 	use NotificationUtils;
-	private Saver $saver;
 
-	public function __construct(Saver $saver)
+	public function __construct(private readonly Saver $saver)
 	{
-		$this->saver = $saver;
 	}
 
 	/**
