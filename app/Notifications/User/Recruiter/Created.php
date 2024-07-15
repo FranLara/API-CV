@@ -7,7 +7,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 
 class Created extends Recruiter
 {
-	private const CREATION_TRANSLATIONS = self::RECRUITER_TRANSLATIONS . 'creation.';
+	private const string CREATION_TRANSLATIONS = self::RECRUITER_TRANSLATIONS . 'creation.';
 
 	public function toMail(object $notifiable): MailMessage
 	{
