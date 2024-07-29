@@ -10,6 +10,12 @@ class Saving
 {
     public function handle(AdminSavingEvent $event): bool
     {
+        $errorMessages = '';
+
+        if(!empty($errorMessages)){
+            return false;
+        }
+
         return true;
     }
 }

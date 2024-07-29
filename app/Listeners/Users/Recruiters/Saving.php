@@ -10,6 +10,12 @@ class Saving
 {
     public function handle(RecruiterSavingEvent $event): bool
     {
+        $errorMessages = '';
+
+        if(!empty($errorMessages)){
+            return false;
+        }
+
         return true;
     }
 }

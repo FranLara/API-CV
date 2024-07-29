@@ -11,7 +11,7 @@ class Saving
 {
     use SerializesModels;
 
-    public function __construct(public Changelog $model)
+    public function __construct(public Changelog $changelog)
     {
     }
 }

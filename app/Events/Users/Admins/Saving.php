@@ -11,7 +11,7 @@ class Saving
 {
     use SerializesModels;
 
-    public function __construct(public Admin $model)
+    public function __construct(public Admin $admin)
     {
     }
 }

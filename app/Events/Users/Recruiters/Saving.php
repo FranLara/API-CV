@@ -11,7 +11,7 @@ class Saving
 {
     use SerializesModels;
 
-    public function __construct(public Recruiter $model)
+    public function __construct(public Recruiter $recruiter)
     {
     }
 }
