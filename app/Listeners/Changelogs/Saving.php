@@ -19,9 +19,9 @@ class Saving
             $errorMessages .= '- The value payload does not have a JSON format.' . PHP_EOL;
         }
 
-        if (!in_array($event->changelog->type, $event->changelog::ENTITY_TYPES, true)) {
-            $errorMessages .= $this->getCollectionErrorMessage('type', collect($event->changelog::ENTITY_TYPES),
-                $event->changelog->type);
+        $type = $event->changelog->type;
+        if ((!class_exists($type)) || (!in_array($type, $event->changelog::ENTITY_TYPES, true))) {
+            $errorMessages .= $this->getCollectionErrorMessage('type', collect($event->changelog::ENTITY_TYPES), $type);
         }
 
         if (!empty($errorMessages)) {
