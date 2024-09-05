@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Listeners\Changelogs;
 
-use App\BusinessObjects\DTOs\Users\Recruiter;
 use App\BusinessObjects\Models\Changelog;
 use App\Events\Changelogs\Saving as SavingEvent;
 use App\Listeners\Changelogs\Saving;
