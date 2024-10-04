@@ -7,7 +7,7 @@ use App\BusinessObjects\DTOs\Users\Admin;
 use Illuminate\Support\Facades\Lang;
 use Tests\TestCase;
 
-abstract class AdminTest extends TestCase
+abstract class AdminTests extends TestCase
 {
 	protected const string USERNAME = 'test_username';
 

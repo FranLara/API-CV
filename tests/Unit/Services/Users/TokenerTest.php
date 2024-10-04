@@ -9,9 +9,9 @@ use App\Http\Controllers\API\API as APIController;
 use App\Services\Users\Tokener;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
-use Tests\Unit\Services\ServiceTest;
+use Tests\Unit\Services\ServiceTests;
 
-class TokenerTest extends ServiceTest
+class TokenerTest extends ServiceTests
 {
 	private const array ROLE_CREATION = [Token::RECRUITER_ROLE];
 

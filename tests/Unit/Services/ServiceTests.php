@@ -1,16 +1,17 @@
 <?php
-declare(strict_types = 1);
 
-namespace Tests\Unit\Listeners;
+declare(strict_types=1);
+
+namespace Tests\Unit\Services;
 
 use App\Events\ModelSaved;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
-abstract class ListenerTest extends TestCase
+abstract class ServiceTests extends TestCase
 {
-	use RefreshDatabase;
+    use RefreshDatabase;
 
     protected function setUp(): void
     {

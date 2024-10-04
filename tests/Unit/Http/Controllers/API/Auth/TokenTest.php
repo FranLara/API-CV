@@ -14,9 +14,9 @@ use PHPOpenSourceSaver\JWTAuth\Payload;
 use PHPOpenSourceSaver\JWTAuth\Token as JWTToken;
 use PHPUnit\Framework\MockObject\Stub\ReturnSelf;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
-use Tests\Unit\Http\Controllers\API\APITest;
+use Tests\Unit\Http\Controllers\API\APITests;
 
-class TokenTest extends APITest
+class TokenTest extends APITests
 {
     private const string TOKEN = 'test_token';
     private const string TYPE_INDEX = 'token_type';

@@ -7,7 +7,7 @@ namespace Tests\Unit\Notifications\User\Admin;
 use App\Notifications\User\Admin\Created;
 use stdClass;
 
-class CreatedTest extends AdminTest
+class CreatedTest extends AdminTests
 {
 
     /**

@@ -12,7 +12,7 @@ use App\Services\Changelogs\Mapper;
 use App\Services\Changelogs\Saver;
 use Illuminate\Database\Eloquent\Model;
 
-class ModelSavedTest extends ListenerTest
+class ModelSavedTest extends ListenerTests
 {
     /**
      * @dataProvider providerModel

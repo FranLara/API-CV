@@ -9,9 +9,9 @@ use App\BusinessObjects\Models\Users\Admin;
 use App\Events\Users\Admins\Saving as SavingEvent;
 use App\Listeners\Users\Admins\Saving;
 use Illuminate\Support\Str;
-use Tests\Unit\Listeners\ListenerTest;
+use Tests\Unit\Listeners\ListenerTests;
 
-class SavingTest extends ListenerTest
+class SavingTest extends ListenerTests
 {
     /**
      * @dataProvider providerField

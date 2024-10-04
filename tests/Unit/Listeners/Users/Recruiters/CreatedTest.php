@@ -7,9 +7,9 @@ namespace Tests\Unit\Listeners\Users\Recruiters;
 use App\BusinessObjects\DTOs\Users\Recruiter;
 use App\Events\Users\Recruiters\Created as RecruiterCreatedEvent;
 use App\Listeners\Users\Recruiters\Created;
-use Tests\Unit\Listeners\ListenerTest;
+use Tests\Unit\Listeners\ListenerTests;
 
-class CreatedTest extends ListenerTest
+class CreatedTest extends ListenerTests
 {
     public function testHandle(): void
     {

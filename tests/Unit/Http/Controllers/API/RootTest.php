@@ -9,7 +9,7 @@ use Dingo\Api\Http\Response;
 use Illuminate\Http\Request;
 use PHPOpenSourceSaver\JWTAuth\JWT;
 
-class RootTest extends APITest
+class RootTest extends APITests
 {
     private const string TYPE_INDEX = 'type';
     private const string NAME_INDEX = 'name';

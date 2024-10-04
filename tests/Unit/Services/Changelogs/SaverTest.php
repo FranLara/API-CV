@@ -10,9 +10,9 @@ use App\Services\Changelogs\Mapper;
 use App\Services\Changelogs\Saver;
 use Illuminate\Support\Facades\Event;
 use PHPUnit\Framework\MockObject\Exception;
-use Tests\Unit\Services\ServiceTest;
+use Tests\Unit\Services\ServiceTests;
 
-class SaverTest extends ServiceTest
+class SaverTest extends ServiceTests
 {
     private const string TYPE = 'test_type';
     private const string ENTITY_ID = 'test_entity_id';

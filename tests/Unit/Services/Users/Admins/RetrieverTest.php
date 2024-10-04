@@ -8,9 +8,9 @@ use App\BusinessObjects\Models\Users\Admin as AdminModel;
 use App\Services\Users\Admins\Retriever;
 use App\Services\Users\Admins\Transformer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Tests\Unit\Services\ServiceTest;
+use Tests\Unit\Services\ServiceTests;
 
-class RetrieverTest extends ServiceTest
+class RetrieverTest extends ServiceTests
 {
 	private Retriever $retriever;
 

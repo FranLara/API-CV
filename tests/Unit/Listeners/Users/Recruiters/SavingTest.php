@@ -8,9 +8,9 @@ use App\BusinessObjects\Models\Users\Recruiter;
 use App\Events\Users\Recruiters\Saving as SavingEvent;
 use App\Listeners\Users\Recruiters\Saving;
 use Illuminate\Support\Str;
-use Tests\Unit\Listeners\ListenerTest;
+use Tests\Unit\Listeners\ListenerTests;
 
-class SavingTest extends ListenerTest
+class SavingTest extends ListenerTests
 {
     /**
      * @dataProvider providerField
