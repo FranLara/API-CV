@@ -10,7 +10,7 @@ trait Errors
 {
     protected function getCollectionErrorMessage(string $variable, Collection $list, $input): string
     {
-        return '- The ' . $variable . ' field must have the following values: "' . $list->implode('","')
-               . '". (Wrong input => "' . $input . '")' . PHP_EOL;
+        return sprintf('- The %s field must have the following values: "%s". (Wrong input => "%s")' . PHP_EOL,
+            $variable, $list->implode('","'), $input);
     }
 }
