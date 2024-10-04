@@ -19,6 +19,7 @@ class RootTest extends APITest
     private const string ENDPOINT_TRANSLATIONS = self::API_TRANSLATIONS . 'endpoints.';
     private const string TOKEN_TRANSLATIONS = self::ENDPOINT_TRANSLATIONS . 'token.';
     private const string ACCOUNT_TRANSLATIONS = self::ENDPOINT_TRANSLATIONS . 'account.';
+
     private array $parameterIndexes = [self::TYPE_INDEX, self::NAME_INDEX];
     private array $resourceIndexes = [
         self::TYPE_INDEX,

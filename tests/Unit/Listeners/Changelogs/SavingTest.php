@@ -11,13 +11,25 @@ use Tests\Unit\Listeners\ListenerTest;
 
 class SavingTest extends ListenerTest
 {
-    public function testHandle(): void
+    /**
+     * @dataProvider providerField
+     */
+    public function testHandle(bool $expectedResult = true, string $field = null, $value = null): void
     {
-        /** @var Changelog $changelog */
-        $changelog = Changelog::factory();
-        (new Saving())->handle(new SavingEvent($changelog));
+        $variable = [];
+        if (!empty($field)) {
+            $variable = [$field => $value];
+        }
 
-        $this->assertDatabaseCount('jobs', 2);
-        $this->assertDatabaseHas('jobs', ['queue' => 'notifications']);
+        /** @var Changelog $changelog */
+        $changelog = Changelog::factory()->make($variable);
+        $result = (new Saving())->handle(new SavingEvent($changelog));
+
+        $this->assertEquals($expectedResult, $result);
+    }
+
+    public static function providerField(): array
+    {
+        return [[], [false, 'type', 'test'], [false, 'value_payload', 'test']];
     }
 }
