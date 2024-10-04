@@ -8,7 +8,7 @@ use App\BusinessObjects\DTOs\Utils\Token;
 use Illuminate\Http\Request;
 use Illuminate\Testing\Fluent\AssertableJson;
 
-class RootTest extends APITest
+class RootTest extends APITests
 {
     private const string TYPE_INDEX = 'type';
     private const string NAME_INDEX = 'name';
