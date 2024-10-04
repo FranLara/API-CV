@@ -32,6 +32,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           retention-days: 1
+          overwrite: true
+          include-hidden-files: true
           name: default-environment-${{vars.PROJECT}}-${{inputs.branch}}
           path: |
             .env
