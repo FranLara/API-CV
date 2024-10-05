@@ -24,10 +24,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Copy .env and create test result folder
-        run: |
-          mv .env.example .env
+        run: mv .env.example .env
 
-      - name: Archive file and folder
+      - name: Archive ENV file
         uses: actions/upload-artifact@v4
         with:
           retention-days: 1
