@@ -36,7 +36,7 @@ env:
 
 jobs:
   test-suite:
-    name: ${{inputs.suite_name}} Suite Tests
+    name: ${{inputs.suite-name}} Suite Tests
     runs-on: ubuntu-latest
     container: ${{vars.REGISTRY}}/${{vars.REPOSITORY}}:${{inputs.image-tag}}
 
@@ -62,5 +62,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           retention-days: 1
-          name: ${{env.REPORT_PATH}}-suites-${{vars.PROJECT}}-${{inputs.branch}}-${{inputs.suite_name}}
+          name: ${{env.REPORT_PATH}}-suites-${{vars.PROJECT}}-${{inputs.branch}}-${{inputs.suite-name}}
           path: ${{env.REPORT_PATH}}
