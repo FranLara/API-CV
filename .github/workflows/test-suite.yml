@@ -59,7 +59,7 @@ jobs:
         run: php vendor/bin/phpunit --testsuite="${{inputs.suite-name}}" --coverage-php="${{env.REPORT_PATH}}/clover/${{inputs.report-name}}-coverage.xml" --log-junit="${{env.REPORT_PATH}}/junit/${{inputs.report-name}}-junit.xml"
 
       - name: Archive test results
-        uses: actions/upload-artifact@424afd3cc8b1d8831ba13f238272c5b07102ee15
+        uses: actions/upload-artifact@v4
         with:
           retention-days: 1
           name: ${{env.REPORT_PATH}}-suites-${{vars.PROJECT}}-${{inputs.branch}}
