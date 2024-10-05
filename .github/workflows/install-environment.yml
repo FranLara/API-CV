@@ -26,7 +26,6 @@ jobs:
       - name: Copy .env and create test result folder
         run: |
           mv .env.example .env
-          mkdir -p test-reports
 
       - name: Archive file and folder
         uses: actions/upload-artifact@v4
@@ -35,6 +34,4 @@ jobs:
           overwrite: true
           include-hidden-files: true
           name: default-environment-${{vars.PROJECT}}-${{inputs.branch}}
-          path: |
-            .env
-            test-reports
+          path: .env
