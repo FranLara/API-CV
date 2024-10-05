@@ -6,10 +6,21 @@
     <title>Fran Lara CV API</title> @vite('resources/css/api.css')
 </head>
 <body class="bgHome">
-<div id="welcome" class="welcome"></div>
+<div><span id="welcome" class="welcome"></span></div>
 <script>
     {!! Vite::content('resources/js/api.js') !!}
     setWelcomeMessage('{{__('home.messages.welcome')}}');
 </script>
+<br/>
+<br/>
+<br/>
+<div class="social_networks">
+    <span>{{__('home.messages.social_networks')}}</span>
+    <ul>
+        <li><a href="https://www.linkedin.com/in/franciscolaracasalilla/" target="_blank">LinkedIn</a></li>
+        <li><a href="https://github.com/FranLara" target="_blank">GitHub</a></li>
+        <li><a href="mailto:francisco.lara.casalilla@gmail.com">Email</a></li>
+    </ul>
+</div>
 </body>
 </html>

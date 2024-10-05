@@ -4,7 +4,7 @@ import.meta.glob(['../images/**']);
 
 const typed = new Typed('#welcome', {
   strings: [''],
-  typeSpeed: 300,
+  typeSpeed: 200,
   loop: true
 });
 
