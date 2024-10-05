@@ -12,9 +12,9 @@ use Dingo\Api\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Illuminate\Testing\TestResponse;
-use Tests\Feature\Controllers\API\APITest;
+use Tests\Feature\Controllers\API\APITests;
 
-class TokenTest extends APITest
+class TokenTest extends APITests
 {
     private const string PSSWD = 'test_psswd';
     private const string TYPE_INDEX = 'token_type';

@@ -27,8 +27,9 @@ class User extends APIController
         ];
         $request->validate($rules);
 
-        $recruiter = new Recruiter($request->get(self::EMAIL_PARAMETER), $request->get(self::NAME_PARAMETER),
-            $request->get(self::LANGUAGE_PARAMETER), null, $request->get(self::LINKEDIN_PARAMETER));
+        $recruiter = new Recruiter(name: $request->get(self::NAME_PARAMETER),
+            email: $request->get(self::EMAIL_PARAMETER), language: $request->get(self::LANGUAGE_PARAMETER),
+            linkedinProfile: $request->get(self::LINKEDIN_PARAMETER));
 
         try {
             $creator->create($recruiter);

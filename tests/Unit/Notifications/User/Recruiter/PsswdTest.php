@@ -7,7 +7,7 @@ use App\Notifications\User\Recruiter\Psswd;
 use Illuminate\Support\Facades\Lang;
 use stdClass;
 
-class PsswdTest extends RecruiterTest
+class PsswdTest extends RecruiterTests
 {
 	/**
 	 * @dataProvider providerMailData

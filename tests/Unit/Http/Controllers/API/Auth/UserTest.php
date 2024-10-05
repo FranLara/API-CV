@@ -12,9 +12,9 @@ use App\Services\Users\Recruiters\Creator;
 use Dingo\Api\Http\Response;
 use Exception;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Tests\Unit\Http\Controllers\API\APITest;
+use Tests\Unit\Http\Controllers\API\APITests;
 
-class UserTest extends APITest
+class UserTest extends APITests
 {
     public function testRequest(): void
     {

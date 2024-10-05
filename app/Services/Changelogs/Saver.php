@@ -8,13 +8,10 @@ use App\BusinessObjects\DTOs\DTO;
 use App\BusinessObjects\Models\Changelog as ChangelogModel;
 use App\Services\Saver as SaverInterface;
 
-class Saver implements SaverInterface
+readonly class Saver implements SaverInterface
 {
-    protected Mapper $mapper;
-
-    public function __construct(Mapper $mapper)
+    public function __construct(protected Mapper $mapper)
     {
-        $this->mapper = $mapper;
     }
 
     public function save(DTO $changelog): bool

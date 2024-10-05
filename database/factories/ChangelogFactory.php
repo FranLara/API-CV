@@ -13,6 +13,10 @@ class ChangelogFactory extends Factory
 
     public function definition(): array
     {
-        return [];
+        return [
+            'entity_id'     => fake()->numberBetween(1),
+            'type'          => collect($this->model::ENTITY_TYPES)->random(),
+            'value_payload' => json_encode([$this->faker->word() => $this->faker->word()]),
+        ];
     }
 }

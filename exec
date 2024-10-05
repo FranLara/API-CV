@@ -44,5 +44,5 @@ if [ $# -gt 0 ]; then
     fi
 
 else
-    docker-compose ps
+    docker compose ps
 fi

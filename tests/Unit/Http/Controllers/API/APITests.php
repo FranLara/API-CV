@@ -6,7 +6,7 @@ namespace Tests\Unit\Http\Controllers\API;
 use Tests\TestCase;
 use Tests\Utils\Request as RequestUtils;
 
-abstract class APITest extends TestCase
+abstract class APITests extends TestCase
 {
 	use RequestUtils;
 

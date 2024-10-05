@@ -6,11 +6,11 @@ namespace Tests\Feature\Controllers\API\Auth;
 
 use App\Http\Controllers\API\API as APIController;
 use Dingo\Api\Http\Response;
-use Tests\Feature\Controllers\API\APITest;
+use Tests\Feature\Controllers\API\APITests;
 
 use function collect;
 
-class UserTest extends APITest
+class UserTest extends APITests
 {
     /**
      * @dataProvider providerUsers

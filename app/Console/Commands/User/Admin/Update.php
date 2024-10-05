@@ -47,7 +47,7 @@ class Update extends AdminCommand
             hint: __(self::UPDATE_TRANSLATIONS . 'username.hint'));
 
         if (Str::of($username)->lower()->exactly(self::EXIT)) {
-            return new Admin($username);
+            return new Admin(username:$username);
         }
 
         try {

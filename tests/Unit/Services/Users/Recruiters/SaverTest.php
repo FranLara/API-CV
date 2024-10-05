@@ -9,9 +9,9 @@ use App\BusinessObjects\Models\Users\Recruiter;
 use App\Services\Users\Recruiters\Mapper;
 use App\Services\Users\Recruiters\Saver;
 use Illuminate\Support\Facades\Hash;
-use Tests\Unit\Services\ServiceTest;
+use Tests\Unit\Services\ServiceTests;
 
-class SaverTest extends ServiceTest
+class SaverTest extends ServiceTests
 {
     private const string NAME = 'test_name';
     private const string EMAIL = 'test_email';

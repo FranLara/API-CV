@@ -12,6 +12,6 @@ class Transformer extends UserTransformer
 
 	public function transform(Model $model): Admin
 	{
-		return new Admin($model->username, $model->language, null, $model->id);
+		return new Admin(identifier: $model->id, username:$model->username, language:$model->language);
 	}
 }

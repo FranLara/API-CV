@@ -3,9 +3,9 @@ declare(strict_types = 1);
 
 namespace Tests\Feature\Controllers\API;
 
-use Tests\Feature\FeatureTest;
+use Tests\Feature\FeatureTests;
 
-abstract class APITest extends FeatureTest
+abstract class APITests extends FeatureTests
 {
 	protected const string API_TRANSLATIONS = 'api.';
 	protected string $domain;

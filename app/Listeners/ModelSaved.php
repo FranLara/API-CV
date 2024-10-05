@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Listeners;
 
@@ -9,17 +10,17 @@ use App\Services\Changelogs\Saver;
 use Illuminate\Contracts\Events\ShouldHandleEventsAfterCommit;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class ModelSaved implements ShouldQueue, ShouldHandleEventsAfterCommit
+readonly class ModelSaved implements ShouldQueue, ShouldHandleEventsAfterCommit
 {
+    public function __construct(private Saver $saver)
+    {
+    }
 
-	public function __construct(private Saver $saver)
-	{
-	}
+    public function handle(ModelSavedEvent $event): void
+    {
+        $changelog = new Changelog(entityId: $event->model->id, type: get_class($event->model),
+            valuePayload: $event->model->toJson());
 
-	public function handle(ModelSavedEvent $event): void
-	{
-		$changelog = new Changelog(get_class($event->model), $event->model->id, $event->model->toJson());
-
-		$this->saver->save($changelog);
-	}
+        $this->saver->save($changelog);
+    }
 }

@@ -21,6 +21,7 @@ class Create extends AdminCommand
     use NotificationUtils;
 
     private const string CREATION_TRANSLATIONS = self::ADMIN_TRANSLATIONS . 'creation.';
+
     protected $description = 'This command creates an admin user asking by keyboard the username and the password.';
 
     public function __construct(Saver $saver, Retriever $retriever)
@@ -30,7 +31,7 @@ class Create extends AdminCommand
         parent::__construct($saver, $retriever);
     }
 
-    public function handle(Saver $saver, Retriever $retriever): void
+    public function handle(): void
     {
         do {
             $username = text(label: __(self::CREATION_TRANSLATIONS . 'username.label'), required: true,
@@ -57,10 +58,10 @@ class Create extends AdminCommand
 
     private function createAdmin(string $username): void
     {
-        $psswrd = password(label: __(self::CREATION_TRANSLATIONS . 'password'), required: true);
+        $psswd = password(label: __(self::CREATION_TRANSLATIONS . 'password'), required: true);
         $language = $this->getLanguage(__(self::CREATION_TRANSLATIONS . 'language'), 'en');
 
-        $admin = new Admin($username, $language, $psswrd);
+        $admin = new Admin(username: $username, psswd: $psswd, language: $language);
 
         $userSaved = $this->saver->save($admin);
 

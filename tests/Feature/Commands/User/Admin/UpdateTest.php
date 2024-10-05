@@ -6,7 +6,7 @@ namespace Tests\Feature\Commands\User\Admin;
 
 use App\BusinessObjects\Models\Users\Admin;
 
-class UpdateTest extends AdminTest
+class UpdateTest extends AdminTests
 {
     private const string USERNAME = 'test_username';
     private const string UPDATE_TRANSLATIONS = self::ADMIN_TRANSLATIONS . 'update.';

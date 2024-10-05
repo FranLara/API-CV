@@ -1,12 +1,12 @@
 <?php
 declare(strict_types = 1);
 
-namespace Tests\Unit\Listeners;
+namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-abstract class ListenerTest extends TestCase
+abstract class FeatureTests extends TestCase
 {
 	use RefreshDatabase;
 }

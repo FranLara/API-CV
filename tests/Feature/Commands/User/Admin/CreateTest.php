@@ -8,7 +8,7 @@ use App\BusinessObjects\Models\Users\Admin;
 use App\Events\ModelSaved;
 use Illuminate\Support\Facades\Event;
 
-class CreateTest extends AdminTest
+class CreateTest extends AdminTests
 {
     private const string USERNAME = 'test_username';
     private const string CREATION_TRANSLATIONS = self::ADMIN_TRANSLATIONS . 'creation.';

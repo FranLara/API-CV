@@ -8,7 +8,7 @@ use App\Notifications\User\Recruiter\Created;
 use Illuminate\Support\Facades\Lang;
 use stdClass;
 
-class CreatedTest extends RecruiterTest
+class CreatedTest extends RecruiterTests
 {
     /**
      * @dataProvider providerMailData

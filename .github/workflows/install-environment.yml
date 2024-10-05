@@ -24,15 +24,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Copy .env and create test result folder
-        run: |
-          mv .env.example .env
-          mkdir -p test-reports
+        run: mv .env.example .env
 
-      - name: Archive file and folder
+      - name: Archive ENV file
         uses: actions/upload-artifact@v4
         with:
           retention-days: 1
+          overwrite: true
+          include-hidden-files: true
           name: default-environment-${{vars.PROJECT}}-${{inputs.branch}}
-          path: |
-            .env
-            test-reports
+          path: .env

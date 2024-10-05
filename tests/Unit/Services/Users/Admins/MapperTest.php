@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Tests\Unit\Services\Users\Admins;
 
@@ -11,30 +12,38 @@ use Tests\TestCase;
 
 class MapperTest extends TestCase
 {
-	private const PSSWD = 'test_psswd';
-	private const LANGUAGE = 'test_language';
-	private const IDENTIFIER = 'test_identifier';
+    private const string PSSWD = 'test_psswd';
+    private const string LANGUAGE = 'test_language';
+    private const string IDENTIFIER = 'test_identifier';
 
-	/**
-	 * @dataProvider providerAdminData
-	 */
-	public function testMap(?string $language = null, ?string $psswd = null, ?string $identifier = null): void
-	{
-		$admin = (new Mapper())->map(new AdminDTO(null, $language, $psswd, $identifier), new Admin());
+    /**
+     * @dataProvider providerAdminData
+     */
+    public function testMap(?string $language = null, ?string $psswd = null, ?string $identifier = null): void
+    {
+        $admin = (new Mapper())->map(new AdminDTO(language: $language, psswd: $psswd, identifier: $identifier),
+            new Admin());
 
-		$this->assertSame($language, $admin->language);
-		if (!empty($psswd)) {
-			$this->assertTrue(Hash::check($psswd, $admin->password));
-		}
-		if (empty($identifier)) {
-			$this->assertGreaterThan(now()->subMinute(), $admin->created_at);
-		}
-	}
+        $this->assertSame($language, $admin->language);
+        if (!empty($psswd)) {
+            $this->assertTrue(Hash::check($psswd, $admin->password));
+        }
+        if (empty($identifier)) {
+            $this->assertGreaterThan(now()->subMinute(), $admin->created_at);
+        }
+    }
 
-	public static function providerAdminData(): array
-	{
-		return [[], [self::LANGUAGE], [null, self::PSSWD], [null, null, self::IDENTIFIER],
-			[self::LANGUAGE, self::PSSWD], [null, self::PSSWD, self::IDENTIFIER],
-			[self::LANGUAGE, null, self::IDENTIFIER], [self::LANGUAGE, self::PSSWD, self::IDENTIFIER]];
-	}
+    public static function providerAdminData(): array
+    {
+        return [
+            [],
+            [self::LANGUAGE],
+            [null, self::PSSWD],
+            [null, null, self::IDENTIFIER],
+            [self::LANGUAGE, self::PSSWD],
+            [null, self::PSSWD, self::IDENTIFIER],
+            [self::LANGUAGE, null, self::IDENTIFIER],
+            [self::LANGUAGE, self::PSSWD, self::IDENTIFIER]
+        ];
+    }
 }

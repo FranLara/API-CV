@@ -8,9 +8,9 @@ use App\BusinessObjects\DTOs\Users\Recruiter;
 use App\Exceptions\Services\RecruiterCreationException;
 use App\Services\Users\Recruiters\Creator;
 use App\Services\Users\Recruiters\Saver;
-use Tests\Unit\Services\ServiceTest;
+use Tests\Unit\Services\ServiceTests;
 
-class CreatorTest extends ServiceTest
+class CreatorTest extends ServiceTests
 {
     /**
      * @throws RecruiterCreationException
