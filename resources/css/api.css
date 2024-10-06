@@ -11,16 +11,22 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-family: 'Your Font', sans-serif;
+    font-family: 'Courier New', sans-serif;
     color: #008647;
+    text-align: center;
+}
+
+.name {
+    font-size: xxx-large;
+    margin-bottom: 62px;
 }
 
 .welcome {
-    text-align: center;
     font-size: xx-large;
 }
 
 .social_networks {
+    margin-top: 31px;
     text-align: center;
     font-size: x-large;
 }
@@ -38,8 +44,9 @@
     text-decoration: none;
     color: #008647;
     font-size: large;
+    transition: color 0.3s;
 }
 
 .social_networks a:hover {
-    text-decoration: underline;
+    color: #005a3d;
 }
