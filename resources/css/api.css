@@ -1,20 +1,52 @@
 .bgHome {
-	margin: 0;
-	padding: 0;
-	background-image: linear-gradient(to top, rgba(0, 0, 0, 1) 35%,
-		rgba(0, 0, 0, 0.31) 100%), url('../images/background.jpg');
-	background-size: cover;
-	background-position: center;
-	background-attachment: fixed;
-	height: 100vh;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-family: 'Your Font', sans-serif;
-	color: #00a859;
+    margin: 0;
+    padding: 0;
+    background-image: linear-gradient(to top, rgba(0, 0, 0, 1) 35%,
+    rgba(0, 0, 0, 0.31) 100%), url('../images/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Courier New', sans-serif;
+    color: #008647;
+    text-align: center;
 }
 
-.welcome{
-	text-align: center;
-	font-size: x-large;
+.name {
+    font-size: xxx-large;
+    margin-bottom: 62px;
+}
+
+.welcome {
+    font-size: xx-large;
+}
+
+.social_networks {
+    margin-top: 31px;
+    text-align: center;
+    font-size: x-large;
+}
+
+.social_networks ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.social_networks li {
+    margin-bottom: 10px;
+}
+
+.social_networks a {
+    text-decoration: none;
+    color: #008647;
+    font-size: large;
+    transition: color 0.3s;
+}
+
+.social_networks a:hover {
+    color: #005a3d;
 }
