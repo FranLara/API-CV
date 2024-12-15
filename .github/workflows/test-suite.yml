@@ -38,7 +38,7 @@ jobs:
   test-suite:
     name: ${{inputs.suite-name}} Suite Tests
     runs-on: ubuntu-latest
-    container: ${{vars.REGISTRY}}/${{vars.REPOSITORY}}:${{inputs.image-tag}}
+    container: serversideup/php:8.3-cli-alpine
 
     steps:
       - name: Checkout to test
