@@ -53,7 +53,7 @@ class RootTest extends APITests
 
     private function getAuthorization(?string $role): array
     {
-        $bearerToken = 'Bearer ';
+        $bearerToken = 'Bearer test.token.';
         $bearerToken = match ($role) {
             Token::GUEST_ROLE => $bearerToken . 'test_token',
             Token::ADMIN_ROLE => $bearerToken . 'test_admin_token',

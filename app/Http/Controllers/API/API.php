@@ -17,6 +17,7 @@ abstract class API extends Controller
     public const string USERNAME_PARAMETER = 'username';
     public const string LANGUAGE_PARAMETER = 'language';
     public const string LINKEDIN_PARAMETER = 'linkedin_profile';
+
     protected const string API_TRANSLATIONS = 'api.';
     protected const string REQUIRED_VALIDATION = 'required';
 }
