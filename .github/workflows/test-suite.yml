@@ -57,6 +57,9 @@ jobs:
         with:
           name: default-environment-${{vars.PROJECT}}-${{inputs.branch}}
 
+      - name: Install Xdebug
+        run: install-php-extensions xdebug
+
       - name: Run tests
         run: php vendor/bin/phpunit --testsuite="${{inputs.suite-name}}" --coverage-php="${{env.REPORT_PATH}}/clover/${{inputs.report-name}}-coverage.xml" --log-junit="${{env.REPORT_PATH}}/junit/${{inputs.report-name}}-junit.xml"
 

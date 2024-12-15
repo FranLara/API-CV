@@ -1,18 +1,7 @@
 name: Cache Libraries
 run-name: ${{github.actor}} caches libraries for ${{vars.PROJECT}}
 
-on:
-  workflow_call:
-    inputs:
-      image-tag:
-        type: string
-        required: true
-  workflow_dispatch:
-    inputs:
-      image-tag:
-        type: string
-        required: true
-        description: Image tag
+on: [workflow_call, workflow_dispatch]
 
 jobs:
   cache-libraries:
