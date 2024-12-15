@@ -18,7 +18,9 @@ jobs:
   cache-libraries:
     name: Cache Libraries
     runs-on: ubuntu-latest
-    container: serversideup/php:8.3-cli-alpine
+    container:
+      image: serversideup/php:8.3-cli-alpine
+      options: --user root
     steps:
       - name: Checkout to cache
         uses: actions/checkout@v4
