@@ -10,9 +10,6 @@ on:
       report-name:
         type: string
         required: true
-      image-tag:
-        type: string
-        required: true
       branch:
         type: string
         required: true

@@ -15,8 +15,6 @@ jobs:
   install-libraries:
     name: Library Caching
     uses: ./.github/workflows/cache-libraries.yml
-    with:
-      image-tag: ${{github.ref_name}}
 
   check-security:
     name: Check Composer Security
@@ -87,7 +85,6 @@ jobs:
       report-name: unit-tests
       suite-name: Unit
       branch: ${{github.ref_name}}
-      image-tag: ${{github.ref_name}}
 
   test-feature:
     name: Feature Test Suite
@@ -97,4 +94,3 @@ jobs:
       report-name: feature-tests
       suite-name: Feature
       branch: ${{github.ref_name}}
-      image-tag: ${{github.ref_name}}
