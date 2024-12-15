@@ -6,6 +6,7 @@ namespace App\Http\Controllers\API\Auth;
 
 use App\Http\Controllers\API\API as APIController;
 use App\Services\Users\Tokener;
+use Dingo\Api\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use PHPOpenSourceSaver\JWTAuth\JWT;
@@ -16,6 +17,13 @@ class Token extends APIController
 {
     public function __construct(private readonly JWT $tokenManager)
     {
+    }
+
+    public function options(): Response
+    {
+        $methods = [Request::METHOD_GET, Request::METHOD_OPTIONS, Request::METHOD_POST];
+
+        return (new Response([], Response::HTTP_OK))->header('Allow', implode(', ', $methods));
     }
 
     public function request(Request $request, Tokener $tokener): JsonResponse
