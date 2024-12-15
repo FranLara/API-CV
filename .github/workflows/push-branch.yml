@@ -6,7 +6,11 @@ on:
   push:
     branches-ignore:
       - main
-      
+
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   install-libraries:
     name: Library Caching
