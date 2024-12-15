@@ -22,7 +22,9 @@ jobs:
     name: Check Composer Security
     runs-on: ubuntu-latest
     needs: install-libraries
-    container: serversideup/php:8.3-cli-alpine
+    container:
+      image: serversideup/php:8.3-cli-alpine
+      options: --user root
 
     steps:
       - name: Checkout to check library security
@@ -41,7 +43,9 @@ jobs:
     name: Check Quality
     runs-on: ubuntu-latest
     needs: install-libraries
-    container: serversideup/php:8.3-cli-alpine
+    container:
+      image: serversideup/php:8.3-cli-alpine
+      options: --user root
     continue-on-error: true
 
     steps:

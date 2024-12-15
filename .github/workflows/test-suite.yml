@@ -38,7 +38,9 @@ jobs:
   test-suite:
     name: ${{inputs.suite-name}} Suite Tests
     runs-on: ubuntu-latest
-    container: serversideup/php:8.3-cli-alpine
+    container:
+      image: serversideup/php:8.3-cli-alpine
+      options: --user root
 
     steps:
       - name: Checkout to test
