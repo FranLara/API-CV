@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Http\Controllers\Web;
 
@@ -11,8 +12,8 @@ use Illuminate\View\View;
 class Landing extends Controller
 {
 
-	public function home(): Factory|View
-	{
-		return view('home');
-	}
+    public function home(): Factory|View
+    {
+        return view('home');
+    }
 }

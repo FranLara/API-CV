@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Tests;
 
@@ -7,13 +8,14 @@ use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
-	use CreatesApplication;
-	protected bool $seed = true;
+    use CreatesApplication;
 
-	protected function setUp(): void
-	{
-		parent::setUp();
+    protected bool $seed = true;
 
-		$this->withoutVite();
-	}
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->withoutVite();
+    }
 }

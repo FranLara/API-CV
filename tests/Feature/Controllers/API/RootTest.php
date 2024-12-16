@@ -7,6 +7,10 @@ namespace Tests\Feature\Controllers\API;
 use App\BusinessObjects\DTOs\Utils\Token;
 use Illuminate\Http\Request;
 use Illuminate\Testing\Fluent\AssertableJson;
+use PHPOpenSourceSaver\JWTAuth\JWT;
+use PHPUnit\Framework\MockObject\Exception;
+
+use function PHPUnit\Framework\returnSelf;
 
 class RootTest extends APITests
 {
@@ -30,9 +34,13 @@ class RootTest extends APITests
 
     /**
      * @dataProvider providerRole
+     * @throws Exception
      */
     public function testIndex(string $role = null): void
     {
+        $mockedTokenManager = $this->createConfiguredMock(JWT::class, ['setToken' => returnSelf(), 'check' => true]);
+        $this->app->instance(JWT::class, $mockedTokenManager);
+
         $header = $this->getHeader($this->getAuthorization($role));
         $this->getJson($this->domain, $header)->assertJson(fn(AssertableJson $json) => $json->has('Resources',
             fn(AssertableJson $resources) => $this->assertResources($resources, $role)));
