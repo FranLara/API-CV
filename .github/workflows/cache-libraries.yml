@@ -1,24 +1,15 @@
 name: Cache Libraries
 run-name: ${{github.actor}} caches libraries for ${{vars.PROJECT}}
 
-on:
-  workflow_call:
-    inputs:
-      image-tag:
-        type: string
-        required: true
-  workflow_dispatch:
-    inputs:
-      image-tag:
-        type: string
-        required: true
-        description: Image tag
+on: [workflow_call, workflow_dispatch]
 
 jobs:
   cache-libraries:
     name: Cache Libraries
     runs-on: ubuntu-latest
-    container: ${{vars.REGISTRY}}/${{vars.REPOSITORY}}:${{inputs.image-tag}}
+    container:
+      image: serversideup/php:8.3-cli-alpine
+      options: --user root
     steps:
       - name: Checkout to cache
         uses: actions/checkout@v4

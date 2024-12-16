@@ -16,14 +16,15 @@ class Root extends APIController
     private const string TYPE_PARAMETER = 'type';
     private const string STRING_PARAMETER = 'string';
     private const string ENDPOINT_TRANSLATIONS = self::API_TRANSLATIONS . 'endpoints.';
-    private const string TOKEN_TRANSLATIONS = self::ENDPOINT_TRANSLATIONS . 'token.';
-    private const string ACCOUNT_TRANSLATIONS = self::ENDPOINT_TRANSLATIONS . 'account.';
+    private const string TOKEN_TRANSLATIONS = self::ENDPOINT_TRANSLATIONS . 'tokens.';
+    private const string ACCOUNT_TRANSLATIONS = self::ENDPOINT_TRANSLATIONS . 'accounts.';
 
     public function index(Request $request, JWT $tokenManager): Response
     {
         $resources = $this->getPublicResources($request);
 
-        if (!empty($request->bearerToken())) {
+        $token = $request->bearerToken();
+        if ((!empty($token)) && (count(explode('.', $token)) == 3) && ($tokenManager->setToken($token)->check())) {
             $resources = $resources->merge($this->getTokenedResources($request, $tokenManager));
         }
 
@@ -34,7 +35,7 @@ class Root extends APIController
 
     public function options(): Response
     {
-        $methods = [Request::METHOD_GET, Request::METHOD_OPTIONS, Request::METHOD_POST, Request::METHOD_PATCH];
+        $methods = [Request::METHOD_GET, Request::METHOD_OPTIONS, Request::METHOD_POST];
 
         return (new Response([], Response::HTTP_OK))->header('Allow', implode(', ', $methods));
     }
@@ -43,12 +44,12 @@ class Root extends APIController
     {
         $resources = collect();
 
-        $resources->push(new Resource(request: $request, path: 'token (' . Request::METHOD_POST . ')',
+        $resources->push(new Resource(request: $request, path: 'tokens (' . Request::METHOD_POST . ')',
             type: Request::METHOD_POST, parameters: [
                 [self::NAME_PARAMETER => self::USERNAME_PARAMETER, self::TYPE_PARAMETER => self::STRING_PARAMETER],
                 [self::NAME_PARAMETER => self::PSSWD_PARAMETER, self::TYPE_PARAMETER => self::STRING_PARAMETER]
             ], description: __(self::TOKEN_TRANSLATIONS . 'request')));
-        $resources->push(new Resource(request: $request, path: 'account', type: Request::METHOD_POST, parameters: [
+        $resources->push(new Resource(request: $request, path: 'accounts', type: Request::METHOD_POST, parameters: [
             [self::NAME_PARAMETER => self::EMAIL_PARAMETER, self::TYPE_PARAMETER => self::STRING_PARAMETER],
             [self::NAME_PARAMETER => self::NAME_PARAMETER, self::TYPE_PARAMETER => self::STRING_PARAMETER],
             [self::NAME_PARAMETER => self::LANGUAGE_PARAMETER, self::TYPE_PARAMETER => self::STRING_PARAMETER],
@@ -62,7 +63,7 @@ class Root extends APIController
     {
         $resources = collect();
 
-        $resources->push(new Resource(request: $request, path: 'token (' . Request::METHOD_GET . ')',
+        $resources->push(new Resource(request: $request, path: 'tokens (' . Request::METHOD_GET . ')',
             description: __(self::TOKEN_TRANSLATIONS . 'refresh')));
 
         return $resources;

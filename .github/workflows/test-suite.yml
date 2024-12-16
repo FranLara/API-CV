@@ -10,9 +10,6 @@ on:
       report-name:
         type: string
         required: true
-      image-tag:
-        type: string
-        required: true
       branch:
         type: string
         required: true
@@ -38,7 +35,9 @@ jobs:
   test-suite:
     name: ${{inputs.suite-name}} Suite Tests
     runs-on: ubuntu-latest
-    container: ${{vars.REGISTRY}}/${{vars.REPOSITORY}}:${{inputs.image-tag}}
+    container:
+      image: serversideup/php:8.3-cli-alpine
+      options: --user root
 
     steps:
       - name: Checkout to test
@@ -54,6 +53,9 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: default-environment-${{vars.PROJECT}}-${{inputs.branch}}
+
+      - name: Install Xdebug
+        run: install-php-extensions xdebug
 
       - name: Run tests
         run: php vendor/bin/phpunit --testsuite="${{inputs.suite-name}}" --coverage-php="${{env.REPORT_PATH}}/clover/${{inputs.report-name}}-coverage.xml" --log-junit="${{env.REPORT_PATH}}/junit/${{inputs.report-name}}-junit.xml"

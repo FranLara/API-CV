@@ -18,7 +18,9 @@ jobs:
   install-environment:
     name: Environment Installation
     runs-on: ubuntu-latest
-    container: laravelsail/php83-composer
+    container:
+      image: serversideup/php:8.3-cli-alpine
+      options: --user root
     steps:
       - name: Checkout to prepare environment
         uses: actions/checkout@v4

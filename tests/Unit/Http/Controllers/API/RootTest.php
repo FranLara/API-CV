@@ -8,35 +8,38 @@ use App\Http\Controllers\API\Root;
 use Dingo\Api\Http\Response;
 use Illuminate\Http\Request;
 use PHPOpenSourceSaver\JWTAuth\JWT;
+use PHPUnit\Framework\MockObject\Exception;
+
+use function PHPUnit\Framework\returnSelf;
 
 class RootTest extends APITests
 {
     private const string TYPE_INDEX = 'type';
     private const string NAME_INDEX = 'name';
-    private const string TOKEN_PATH = 'token';
+    private const string TOKEN_PATH = 'tokens';
     private const string STRING_TYPE = 'string';
     private const string RESOURCES = 'Resources';
-    private const string ACCOUNT_PATH = 'account';
+    private const string ACCOUNT_PATH = 'accounts';
     private const string DOMAIN = 'https://domain.test/';
     private const string PARAMETER_INDEX = 'parameters';
     private const string DESCRIPTION_INDEX = 'description';
     private const string ENDPOINT_INDEX = 'endpointExample';
     private const string ENDPOINT_TRANSLATIONS = self::API_TRANSLATIONS . 'endpoints.';
-    private const string TOKEN_TRANSLATIONS = self::ENDPOINT_TRANSLATIONS . 'token.';
-    private const string ACCOUNT_TRANSLATIONS = self::ENDPOINT_TRANSLATIONS . 'account.';
+    private const string TOKEN_TRANSLATIONS = self::ENDPOINT_TRANSLATIONS . 'tokens.';
+    private const string ACCOUNT_TRANSLATIONS = self::ENDPOINT_TRANSLATIONS . 'accounts.';
     private const array PUBLIC_RESOURCES_TO_CHECK = [
         self::TOKEN_PATH . ' (POST)' => [
             self::TYPE_INDEX        => Request::METHOD_POST,
             self::PARAMETER_INDEX   => 2,
             self::DESCRIPTION_INDEX => self::TOKEN_TRANSLATIONS . 'request',
-            self::ENDPOINT_INDEX    => self::DOMAIN . 'token?username=username&password=password'
+            self::ENDPOINT_INDEX    => self::DOMAIN . 'tokens?username=username&password=password'
         ],
         self::ACCOUNT_PATH           => [
             self::TYPE_INDEX        => Request::METHOD_POST,
             self::PARAMETER_INDEX   => 4,
             self::DESCRIPTION_INDEX => self::ACCOUNT_TRANSLATIONS . 'request',
             self::ENDPOINT_INDEX    => self::DOMAIN
-                                       . 'account?email=email&name=name&language=language&linkedin_profile=linkedin_profile'
+                                       . 'accounts?email=email&name=name&language=language&linkedin_profile=linkedin_profile'
         ]
     ];
     private const array TOKENED_RESOURCES_TO_CHECK = [
@@ -44,7 +47,7 @@ class RootTest extends APITests
             self::TYPE_INDEX        => Request::METHOD_GET,
             self::PARAMETER_INDEX   => 0,
             self::DESCRIPTION_INDEX => self::TOKEN_TRANSLATIONS . 'refresh',
-            self::ENDPOINT_INDEX    => self::DOMAIN . 'token'
+            self::ENDPOINT_INDEX    => self::DOMAIN . 'tokens'
         ]
     ];
 
@@ -52,11 +55,13 @@ class RootTest extends APITests
 
     /**
      * @dataProvider providerToken
+     * @throws Exception
      */
     public function testIndex(string $token = null): void
     {
         $request = $this->getRequest(['bearerToken' => $token]);
-        $index = json_decode($this->controller->index($request, $this->createMock(JWT::class))->content(), true);
+        $mockedTokenManager = $this->createConfiguredMock(JWT::class, ['setToken' => returnSelf(), 'check' => true]);
+        $index = json_decode($this->controller->index($request, $mockedTokenManager)->content(), true);
 
         $this->assertIsArray($index);
         $this->assertIsArray($index[self::RESOURCES]);
@@ -93,7 +98,7 @@ class RootTest extends APITests
     {
         $data = $this->controller->options();
 
-        $expectedMethods = [Request::METHOD_GET, Request::METHOD_OPTIONS, Request::METHOD_POST, Request::METHOD_PATCH];
+        $expectedMethods = [Request::METHOD_GET, Request::METHOD_OPTIONS, Request::METHOD_POST];
 
         $this->assertEquals(Response::HTTP_OK, $data->getStatusCode());
         $this->assertSame(implode(', ', $expectedMethods), $data->headers->get('Allow'));
@@ -101,7 +106,7 @@ class RootTest extends APITests
 
     public static function providerToken(): array
     {
-        return [[], ['test_token']];
+        return [[], ['test.token.test_token']];
     }
 
     protected function setUp(): void

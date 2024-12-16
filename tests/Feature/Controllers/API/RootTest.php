@@ -7,6 +7,10 @@ namespace Tests\Feature\Controllers\API;
 use App\BusinessObjects\DTOs\Utils\Token;
 use Illuminate\Http\Request;
 use Illuminate\Testing\Fluent\AssertableJson;
+use PHPOpenSourceSaver\JWTAuth\JWT;
+use PHPUnit\Framework\MockObject\Exception;
+
+use function PHPUnit\Framework\returnSelf;
 
 class RootTest extends APITests
 {
@@ -17,8 +21,8 @@ class RootTest extends APITests
     private const string DESCRIPTION_INDEX = 'description';
     private const string ENDPOINT_INDEX = 'endpointExample';
     private const string ENDPOINT_TRANSLATIONS = self::API_TRANSLATIONS . 'endpoints.';
-    private const string TOKEN_TRANSLATIONS = self::ENDPOINT_TRANSLATIONS . 'token.';
-    private const string ACCOUNT_TRANSLATIONS = self::ENDPOINT_TRANSLATIONS . 'account.';
+    private const string TOKEN_TRANSLATIONS = self::ENDPOINT_TRANSLATIONS . 'tokens.';
+    private const string ACCOUNT_TRANSLATIONS = self::ENDPOINT_TRANSLATIONS . 'accounts.';
 
     private array $parameterIndexes = [self::TYPE_INDEX, self::NAME_INDEX];
     private array $resourceIndexes = [
@@ -30,9 +34,13 @@ class RootTest extends APITests
 
     /**
      * @dataProvider providerRole
+     * @throws Exception
      */
     public function testIndex(string $role = null): void
     {
+        $mockedTokenManager = $this->createConfiguredMock(JWT::class, ['setToken' => returnSelf(), 'check' => true]);
+        $this->app->bind(JWT::class, fn() => $mockedTokenManager);
+
         $header = $this->getHeader($this->getAuthorization($role));
         $this->getJson($this->domain, $header)->assertJson(fn(AssertableJson $json) => $json->has('Resources',
             fn(AssertableJson $resources) => $this->assertResources($resources, $role)));
@@ -40,7 +48,7 @@ class RootTest extends APITests
 
     public function testOptions(): void
     {
-        $methods = [Request::METHOD_GET, Request::METHOD_OPTIONS, Request::METHOD_POST, Request::METHOD_PATCH];
+        $methods = [Request::METHOD_GET, Request::METHOD_OPTIONS, Request::METHOD_POST];
         $this->withHeaders($this->getHeader())
              ->options($this->domain . '/allows')
              ->assertHeader('Allow', implode(', ', $methods));
@@ -53,7 +61,7 @@ class RootTest extends APITests
 
     private function getAuthorization(?string $role): array
     {
-        $bearerToken = 'Bearer ';
+        $bearerToken = 'Bearer test.token.';
         $bearerToken = match ($role) {
             Token::GUEST_ROLE => $bearerToken . 'test_token',
             Token::ADMIN_ROLE => $bearerToken . 'test_admin_token',
@@ -77,79 +85,83 @@ class RootTest extends APITests
 
     private function assertPublicResources(AssertableJson $resources): AssertableJson
     {
-        return $resources->has('token (POST)', fn(AssertableJson $token) => $token->hasAll($this->resourceIndexes)
+        return $resources->has('tokens (POST)', fn(AssertableJson $token) => $token->hasAll($this->resourceIndexes)
+                                                                                   ->where(self::TYPE_INDEX,
+                                                                                       Request::METHOD_POST)
+                                                                                   ->where(self::DESCRIPTION_INDEX,
+                                                                                       __(self::TOKEN_TRANSLATIONS
+                                                                                          . 'request'))
+                                                                                   ->has(self::PARAMETER_INDEX, 2)
+                                                                                   ->has(self::PARAMETER_INDEX . '.0',
+                                                                                       fn(AssertableJson $parameter
+                                                                                       ) => $parameter->hasAll($this->parameterIndexes)
+                                                                                                      ->where(self::NAME_INDEX,
+                                                                                                          'username')
+                                                                                                      ->where(self::TYPE_INDEX,
+                                                                                                          self::STRING_TYPE))
+                                                                                   ->has(self::PARAMETER_INDEX . '.1',
+                                                                                       fn(AssertableJson $parameter
+                                                                                       ) => $parameter->hasAll($this->parameterIndexes)
+                                                                                                      ->where(self::NAME_INDEX,
+                                                                                                          'password')
+                                                                                                      ->where(self::TYPE_INDEX,
+                                                                                                          self::STRING_TYPE))
+                                                                                   ->where(self::ENDPOINT_INDEX,
+                                                                                       $this->domain
+                                                                                       . '/tokens?username=username&password=password'))
+                         ->has('accounts', fn(AssertableJson $account) => $account->hasAll($this->resourceIndexes)
                                                                                   ->where(self::TYPE_INDEX,
                                                                                       Request::METHOD_POST)
                                                                                   ->where(self::DESCRIPTION_INDEX,
-                                                                                      __(self::TOKEN_TRANSLATIONS
+                                                                                      __(self::ACCOUNT_TRANSLATIONS
                                                                                          . 'request'))
-                                                                                  ->has(self::PARAMETER_INDEX, 2)
+                                                                                  ->has(self::PARAMETER_INDEX, 4)
                                                                                   ->has(self::PARAMETER_INDEX . '.0',
-                                                                                      fn(AssertableJson $parameter
+                                                                                      fn(
+                                                                                          AssertableJson $parameter
                                                                                       ) => $parameter->hasAll($this->parameterIndexes)
                                                                                                      ->where(self::NAME_INDEX,
-                                                                                                         'username')
+                                                                                                         'email')
                                                                                                      ->where(self::TYPE_INDEX,
                                                                                                          self::STRING_TYPE))
                                                                                   ->has(self::PARAMETER_INDEX . '.1',
-                                                                                      fn(AssertableJson $parameter
+                                                                                      fn(
+                                                                                          AssertableJson $parameter
                                                                                       ) => $parameter->hasAll($this->parameterIndexes)
                                                                                                      ->where(self::NAME_INDEX,
-                                                                                                         'password')
+                                                                                                         'name')
+                                                                                                     ->where(self::TYPE_INDEX,
+                                                                                                         self::STRING_TYPE))
+                                                                                  ->has(self::PARAMETER_INDEX . '.2',
+                                                                                      fn(
+                                                                                          AssertableJson $parameter
+                                                                                      ) => $parameter->hasAll($this->parameterIndexes)
+                                                                                                     ->where(self::NAME_INDEX,
+                                                                                                         'language')
+                                                                                                     ->where(self::TYPE_INDEX,
+                                                                                                         self::STRING_TYPE))
+                                                                                  ->has(self::PARAMETER_INDEX . '.3',
+                                                                                      fn(
+                                                                                          AssertableJson $parameter
+                                                                                      ) => $parameter->hasAll($this->parameterIndexes)
+                                                                                                     ->where(self::NAME_INDEX,
+                                                                                                         'linkedin_profile')
                                                                                                      ->where(self::TYPE_INDEX,
                                                                                                          self::STRING_TYPE))
                                                                                   ->where(self::ENDPOINT_INDEX,
                                                                                       $this->domain
-                                                                                      . '/token?username=username&password=password'))
-                         ->has('account', fn(AssertableJson $account) => $account->hasAll($this->resourceIndexes)
-                                                                                 ->where(self::TYPE_INDEX,
-                                                                                     Request::METHOD_POST)
-                                                                                 ->where(self::DESCRIPTION_INDEX,
-                                                                                     __(self::ACCOUNT_TRANSLATIONS
-                                                                                        . 'request'))
-                                                                                 ->has(self::PARAMETER_INDEX, 4)
-                                                                                 ->has(self::PARAMETER_INDEX . '.0', fn(
-                                                                                     AssertableJson $parameter
-                                                                                 ) => $parameter->hasAll($this->parameterIndexes)
-                                                                                                ->where(self::NAME_INDEX,
-                                                                                                    'email')
-                                                                                                ->where(self::TYPE_INDEX,
-                                                                                                    self::STRING_TYPE))
-                                                                                 ->has(self::PARAMETER_INDEX . '.1', fn(
-                                                                                     AssertableJson $parameter
-                                                                                 ) => $parameter->hasAll($this->parameterIndexes)
-                                                                                                ->where(self::NAME_INDEX,
-                                                                                                    'name')
-                                                                                                ->where(self::TYPE_INDEX,
-                                                                                                    self::STRING_TYPE))
-                                                                                 ->has(self::PARAMETER_INDEX . '.2', fn(
-                                                                                     AssertableJson $parameter
-                                                                                 ) => $parameter->hasAll($this->parameterIndexes)
-                                                                                                ->where(self::NAME_INDEX,
-                                                                                                    'language')
-                                                                                                ->where(self::TYPE_INDEX,
-                                                                                                    self::STRING_TYPE))
-                                                                                 ->has(self::PARAMETER_INDEX . '.3', fn(
-                                                                                     AssertableJson $parameter
-                                                                                 ) => $parameter->hasAll($this->parameterIndexes)
-                                                                                                ->where(self::NAME_INDEX,
-                                                                                                    'linkedin_profile')
-                                                                                                ->where(self::TYPE_INDEX,
-                                                                                                    self::STRING_TYPE))
-                                                                                 ->where(self::ENDPOINT_INDEX,
-                                                                                     $this->domain
-                                                                                     . '/account?email=email&name=name&language=language&linkedin_profile=linkedin_profile'));
+                                                                                      . '/accounts?email=email&name=name&language=language&linkedin_profile=linkedin_profile'));
     }
 
     private function assertTokenedResources(AssertableJson $resources): AssertableJson
     {
-        return $resources->has('token (GET)', fn(AssertableJson $token) => $token->hasAll($this->resourceIndexes)
-                                                                                 ->where(self::TYPE_INDEX,
-                                                                                     Request::METHOD_GET)
-                                                                                 ->where(self::DESCRIPTION_INDEX,
-                                                                                     __(self::TOKEN_TRANSLATIONS
-                                                                                        . 'refresh'))
-                                                                                 ->where(self::ENDPOINT_INDEX,
-                                                                                     $this->domain . '/token'));
+        return $resources->has('tokens (GET)', fn(AssertableJson $token) => $token->hasAll($this->resourceIndexes)
+                                                                                  ->where(self::TYPE_INDEX,
+                                                                                      Request::METHOD_GET)
+                                                                                  ->where(self::DESCRIPTION_INDEX,
+                                                                                      __(self::TOKEN_TRANSLATIONS
+                                                                                         . 'refresh'))
+                                                                                  ->where(self::ENDPOINT_INDEX,
+                                                                                      $this->domain . '/tokens'));
     }
 }

@@ -1,12 +1,21 @@
 <?php
-$api->group(['middleware' => 'api', 'limit' => 60], function ($api) {
-	$api->get('', 'App\Http\Controllers\API\Root@index');
-	$api->options('allows', 'App\Http\Controllers\API\Root@options');
 
-	$api->post('token', 'App\Http\Controllers\API\Auth\Token@request');
-	$api->post('account', 'App\Http\Controllers\API\Auth\User@request');
+use Dingo\Api\Routing\Router;
 
-	$api->group(['middleware' => 'api.cv.auth'], function ($api) {
-		$api->get('token', 'App\Http\Controllers\API\Auth\Token@refresh');
-	});
+/** @var Router $api */
+$api->group(['middleware' => 'api', 'limit' => 60, 'namespace' => 'App\Http\Controllers\API'], function ($api) {
+    $api->get('', 'Root@index');
+    $api->options('allows', 'Root@options');
+
+    $api->group(['namespace' => 'Auth'], function ($api) {
+        $api->post('accounts', 'User@request');
+
+        $api->group(['prefix' => 'tokens'], function ($api) {
+            $api->options('', 'Token@options');
+            $api->post('', 'Token@request');
+            $api->group(['middleware' => 'api.cv.auth'], function ($api) {
+                $api->get('', 'Token@refresh');
+            });
+        });
+    });
 });

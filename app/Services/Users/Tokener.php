@@ -1,76 +1,81 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Services\Users;
 
 use App\BusinessObjects\DTOs\Utils\Token;
 use App\Http\Controllers\API\API as APIController;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
+
 use function collect;
 
 class Tokener
 {
-	private const string ROLE_CLAIM = 'role';
-	private const array ROLES = [Token::ADMIN_ROLE, Token::RECRUITER_ROLE];
+    private const string ROLE_CLAIM = 'role';
+    private const array ROLES = [Token::ADMIN_ROLE, Token::RECRUITER_ROLE]; //, 'technician'];
 
-	//, 'technician'];
-	public function getToken(array $credentials): string
-	{
-		if (empty($credentials)) {
-			return $this->getPayload(new Token());
-		}
+    public function getToken(array $credentials): string
+    {
+        if (empty($credentials)) {
+            return $this->getPayload(new Token());
+        }
 
-		return $this->getTokenByRole($credentials);
-	}
+        return $this->getTokenByRole($credentials);
+    }
 
-	private function getTokenByRole(array $credentials): string
-	{
-		$token = collect(self::ROLES)->map(function (string $role) use ($credentials) {
-			return $this->getPayload(new Token($role, $credentials));
-		})
-			->filter();
+    private function getTokenByRole(array $credentials): string
+    {
+        $token = collect(self::ROLES)->map(function (string $role) use ($credentials) {
+            return $this->getPayload(new Token($role, $credentials));
+        })->filter();
 
-		if ($token->count() == 1) {
-			return $token->first();
-		}
+        if ($token->count() == 1) {
+            return $token->first();
+        }
 
-		if ($token->count() > 1) {
-			// Throw exception of collision
-		}
+        if ($token->count() > 1) {
+            // Throw collision exception
+        }
 
-		Log::channel('credentials')->notice('The username "{username}" tried to request a token, but it could\'t login.', [
-			'username' => $credentials['username']]);
-		return $this->getPayload(new Token());
-	}
+        $message = 'The username "{username}" tried to request a token, but it could\'t login.';
+        Log::channel('credentials')->notice($message, ['username' => $credentials['username']]);
 
-	private function getPayload(Token $token): string
-	{
-		$claims = ['sub' => 0, self::ROLE_CLAIM => Token::GUEST_ROLE];
-		$credentials = [APIController::USERNAME_PARAMETER => env('SUPER_ADMIN_USERNAME'),
-			APIController::PSSWD_PARAMETER => env('SUPER_ADMIN_PASSWORD')];
+        return $this->getPayload(new Token());
+    }
 
-		if (!empty($token->getCredentials())) {
-			$credentials = $this->getCredentials($token);
-			$claims = [self::ROLE_CLAIM => $token->getRole()];
-		}
+    private function getPayload(Token $token): string
+    {
+        $claims = ['sub' => 0, self::ROLE_CLAIM => Token::GUEST_ROLE];
+        $credentials = [
+            APIController::USERNAME_PARAMETER => env('SUPER_ADMIN_USERNAME'),
+            APIController::PSSWD_PARAMETER    => env('SUPER_ADMIN_PASSWORD'),
+        ];
 
-		$token = auth('api.' . $token->getRole())->claims($claims)->attempt($credentials);
+        if (!empty($token->getCredentials())) {
+            $credentials = $this->getCredentials($token);
+            $claims = [self::ROLE_CLAIM => $token->getRole()];
+        }
 
-		if (strval($token)) {
-			return $token;
-		}
+        $token = auth('api.' . $token->getRole())->claims($claims)->attempt($credentials);
 
-		return '';
-	}
+        if (strval($token)) {
+            return $token;
+        }
 
-	private function getCredentials(Token $token): array
-	{
-		if (Str::of($token->getRole())->exactly(Token::ADMIN_ROLE)) {
-			return $token->getCredentials();
-		}
+        return '';
+    }
 
-		return ['email' => $token->getCredentials()[APIController::USERNAME_PARAMETER],
-			'password' => $token->getCredentials()[APIController::PSSWD_PARAMETER]];
-	}
+    private function getCredentials(Token $token): array
+    {
+        if (Str::of($token->getRole())->exactly(Token::ADMIN_ROLE)) {
+            return $token->getCredentials();
+        }
+
+        return [
+            'password' => $token->getCredentials()[APIController::PSSWD_PARAMETER],
+            'email'    => $token->getCredentials()[APIController::USERNAME_PARAMETER],
+        ];
+    }
 }

@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Tests\Feature;
 
@@ -8,5 +9,5 @@ use Tests\TestCase;
 
 abstract class FeatureTests extends TestCase
 {
-	use RefreshDatabase;
+    use RefreshDatabase;
 }
