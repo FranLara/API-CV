@@ -17,7 +17,7 @@ class UserTest extends APITests
      */
     public function testRequest(int $expectedStatusCode = Response::HTTP_UNPROCESSABLE_ENTITY, string $email = ''): void
     {
-        $response = $this->post($this->domain . '/account', $this->getUser($email), $this->getHeader());
+        $response = $this->post($this->domain . '/accounts', $this->getUser($email), $this->getHeader());
 
         $this->assertEquals($expectedStatusCode, $response->getStatusCode());
 

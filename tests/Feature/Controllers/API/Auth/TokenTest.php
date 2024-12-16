@@ -55,7 +55,7 @@ class TokenTest extends APITests
     public function testRefresh(int $expectedStatusCode = Response::HTTP_UNAUTHORIZED, string $role = null): void
     {
         $authorization = ['Authorization' => 'Bearer ' . $this->getToken($role)];
-        $response = $this->getJson($this->domain . '/token', $this->getHeader($authorization));
+        $response = $this->getJson($this->domain . '/tokens', $this->getHeader($authorization));
         $this->assertEquals($expectedStatusCode, $response->getStatusCode());
 
         if ($response->getStatusCode() == Response::HTTP_OK) {
@@ -100,7 +100,7 @@ class TokenTest extends APITests
 
     private function getTokenResponse(array $credentials): TestResponse
     {
-        return $this->postJson($this->domain . '/token', $credentials, $this->getHeader());
+        return $this->postJson($this->domain . '/tokens', $credentials, $this->getHeader());
     }
 
     private function getToken(?string $role): string
