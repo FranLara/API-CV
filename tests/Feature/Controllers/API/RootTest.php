@@ -39,7 +39,7 @@ class RootTest extends APITests
     public function testIndex(string $role = null): void
     {
         $mockedTokenManager = $this->createConfiguredMock(JWT::class, ['setToken' => returnSelf(), 'check' => true]);
-        $this->app->instance(JWT::class, $mockedTokenManager);
+        $this->app->bind(JWT::class, fn() => $mockedTokenManager);
 
         $header = $this->getHeader($this->getAuthorization($role));
         $this->getJson($this->domain, $header)->assertJson(fn(AssertableJson $json) => $json->has('Resources',
