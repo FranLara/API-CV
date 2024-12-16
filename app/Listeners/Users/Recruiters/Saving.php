@@ -16,8 +16,7 @@ class Saving
         $checkRecruiter = Recruiter::whereEmail($event->recruiter->email)->first();
         if ((!empty($checkRecruiter))
             && ((empty($event->recruiter->id))
-                || ((!empty($event->recruiter->id))
-                    && ($event->recruiter->id != $checkRecruiter->id)))) {
+                || (($event->recruiter->id !== $checkRecruiter->id)))) {
             $errorMessages .= sprintf('The email "%s" already exists.' . PHP_EOL, $event->recruiter->email);
         }
 

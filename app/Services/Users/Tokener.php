@@ -31,7 +31,7 @@ class Tokener
             return $this->getPayload(new Token($role, $credentials));
         })->filter();
 
-        if ($token->count() == 1) {
+        if ($token->count() === 1) {
             return $token->first();
         }
 
