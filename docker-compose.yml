@@ -10,10 +10,9 @@ services:
             - ${APP_PORT_SECURE:-443}:8443
         environment:
             SSL_MODE: ${SSL_MODE}
-            SSL_PRIVATE_KEY_FILE: '/etc/ssl/private/franciscolaracasalilla.key'
-            SSL_CERTIFICATE_FILE: '/etc/ssl/private/franciscolaracasalilla.crt'
         volumes:
             - .:/var/www/html:cached
+            - /var/www/html/node_modules
         networks:
             - franlaranet
         depends_on:

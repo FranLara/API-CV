@@ -2,5 +2,8 @@ FROM serversideup/php:8.3-fpm-nginx-alpine
 
 LABEL maintainer="Fran Lara"
 
-COPY --chown=www-data ./config/nginx/certs/franciscolaracasalilla.crt /etc/ssl/private/franciscolaracasalilla.crt
-COPY --chown=www-data ./config/nginx/certs/franciscolaracasalilla.key /etc/ssl/private/franciscolaracasalilla.key
+USER root
+
+RUN apk add --update nodejs npm
+
+USER www-data
