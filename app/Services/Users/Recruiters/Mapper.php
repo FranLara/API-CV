@@ -9,9 +9,8 @@ use App\Services\Users\Mapper as UserMapper;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 
-class Mapper extends UserMapper
+readonly class Mapper extends UserMapper
 {
-
 	public function map(DTO $dto, Model $recruiter): Recruiter
 	{
         if (empty($recruiter->id)) {

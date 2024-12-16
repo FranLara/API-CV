@@ -6,11 +6,12 @@ namespace App\Services\Changelogs;
 
 use App\BusinessObjects\DTOs\DTO;
 use App\BusinessObjects\Models\Changelog as ChangelogModel;
+use App\Services\Mapper;
 use App\Services\Saver as SaverInterface;
 
 readonly class Saver implements SaverInterface
 {
-    public function __construct(protected Mapper $mapper)
+    public function __construct(private Mapper $mapper)
     {
     }
 

@@ -7,8 +7,8 @@ namespace App\Console\Commands\User\Admin;
 use App\BusinessObjects\DTOs\Users\Admin;
 use App\Console\Commands\User\Admin\Admin as AdminCommand;
 use App\Notifications\User\Admin\Updated;
-use App\Services\Users\Admins\Retriever;
-use App\Services\Users\Admins\Saver;
+use App\Services\Retriever;
+use App\Services\Saver;
 use App\Utils\Notifications as NotificationUtils;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
@@ -23,11 +23,11 @@ class Update extends AdminCommand
     private const string UPDATE_TRANSLATIONS = self::ADMIN_TRANSLATIONS . 'update.';
     protected $description = 'This command updates an admin user asking by keyboard the username and the new password.';
 
-    public function __construct(Saver $saver, Retriever $retriever)
+    public function __construct(protected readonly Saver $saver, protected readonly Retriever $retriever)
     {
         $this->signature = self::USER_SIGNATURE . 'update' . self::ADMIN_SIGNATURE;
 
-        parent::__construct($saver, $retriever);
+        parent::__construct();
     }
 
     public function handle(): void

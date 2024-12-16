@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Notification as FacadeNotification;
 
 trait Notifications
 {
-
     protected function sendMailNotification(Notification $notification, string $locale = null, string $to = null): void
     {
         if (empty($to)) {

@@ -1,5 +1,11 @@
 <?php
 
+use App\Providers\AppServiceProvider;
+use App\Providers\AuthServiceProvider;
+use App\Providers\CommandServiceProvider;
+use App\Providers\EventServiceProvider;
+use App\Providers\RouteServiceProvider;
+use App\Providers\ServiceServiceProvider;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
@@ -153,10 +159,12 @@ return [ /*
          */
 
          'providers' => ServiceProvider::defaultProviders()->merge([
-             App\Providers\AppServiceProvider::class,
-             App\Providers\AuthServiceProvider::class,
-             App\Providers\EventServiceProvider::class,
-             App\Providers\RouteServiceProvider::class,
+             AppServiceProvider::class,
+             AuthServiceProvider::class,
+             EventServiceProvider::class,
+             RouteServiceProvider::class,
+             CommandServiceProvider::class,
+             ServiceServiceProvider::class,
          ])->toArray(),
 
          /*

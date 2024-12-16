@@ -12,7 +12,7 @@ trait LinkedinProfileable
 		return $this->linkedinProfile;
 	}
 
-	public function setLinkedinProfilel(?string $linkedinProfile): void
+	public function setLinkedinProfile(?string $linkedinProfile): void
 	{
 		$this->linkedinProfile = $linkedinProfile;
 	}

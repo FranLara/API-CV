@@ -1,35 +1,37 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Services\Users\Recruiters;
 
 use App\BusinessObjects\DTOs\Users\Recruiter;
 use App\Events\Users\Recruiters\Created as RecruiterCreatedEvent;
 use App\Exceptions\Services\RecruiterCreationException;
+use App\Services\Saver;
 use App\Utils\Notifications as NotificationUtils;
 use Illuminate\Support\Str;
 
-class Creator
+readonly class Creator
 {
-	use NotificationUtils;
+    use NotificationUtils;
 
-	public function __construct(private readonly Saver $saver)
-	{
-	}
+    public function __construct(private Saver $saver)
+    {
+    }
 
-	/**
-	 * @throws RecruiterCreationException
-	 */
-	public function create(Recruiter $recruiter): void
-	{
-		$recruiter->setPsswd(Str::random());
+    /**
+     * @throws RecruiterCreationException
+     */
+    public function create(Recruiter $recruiter): void
+    {
+        $recruiter->setPsswd(Str::random());
 
-		$userSaved = $this->saver->save($recruiter);
+        $userSaved = $this->saver->save($recruiter);
 
-		if (empty($userSaved)) {
-			throw new RecruiterCreationException($recruiter);
-		}
+        if (empty($userSaved)) {
+            throw new RecruiterCreationException($recruiter);
+        }
 
-		event(new RecruiterCreatedEvent($recruiter));
-	}
+        event(new RecruiterCreatedEvent($recruiter));
+    }
 }

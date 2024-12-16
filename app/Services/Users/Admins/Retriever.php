@@ -5,15 +5,14 @@ namespace App\Services\Users\Admins;
 
 use App\BusinessObjects\DTOs\Users\Admin;
 use App\BusinessObjects\Models\Users\Admin as AdminModel;
+use App\Services\Transformer;
 use App\Services\Users\Retriever as UserRetriever;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class Retriever extends UserRetriever
+readonly class Retriever extends UserRetriever
 {
-
-	public function __construct(Transformer $transformer)
+	public function __construct(private Transformer $transformer)
 	{
-		$this->transformer = $transformer;
 	}
 
 	public function retrieve(string $identifier): Admin

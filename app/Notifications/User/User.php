@@ -12,12 +12,9 @@ abstract class User extends Notification
 {
     protected const string USER_TRANSLATIONS = self::NOTIFICATION_TRANSLATIONS . 'user.';
 
-    protected UserDTO $user;
-
-    public function __construct(UserDTO $user)
+    public function __construct(protected readonly UserDTO $user)
     {
         parent::__construct();
-        $this->user = $user;
     }
 
     public function via(object $notifiable): array
