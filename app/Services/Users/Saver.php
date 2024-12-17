@@ -11,4 +11,3 @@ readonly abstract class Saver implements SaverInterface
 {
     abstract public function save(DTO $user): bool;
 }
-

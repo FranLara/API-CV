@@ -26,13 +26,13 @@ class Psswd extends Recruiter
         $line3 = __(self::PSSWD_TRANSLATIONS . 'line_3', ['username' => $this->user->getEmail()]);
 
         return (new MailMessage())->subject($subject)
-                                  ->greeting($greeting)
-                                  ->line($line1)
-                                  ->line($line2)
-                                  ->line($line3)
-                                  ->line($line4)
-                                  ->line($line5)
-                                  ->line($line6)
-                                  ->line($line7);
+            ->greeting($greeting)
+            ->line($line1)
+            ->line($line2)
+            ->line($line3)
+            ->line($line4)
+            ->line($line5)
+            ->line($line6)
+            ->line($line7);
     }
 }

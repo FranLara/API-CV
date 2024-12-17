@@ -13,4 +13,3 @@ readonly abstract class Retriever implements RetrieverInterface
 
     abstract public function retrieveByField(string $field, $value): User;
 }
-

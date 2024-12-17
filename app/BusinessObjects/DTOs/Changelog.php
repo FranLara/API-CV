@@ -11,7 +11,6 @@ class Changelog extends DTO
         private readonly string $entityId,
         private readonly string $valuePayload
     ) {
-
     }
 
     public function getType(): string

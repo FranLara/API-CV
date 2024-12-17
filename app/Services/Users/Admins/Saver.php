@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Services\Users\Admins;
 
@@ -12,26 +13,26 @@ use Override;
 
 readonly class Saver extends UserSaver
 {
-	public function __construct(private Mapper $mapper)
-	{
-	}
+    public function __construct(private Mapper $mapper)
+    {
+    }
 
-	#[Override]
+    #[Override]
     public function save(DTO $admin): bool
-	{
-		$model = $this->getMappedModel($admin);
+    {
+        $model = $this->getMappedModel($admin);
 
-		if ($model->isDirty()) {
-			return $model->save();
-		}
+        if ($model->isDirty()) {
+            return $model->save();
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	private function getMappedModel(Admin $admin): AdminModel
-	{
-		$model = AdminModel::firstOrNew(['username' => $admin->getUsername()]);
+    private function getMappedModel(Admin $admin): AdminModel
+    {
+        $model = AdminModel::firstOrNew(['username' => $admin->getUsername()]);
 
-		return $this->mapper->map($admin, $model);
-	}
+        return $this->mapper->map($admin, $model);
+    }
 }

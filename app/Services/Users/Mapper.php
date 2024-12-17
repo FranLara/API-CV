@@ -13,4 +13,3 @@ readonly abstract class Mapper implements MapperInterface
 {
     abstract public function map(DTO $dto, Model $user): User;
 }
-

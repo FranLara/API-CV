@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Services\Users\Recruiters;
 
@@ -11,23 +12,23 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 readonly class Retriever extends UserRetriever
 {
-	public function __construct(private Transformer $transformer)
-	{
-	}
+    public function __construct(private Transformer $transformer)
+    {
+    }
 
-	public function retrieve(string $identifier): Recruiter
-	{
-		return $this->transformer->transform(RecruiterModel::findOrFail($identifier));
-	}
+    public function retrieve(string $identifier): Recruiter
+    {
+        return $this->transformer->transform(RecruiterModel::findOrFail($identifier));
+    }
 
-	public function retrieveByField(string $field, $value): Recruiter
-	{
-		$model = RecruiterModel::firstWhere($field, $value);
+    public function retrieveByField(string $field, $value): Recruiter
+    {
+        $model = RecruiterModel::firstWhere($field, $value);
 
-		if (empty($model)) {
-			throw (new ModelNotFoundException())->setModel(RecruiterModel::class, $value);
-		}
+        if (empty($model)) {
+            throw (new ModelNotFoundException())->setModel(RecruiterModel::class, $value);
+        }
 
-		return $this->transformer->transform($model);
-	}
+        return $this->transformer->transform($model);
+    }
 }

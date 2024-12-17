@@ -12,4 +12,3 @@ readonly abstract class Transformer implements TransformerInterface
 {
     abstract public function transform(Model $model): User;
 }
-
