@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Exceptions\Controllers;
 
@@ -8,17 +9,13 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class UserCreationException extends HttpException
 {
-	private Exception $exception;
+    public function __construct(private readonly Exception $exception)
+    {
+        parent::__construct($exception->getCode(), 'The user was not created.');
+    }
 
-	public function __construct(Exception $exception)
-	{
-		parent::__construct($exception->getCode(), 'The user was not created.');
-		$this->exception = $exception;
-	}
-
-	public function context(): array
-	{
-		return ['message' => $this->exception->getMessage(), 'user' => $this->exception->context()];
-	}
+    public function context(): array
+    {
+        return ['message' => $this->exception->getMessage(), 'user' => $this->exception->context()];
+    }
 }
-

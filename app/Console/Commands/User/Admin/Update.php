@@ -43,11 +43,14 @@ class Update extends AdminCommand
 
     private function getAdmin(): Admin
     {
-        $username = text(label: __(self::UPDATE_TRANSLATIONS . 'username.label'), required: true,
-            hint: __(self::UPDATE_TRANSLATIONS . 'username.hint'));
+        $username = text(
+            required: true,
+            hint:     __(self::UPDATE_TRANSLATIONS . 'username.hint'),
+            label:    __(self::UPDATE_TRANSLATIONS . 'username.label'),
+        );
 
         if (Str::of($username)->lower()->exactly(self::EXIT)) {
-            return new Admin(username:$username);
+            return new Admin(username: $username);
         }
 
         try {

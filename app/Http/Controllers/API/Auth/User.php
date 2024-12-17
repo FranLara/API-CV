@@ -23,13 +23,16 @@ class User extends APIController
             // TODO Add unique to technicians
             self::NAME_PARAMETER     => self::REQUIRED_VALIDATION,
             self::LANGUAGE_PARAMETER => [self::REQUIRED_VALIDATION, Rule::in(['en', 'es'])],
-            self::LINKEDIN_PARAMETER => 'sometimes|url'
+            self::LINKEDIN_PARAMETER => 'sometimes|url',
         ];
         $request->validate($rules);
 
-        $recruiter = new Recruiter(name: $request->get(self::NAME_PARAMETER),
-            email: $request->get(self::EMAIL_PARAMETER), language: $request->get(self::LANGUAGE_PARAMETER),
-            linkedinProfile: $request->get(self::LINKEDIN_PARAMETER));
+        $recruiter = new Recruiter(
+            name:            $request->get(self::NAME_PARAMETER),
+            email:           $request->get(self::EMAIL_PARAMETER),
+            language:        $request->get(self::LANGUAGE_PARAMETER),
+            linkedinProfile: $request->get(self::LINKEDIN_PARAMETER)
+        );
 
         try {
             $creator->create($recruiter);

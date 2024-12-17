@@ -24,13 +24,15 @@ class Root extends APIController
         $resources = $this->getPublicResources($request);
 
         $token = $request->bearerToken();
-        if ((!empty($token)) && (count(explode('.', $token)) == 3) && ($tokenManager->setToken($token)->check())) {
+        if ((!empty($token)) && (count(explode('.', $token)) === 3) && ($tokenManager->setToken($token)->check())) {
             $resources = $resources->merge($this->getTokenedResources($request, $tokenManager));
         }
 
-        return $this->response->array([
-            'Resources' => $resources->flatMap(fn(Resource $resource) => $resource->getResource())->toArray()
-        ]);
+        return $this->response->array(
+            [
+                'Resources' => $resources->flatMap(fn(Resource $resource) => $resource->getResource())->toArray(),
+            ]
+        );
     }
 
     public function options(): Response
@@ -44,17 +46,22 @@ class Root extends APIController
     {
         $resources = collect();
 
-        $resources->push(new Resource(request: $request, path: 'tokens (' . Request::METHOD_POST . ')',
-            type: Request::METHOD_POST, parameters: [
-                [self::NAME_PARAMETER => self::USERNAME_PARAMETER, self::TYPE_PARAMETER => self::STRING_PARAMETER],
-                [self::NAME_PARAMETER => self::PSSWD_PARAMETER, self::TYPE_PARAMETER => self::STRING_PARAMETER]
-            ], description: __(self::TOKEN_TRANSLATIONS . 'request')));
-        $resources->push(new Resource(request: $request, path: 'accounts', type: Request::METHOD_POST, parameters: [
+        $path = 'tokens (' . Request::METHOD_POST . ')';
+        $description = __(self::TOKEN_TRANSLATIONS . 'request');
+        $parameters = [
+            [self::NAME_PARAMETER => self::USERNAME_PARAMETER, self::TYPE_PARAMETER => self::STRING_PARAMETER],
+            [self::NAME_PARAMETER => self::PSSWD_PARAMETER, self::TYPE_PARAMETER => self::STRING_PARAMETER],
+        ];
+        $resources->push(new Resource($path, $request, $description, $parameters, Request::METHOD_POST));
+
+        $description = __(self::ACCOUNT_TRANSLATIONS . 'request');
+        $parameters = [
             [self::NAME_PARAMETER => self::EMAIL_PARAMETER, self::TYPE_PARAMETER => self::STRING_PARAMETER],
             [self::NAME_PARAMETER => self::NAME_PARAMETER, self::TYPE_PARAMETER => self::STRING_PARAMETER],
             [self::NAME_PARAMETER => self::LANGUAGE_PARAMETER, self::TYPE_PARAMETER => self::STRING_PARAMETER],
             [self::NAME_PARAMETER => self::LINKEDIN_PARAMETER, self::TYPE_PARAMETER => self::STRING_PARAMETER],
-        ], description: __(self::ACCOUNT_TRANSLATIONS . 'request')));
+        ];
+        $resources->push(new Resource('accounts', $request, $description, $parameters, type: Request::METHOD_POST));
 
         return $resources;
     }
@@ -63,8 +70,9 @@ class Root extends APIController
     {
         $resources = collect();
 
-        $resources->push(new Resource(request: $request, path: 'tokens (' . Request::METHOD_GET . ')',
-            description: __(self::TOKEN_TRANSLATIONS . 'refresh')));
+        $path = 'tokens (' . Request::METHOD_GET . ')';
+        $description = __(self::TOKEN_TRANSLATIONS . 'refresh');
+        $resources->push(new Resource($path, $request, $description));
 
         return $resources;
     }

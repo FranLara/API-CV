@@ -7,8 +7,8 @@ namespace App\Console\Commands\User\Admin;
 use App\BusinessObjects\DTOs\Users\Admin;
 use App\Console\Commands\User\Admin\Admin as AdminCommand;
 use App\Notifications\User\Admin\Created;
-use App\Services\Saver;
 use App\Services\Retriever;
+use App\Services\Saver;
 use App\Utils\Notifications as NotificationUtils;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
@@ -34,8 +34,11 @@ class Create extends AdminCommand
     public function handle(): void
     {
         do {
-            $username = text(label: __(self::CREATION_TRANSLATIONS . 'username.label'), required: true,
-                hint: __(self::CREATION_TRANSLATIONS . 'username.hint'));
+            $username = text(
+                required: true,
+                hint:     __(self::CREATION_TRANSLATIONS . 'username.hint'),
+                label:    __(self::CREATION_TRANSLATIONS . 'username.label')
+            );
         } while ((!$this->isUsernameUnique($username)) && (!Str::of($username)->exactly(self::EXIT)));
 
         if (!Str::of($username)->lower()->exactly(self::EXIT)) {

@@ -12,7 +12,12 @@ readonly class Transformer extends UserTransformer
 {
     public function transform(Model $model): Recruiter
     {
-        return new Recruiter(identifier: $model->id, name: $model->name, email: $model->email,
-            language: $model->language, linkedinProfile: $model->linkedin_profile);
+        return new Recruiter(
+            identifier:      $model->id,
+            name:            $model->name,
+            email:           $model->email,
+            language:        $model->language,
+            linkedinProfile: $model->linkedin_profile
+        );
     }
 }

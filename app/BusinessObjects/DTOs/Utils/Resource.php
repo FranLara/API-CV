@@ -6,6 +6,7 @@ namespace App\BusinessObjects\DTOs\Utils;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Random\RandomException;
 
 use function collect;
 
@@ -18,11 +19,11 @@ class Resource
     private Collection $parameters;
 
     public function __construct(
-        string $path,
+        string  $path,
         Request $request,
-        string $description,
-        array $parameters = [],
-        string $type = Request::METHOD_GET
+        string  $description,
+        array   $parameters = [],
+        string  $type = Request::METHOD_GET
     ) {
         $this->path = $path;
         $this->type = $type;
@@ -31,6 +32,9 @@ class Resource
         $this->host = $request->getSchemeAndHttpHost();
     }
 
+    /**
+     * @throws RandomException
+     */
     public function getResource(): array
     {
         $parameters = $this->parameters->all();
@@ -49,11 +53,14 @@ class Resource
                 'type'            => $this->type,
                 'description'     => $this->description,
                 'parameters'      => $parameters,
-                'endpointExample' => $endpoint
-            ]
+                'endpointExample' => $endpoint,
+            ],
         ];
     }
 
+    /**
+     * @throws RandomException
+     */
     private function getParameterForEndpointExample(array $parameter): string
     {
         $param = $parameter['name'] . '=';

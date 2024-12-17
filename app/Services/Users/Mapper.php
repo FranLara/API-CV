@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Services\Users;
 
@@ -10,6 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 
 readonly abstract class Mapper implements MapperInterface
 {
-	abstract public function map(DTO $dto, Model $user): User;
+    abstract public function map(DTO $dto, Model $user): User;
 }
 

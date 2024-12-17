@@ -15,7 +15,10 @@ abstract class Admin extends User
 
     protected function getLanguage(string $question, string $default): string
     {
-        return select(label: $question, options: ['en' => 'English', 'es' => 'Castellano ', 'de' => 'Deutsch'],
-            default: $default);
+        return select(
+            label:   $question,
+            default: $default,
+            options: ['en' => 'English', 'es' => 'Castellano ', 'de' => 'Deutsch'],
+        );
     }
 }

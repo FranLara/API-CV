@@ -10,7 +10,8 @@ return [
     'alpha_dash'           => 'El atributo :attribute tiene que contener solo letras, números, guiones o barrabajas.',
     'alpha_num'            => 'El atributo :attribute tiene que contener solo letras y números.',
     'array'                => 'El atributo :attribute tiene que ser un array.',
-    'ascii'                => 'El atributo :attribute tiene que contener solo caracteres alfanuméricos o symbolos de un único byte.',
+    'ascii'                => 'El atributo :attribute tiene que contener solo caracteres alfanuméricos o symbolos de '
+                              . 'un único byte.',
     'before'               => 'El atributo :attribute tiene que ser una fecha anterior a :date.',
     'before_or_equal'      => 'El atributo :attribute tiene que ser una fecha anterior o igual a :date.',
     'between'              => [
@@ -34,7 +35,8 @@ return [
     'digits_between'       => 'El atributo :attribute tiene que tener entre :min y :max dígitos.',
     'dimensions'           => 'La imagen del atributo :attribute tiene dimensiones inválidas.',
     'distinct'             => 'El atributo :attribute tiene un valor duplicado.',
-    'doesnt_end_with'      => 'El atributo :attribute no tiene que terminar con uno de los siguientes valores: :values.',
+    'doesnt_end_with'      => 'El atributo :attribute no tiene que terminar con uno de los siguientes valores: '
+                              . ':values.',
     'doesnt_start_with'    => 'El atributo :attribute no tiene que empezar con uno de los siguientes valores: :values.',
     'email'                => 'El atributo :attribute tiene que una dirección de email válida.',
     'ends_with'            => 'El atributo :attribute tiene que acabar con los siguientes valores: :values.',
@@ -106,7 +108,8 @@ return [
         'mixed'         => 'El atributo :attribute tiene que contener al menos una letra mayúscula y una minúscula.',
         'numbers'       => 'El atributo :attribute tiene que contener al menos un número.',
         'symbols'       => 'El atributo :attribute tiene que contener al menos un símbolo.',
-        'uncompromised' => 'El atributo dado :attribute ha aparecido en una filtración. Por favor, elige un :attribute diferente.',
+        'uncompromised' => 'El atributo dado :attribute ha aparecido en una filtración. Por favor, elige un '
+                           . ':attribute diferente.',
     ],
     'present'              => 'El atributo :attribute tiene que estar presente.',
     'present_if'           => 'El atributo :attribute tiene que estar presente cuando :other es :value.',
@@ -134,7 +137,8 @@ return [
         'numeric' => 'El atributo :attribute tiene que que ser :size.',
         'string'  => 'El atributo :attribute tiene que tener :size caracteres.',
     ],
-    'starts_with'          => 'El atributo :attribute tiene que empezar por con uno de los siguientes valores: :values.',
+    'starts_with'          => 'El atributo :attribute tiene que empezar por con uno de los siguientes valores: '
+                              . ':values.',
     'string'               => 'El atributo :attribute tiene que ser una cadena de caracteres.',
     'timezone'             => 'El atributo :attribute tiene que ser una zona horaria válida.',
     'unique'               => 'El atributo :attribute ya ha sido tomado.',
@@ -155,7 +159,7 @@ return [
     |
     */
 
-    'custom' => ['attribute-name' => ['rule-name' => 'custom-message',],],
+    'custom' => ['attribute-name' => ['rule-name' => 'custom-message']],
 
     /*
     |--------------------------------------------------------------------------

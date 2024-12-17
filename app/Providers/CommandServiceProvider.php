@@ -8,8 +8,8 @@ use App\Console\Commands\User\Admin\Create;
 use App\Console\Commands\User\Admin\Update;
 use App\Services\Retriever;
 use App\Services\Saver;
-use App\Services\Users\Admins\Saver as AdminSaver;
 use App\Services\Users\Admins\Retriever as AdminRetriever;
+use App\Services\Users\Admins\Saver as AdminSaver;
 use Illuminate\Support\ServiceProvider;
 
 class CommandServiceProvider extends ServiceProvider
