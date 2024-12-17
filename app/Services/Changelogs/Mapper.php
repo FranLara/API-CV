@@ -9,7 +9,7 @@ use App\BusinessObjects\Models\Changelog;
 use App\Services\Mapper as MapperInterface;
 use Illuminate\Database\Eloquent\Model;
 
-readonly class Mapper implements MapperInterface
+class Mapper implements MapperInterface
 {
     public function map(DTO $dto, Model $changelog): Changelog
     {

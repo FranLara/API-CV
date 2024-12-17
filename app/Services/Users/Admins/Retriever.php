@@ -10,9 +10,9 @@ use App\Services\Transformer;
 use App\Services\Users\Retriever as UserRetriever;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-readonly class Retriever extends UserRetriever
+class Retriever extends UserRetriever
 {
-    public function __construct(private Transformer $transformer)
+    public function __construct(private readonly Transformer $transformer)
     {
     }
 

@@ -7,7 +7,7 @@ namespace App\Services\Users;
 use App\BusinessObjects\DTOs\Users\User;
 use App\Services\Retriever as RetrieverInterface;
 
-readonly abstract class Retriever implements RetrieverInterface
+abstract class Retriever implements RetrieverInterface
 {
     abstract public function retrieve(string $identifier): User;
 

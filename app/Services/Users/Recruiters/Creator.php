@@ -11,11 +11,11 @@ use App\Services\Saver;
 use App\Utils\Notifications as NotificationUtils;
 use Illuminate\Support\Str;
 
-readonly class Creator
+class Creator
 {
     use NotificationUtils;
 
-    public function __construct(private Saver $saver)
+    public function __construct(private readonly Saver $saver)
     {
     }
 

@@ -9,15 +9,13 @@ use App\BusinessObjects\DTOs\Users\Admin;
 use App\BusinessObjects\Models\Users\Admin as AdminModel;
 use App\Services\Mapper;
 use App\Services\Users\Saver as UserSaver;
-use Override;
 
-readonly class Saver extends UserSaver
+class Saver extends UserSaver
 {
-    public function __construct(private Mapper $mapper)
+    public function __construct(private readonly Mapper $mapper)
     {
     }
 
-    #[Override]
     public function save(DTO $admin): bool
     {
         $model = $this->getMappedModel($admin);

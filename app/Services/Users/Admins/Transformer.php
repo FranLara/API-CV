@@ -8,7 +8,7 @@ use App\BusinessObjects\DTOs\Users\Admin;
 use App\Services\Users\Transformer as UserTransformer;
 use Illuminate\Database\Eloquent\Model;
 
-readonly class Transformer extends UserTransformer
+class Transformer extends UserTransformer
 {
     public function transform(Model $model): Admin
     {

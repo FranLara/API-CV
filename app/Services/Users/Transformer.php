@@ -8,7 +8,7 @@ use App\BusinessObjects\DTOs\Users\User;
 use App\Services\Transformer as TransformerInterface;
 use Illuminate\Database\Eloquent\Model;
 
-readonly abstract class Transformer implements TransformerInterface
+abstract class Transformer implements TransformerInterface
 {
     abstract public function transform(Model $model): User;
 }
