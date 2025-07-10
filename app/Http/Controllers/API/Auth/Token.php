@@ -23,7 +23,7 @@ class Token extends APIController
     {
         $methods = [Request::METHOD_GET, Request::METHOD_OPTIONS, Request::METHOD_POST];
 
-        return (new Response([], Response::HTTP_OK))->header('Allow', implode(', ', $methods));
+        return new Response([], Response::HTTP_OK)->header('Allow', implode(', ', $methods));
     }
 
     public function request(Request $request, Tokener $tokener): JsonResponse
