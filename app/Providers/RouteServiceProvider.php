@@ -14,9 +14,6 @@ class RouteServiceProvider extends ServiceProvider
     public const string HOME = '/';
     private const string ROOT = 'App\Http\Controllers\\';
 
-    /**
-     * Define your route model bindings, pattern filters, and other route configuration.
-     */
     public function boot(): void
     {
         resolve(UrlGenerator::class)->forceScheme('https');

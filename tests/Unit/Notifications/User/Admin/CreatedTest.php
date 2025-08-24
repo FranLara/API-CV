@@ -9,7 +9,6 @@ use stdClass;
 
 class CreatedTest extends AdminTests
 {
-
     /**
      * @dataProvider providerMailData
      */
@@ -20,7 +19,7 @@ class CreatedTest extends AdminTests
         string $expectedFirstLine,
         string $expectedSecondLine
     ): void {
-        $mail = (new Created($this->getAdmin($language)))->toMail(new stdClass());
+        $mail = new Created($this->getAdmin($language))->toMail(new stdClass());
 
         $this->assertSame($expectedSubject, $mail->subject);
         $this->assertSame($expectedGreeting, $mail->greeting);

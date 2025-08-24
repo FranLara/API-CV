@@ -11,6 +11,7 @@ class Changelog extends DTO
         private readonly string $entityId,
         private readonly string $valuePayload
     ) {
+        parent::__construct();
     }
 
     public function getType(): string

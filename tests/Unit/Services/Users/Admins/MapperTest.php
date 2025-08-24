@@ -21,7 +21,7 @@ class MapperTest extends TestCase
      */
     public function testMap(?string $language = null, ?string $psswd = null, ?string $identifier = null): void
     {
-        $admin = (new Mapper())->map(new AdminDTO(language: $language, psswd: $psswd, identifier: $identifier),
+        $admin = new Mapper()->map(new AdminDTO(language: $language, psswd: $psswd, identifier: $identifier),
             new Admin());
 
         $this->assertSame($language, $admin->language);

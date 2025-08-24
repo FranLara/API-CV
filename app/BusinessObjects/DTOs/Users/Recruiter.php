@@ -13,12 +13,12 @@ class Recruiter extends User
     use Emailable, Nameable, LinkedinProfileable;
 
     public function __construct(
-        string $name = null,
-        string $email = null,
-        string $psswd = null,
-        string $language = null,
-        string $identifier = null,
-        string $linkedinProfile = null
+        ?string $name = null,
+        ?string $email = null,
+        ?string $psswd = null,
+        ?string $language = null,
+        ?string $identifier = null,
+        ?string $linkedinProfile = null
     ) {
         parent::__construct($identifier, $psswd, $language);
 

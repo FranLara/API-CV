@@ -19,11 +19,11 @@ class Resource
     private Collection $parameters;
 
     public function __construct(
-        string  $path,
+        string $path,
         Request $request,
-        string  $description,
-        array   $parameters = [],
-        string  $type = Request::METHOD_GET
+        string $description,
+        array $parameters = [],
+        string $type = Request::METHOD_GET
     ) {
         $this->path = $path;
         $this->type = $type;

@@ -12,11 +12,8 @@ use Throwable;
 
 abstract class DTO
 {
-    protected ?string $identifier;
-
-    public function __construct(?string $identifier = null)
+    public function __construct(protected ?string $identifier = null)
     {
-        $this->identifier = $identifier;
     }
 
     public function getIdentifier(): ?string

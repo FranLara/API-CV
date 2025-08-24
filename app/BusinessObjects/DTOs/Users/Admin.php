@@ -9,10 +9,10 @@ class Admin extends User
     private ?string $username;
 
     public function __construct(
-        string $psswd = null,
-        string $username = null,
-        string $language = null,
-        string $identifier = null
+        ?string $psswd = null,
+        ?string $username = null,
+        ?string $language = null,
+        ?string $identifier = null
     ) {
         parent::__construct($identifier, $psswd, $language);
 
