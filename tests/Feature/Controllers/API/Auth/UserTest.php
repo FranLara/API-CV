@@ -6,16 +6,15 @@ namespace Tests\Feature\Controllers\API\Auth;
 
 use App\Http\Controllers\API\API as APIController;
 use Dingo\Api\Http\Response;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\Feature\Controllers\API\APITests;
 
 use function collect;
 
 class UserTest extends APITests
 {
-    /**
-     * @dataProvider providerUsers
-     */
-    public function testRequest(int $expectedStatusCode = Response::HTTP_UNPROCESSABLE_ENTITY, string $email = ''): void
+    #[DataProvider('providerUsers')]
+    public function testRequest(int $expectedStatusCode, string $email = ''): void
     {
         $response = $this->post($this->domain . '/accounts', $this->getUser($email), $this->getHeader());
 
@@ -31,7 +30,7 @@ class UserTest extends APITests
 
     public static function providerUsers(): array
     {
-        return [[], [Response::HTTP_CREATED, 'test@recruiter.com']];
+        return [[Response::HTTP_UNPROCESSABLE_ENTITY], [Response::HTTP_CREATED, 'test@recruiter.com']];
     }
 
     private function getUser(string $email): array
