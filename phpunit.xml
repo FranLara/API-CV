@@ -2,14 +2,6 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
 	bootstrap="vendor/autoload.php" colors="true">
-	<coverage processUncoveredFiles="false">
-		<include>
-			<directory suffix=".php">./app</directory>
-		</include>
-		<report>
-			<clover outputFile="./storage/files/test-reports/coverage.xml" />
-		</report>
-	</coverage>
 	<testsuites>
 		<testsuite name="Unit">
 			<directory>./tests/Unit</directory>
