@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: install-libraries
     container:
-      image: serversideup/php:8.3-cli-alpine
+      image: serversideup/php:8.4-cli-alpine
       options: --user root
 
     steps:
@@ -42,7 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: install-libraries
     container:
-      image: serversideup/php:8.3-cli-alpine
+      image: serversideup/php:8.4-cli-alpine
       options: --user root
     continue-on-error: true
 
