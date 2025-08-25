@@ -12,16 +12,6 @@ class Created extends Admin
 
     public function toMail(object $notifiable): MailMessage
     {
-        $username = ['username' => $this->user->getUsername()];
-
-        $mailMessage = new MailMessage()->subject(__(self::CREATION_TRANSLATIONS . 'subject', $username));
-
-        $mailMessage->greeting(__(self::USER_TRANSLATIONS . 'greeting'))
-                    ->line(__(self::CREATION_TRANSLATIONS . 'line_1', $username))
-                    ->line(__(self::USER_TRANSLATIONS . 'line_2', [
-                        'language' => $this->getLanguage($this->user->getLanguage())
-                    ]));
-
-        return $mailMessage;
+        return $this->getMailMessage($this->user, self::CREATION_TRANSLATIONS);
     }
 }

@@ -9,6 +9,7 @@ class Token
     public const string GUEST_ROLE = 'guest';
     public const string ADMIN_ROLE = 'admin';
     public const string RECRUITER_ROLE = 'recruiter';
+    public const string TECHNICIAN_ROLE = 'technician';
 
     private string $role;
     private array $credentials;

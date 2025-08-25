@@ -21,9 +21,9 @@ class User extends APIController
         $request->validate($this->getValidationRules());
 
         $recruiter = new Recruiter(
-            name:            $request->get(self::NAME_PARAMETER),
-            email:           $request->get(self::EMAIL_PARAMETER),
-            language:        $request->get(self::LANGUAGE_PARAMETER),
+            name: $request->get(self::NAME_PARAMETER),
+            email: $request->get(self::EMAIL_PARAMETER),
+            language: $request->get(self::LANGUAGE_PARAMETER),
             linkedinProfile: $request->get(self::LINKEDIN_PARAMETER)
         );
 
@@ -41,8 +41,8 @@ class User extends APIController
     private function getValidationRules(): array
     {
         return [
-            self::EMAIL_PARAMETER    => self::REQUIRED_VALIDATION . '|email|unique:recruiters,email',
-            // TODO Add unique to technicians
+            self::EMAIL_PARAMETER    => self::REQUIRED_VALIDATION
+                                        . '|email|unique:recruiters,email|unique:technicians,email',
             self::NAME_PARAMETER     => self::REQUIRED_VALIDATION,
             self::LANGUAGE_PARAMETER => [self::REQUIRED_VALIDATION, Rule::in(['en', 'es'])],
             self::LINKEDIN_PARAMETER => 'sometimes|url',

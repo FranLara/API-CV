@@ -8,7 +8,9 @@ use App\BusinessObjects\DTOs\Users\Recruiter as RecruiterDTO;
 use App\BusinessObjects\Models\Users\Recruiter;
 use App\Services\Users\Recruiters\Mapper;
 use Illuminate\Support\Facades\Hash;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
+use Tests\Utils\DTOs\SetGenerator;
 
 class MapperTest extends TestCase
 {
@@ -18,9 +20,9 @@ class MapperTest extends TestCase
     private const string IDENTIFIER = 'test_identifier';
     private const string LINKEDIN_PROFILE = 'test_linkedin_profile';
 
-    /**
-     * @dataProvider providerRecruiterData
-     */
+    private const array VALUES = [self::NAME, self::PSSWD, self::LANGUAGE, self::IDENTIFIER, self::LINKEDIN_PROFILE];
+
+    #[DataProvider('providerRecruiterData')]
     public function testMap(
         ?string $name = null,
         ?string $psswd = null,
@@ -28,8 +30,10 @@ class MapperTest extends TestCase
         ?string $identifier = null,
         ?string $linkedinProfile = null
     ): void {
-        $recruiter = (new Mapper())->map(new RecruiterDTO(identifier: $identifier, name: $name, psswd: $psswd,
-            language: $language, linkedinProfile: $linkedinProfile,), new Recruiter());
+        $recruiter = new RecruiterDTO(
+            identifier: $identifier, name: $name, psswd: $psswd, language: $language, linkedinProfile: $linkedinProfile
+        );
+        $recruiter = new Mapper()->map($recruiter, new Recruiter());
 
         $this->assertSame($name, $recruiter->name);
         $this->assertSame($language, $recruiter->language);
@@ -44,41 +48,13 @@ class MapperTest extends TestCase
 
     public static function providerRecruiterData(): array
     {
-        return [
-            [],
-            [self::NAME],
-            [null, self::PSSWD],
-            [null, null, self::LANGUAGE],
-            [null, null, null, self::IDENTIFIER],
-            [null, null, null, null, self::LINKEDIN_PROFILE],
-
-            [self::NAME, self::PSSWD],
-            [self::NAME, null, self::LANGUAGE],
-            [self::NAME, null, null, self::IDENTIFIER],
-            [self::NAME, null, null, null, self::LINKEDIN_PROFILE],
-
-            [null, self::PSSWD, self::LANGUAGE],
-            [null, self::PSSWD, null, self::IDENTIFIER],
-            [null, self::PSSWD, null, null, self::LINKEDIN_PROFILE],
-            [null, null, self::LANGUAGE, self::IDENTIFIER],
-            [null, null, self::LANGUAGE, null, self::LINKEDIN_PROFILE],
-
-            [null, null, null, self::IDENTIFIER, self::LINKEDIN_PROFILE],
-            [self::NAME, self::PSSWD, self::LANGUAGE],
-            [self::NAME, self::PSSWD, null, self::LINKEDIN_PROFILE],
-            [self::NAME, self::PSSWD, null, null, self::LINKEDIN_PROFILE],
-
-            [null, self::PSSWD, self::LANGUAGE, self::IDENTIFIER],
-            [null, self::PSSWD, self::LANGUAGE, null, self::LINKEDIN_PROFILE],
-
-            [null, null, self::LANGUAGE, self::IDENTIFIER, self::LINKEDIN_PROFILE],
-
-            [self::NAME, self::PSSWD, self::LANGUAGE, self::IDENTIFIER],
-            [self::NAME, self::PSSWD, self::LANGUAGE, null, self::LINKEDIN_PROFILE],
-
-            [null, self::PSSWD, self::LANGUAGE, self::IDENTIFIER, self::LINKEDIN_PROFILE],
-
-            [self::NAME, self::PSSWD, self::LANGUAGE, self::IDENTIFIER, self::LINKEDIN_PROFILE]
-        ];
+        return array_merge(
+            [self::VALUES],
+            [[null, null, null, null, null]],
+            SetGenerator::generate(self::VALUES, 1),
+            SetGenerator::generate(self::VALUES, 2),
+            SetGenerator::generate(self::VALUES, 3),
+            SetGenerator::generate(self::VALUES, 4),
+        );
     }
 }

@@ -8,12 +8,14 @@ use App\BusinessObjects\DTOs\Users\Recruiter;
 use App\Exceptions\Services\RecruiterCreationException;
 use App\Services\Users\Recruiters\Creator;
 use App\Services\Users\Recruiters\Saver;
+use PHPUnit\Framework\MockObject\Exception;
 use Tests\Unit\Services\ServiceTests;
 
 class CreatorTest extends ServiceTests
 {
     /**
      * @throws RecruiterCreationException
+     * @throws Exception
      */
     public function testCreate(): void
     {
@@ -23,6 +25,9 @@ class CreatorTest extends ServiceTests
         $this->assertDatabaseHas('jobs', ['queue' => 'listeners']);
     }
 
+    /**
+     * @throws Exception
+     */
     public function testCreateRecruiterCreationException(): void
     {
         $this->expectException(RecruiterCreationException::class);
@@ -30,6 +35,9 @@ class CreatorTest extends ServiceTests
         $this->getCreator(false)->create(new Recruiter());
     }
 
+    /**
+     * @throws Exception
+     */
     private function getCreator(bool $saved): Creator
     {
         return new Creator($this->createConfiguredMock(Saver::class, ['save' => $saved]));

@@ -9,6 +9,7 @@ use App\BusinessObjects\Models\Users\Admin;
 use App\Services\Users\Admins\Mapper;
 use App\Services\Users\Admins\Saver;
 use Illuminate\Support\Facades\Hash;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\Exception;
 use Tests\Unit\Services\ServiceTests;
 
@@ -19,10 +20,10 @@ class SaverTest extends ServiceTests
     private const string LANGUAGE = 'test_language';
 
     /**
-     * @dataProvider providerUser
      * @throws Exception
      */
-    public function testSave(bool $existing = false, bool $modified = false): void
+    #[DataProvider('providerUser')]
+    public function testSave(bool $existing, bool $modified = false): void
     {
         $mapper = $this->createConfiguredMock(Mapper::class, ['map' => $this->getAdmin($existing, $modified)]);
         new Saver($mapper)->save(new AdminDTO());
@@ -35,7 +36,7 @@ class SaverTest extends ServiceTests
 
     public static function providerUser(): array
     {
-        return [[], [true], [true, true]];
+        return [[false], [true], [true, true]];
     }
 
     private function getAdmin(bool $existing, bool $modified): Admin

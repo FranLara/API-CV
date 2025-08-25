@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Authenticate extends BaseMiddleware
 {
-    public function handle(Request $request, Closure $next, string $role = null): Response
+    public function handle(Request $request, Closure $next, ?string $role = null): Response
     {
         if (empty($role)) {
             $this->checkForToken($request);

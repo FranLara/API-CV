@@ -6,17 +6,17 @@ namespace Tests\Unit\Listeners;
 
 use App\BusinessObjects\Models\Users\Admin;
 use App\BusinessObjects\Models\Users\Recruiter;
+use App\BusinessObjects\Models\Users\Technician;
 use App\Events\ModelSaved as ModelSavedEvent;
 use App\Listeners\ModelSaved;
 use App\Services\Changelogs\Mapper;
 use App\Services\Changelogs\Saver;
 use Illuminate\Database\Eloquent\Model;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ModelSavedTest extends ListenerTests
 {
-    /**
-     * @dataProvider providerModel
-     */
+    #[DataProvider('providerModel')]
     public function testHandle(Model $model): void
     {
         $model = $model::factory()->create();
@@ -30,6 +30,6 @@ class ModelSavedTest extends ListenerTests
 
     public static function providerModel(): array
     {
-        return [[new Admin()], [new Recruiter()]];
+        return [[new Admin()], [new Recruiter()], [new Technician()]];
     }
 }

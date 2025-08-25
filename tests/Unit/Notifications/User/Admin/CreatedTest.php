@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace Tests\Unit\Notifications\User\Admin;
 
 use App\Notifications\User\Admin\Created;
+use PHPUnit\Framework\Attributes\DataProvider;
 use stdClass;
 
 class CreatedTest extends AdminTests
 {
-    /**
-     * @dataProvider providerMailData
-     */
+    #[DataProvider('providerMailData')]
     public function testToMail(
         string $language,
         string $expectedSubject,
@@ -35,14 +34,14 @@ class CreatedTest extends AdminTests
                 'Admin ' . self::USERNAME . ' created!',
                 'Warning!',
                 'The system recorded a new Admin: "' . self::USERNAME . '"',
-                'Their chosen language is: "English"'
+                'Their chosen language is: "English"',
             ],
             [
                 'es',
                 '¡Un nuevo administrador ' . self::USERNAME . ' creado!',
                 '¡Aviso!',
                 'La plataforma ha registrado un nuevo administrador: "' . self::USERNAME . '"',
-                'Su idioma escogido es el: "Castellano"'
+                'Su idioma escogido es el: "Castellano"',
             ],
         ];
     }

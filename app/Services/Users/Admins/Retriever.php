@@ -26,7 +26,7 @@ class Retriever extends UserRetriever
         $model = AdminModel::firstWhere($field, $value);
 
         if (empty($model)) {
-            throw (new ModelNotFoundException())->setModel(AdminModel::class, $value);
+            throw new ModelNotFoundException()->setModel(AdminModel::class, $value);
         }
 
         return $this->transformer->transform($model);

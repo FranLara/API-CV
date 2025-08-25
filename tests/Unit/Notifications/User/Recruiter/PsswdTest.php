@@ -6,17 +6,16 @@ namespace Tests\Unit\Notifications\User\Recruiter;
 
 use App\Notifications\User\Recruiter\Psswd;
 use Illuminate\Support\Facades\Lang;
+use PHPUnit\Framework\Attributes\DataProvider;
 use stdClass;
 
 class PsswdTest extends RecruiterTests
 {
-    /**
-     * @dataProvider providerMailData
-     */
+    #[DataProvider('providerMailData')]
     public function testToMail(string $language, array $expectedMessages): void
     {
         Lang::setLocale($language);
-        $mail = (new Psswd($this->getRecruiter($language)))->toMail(new stdClass());
+        $mail = new Psswd($this->getRecruiter($language))->toMail(new stdClass());
 
         $this->assertSame($expectedMessages[0], $mail->subject);
         $this->assertSame($expectedMessages[1], $mail->greeting);
@@ -49,7 +48,6 @@ class PsswdTest extends RecruiterTests
                 ],
             ],
             [
-
                 'es',
                 [
                     '¡Usuario para la API del CV de Fran Lara creado!',

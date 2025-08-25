@@ -8,7 +8,7 @@ use App\BusinessObjects\DTOs\DTO;
 
 abstract class User extends DTO
 {
-    public function __construct(?string $identifier, protected ?string $psswd, protected ?string $language)
+    public function __construct(protected ?string $identifier, protected ?string $psswd, protected ?string $language)
     {
         parent::__construct($identifier);
     }

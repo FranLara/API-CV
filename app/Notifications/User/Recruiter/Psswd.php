@@ -12,7 +12,7 @@ class Psswd extends Recruiter
 
     public function toMail(object $notifiable): MailMessage
     {
-        $endpoint = env('API_DOMAIN') . '/tokens?username=username&password=password';
+        $endpoint = config('api.domain') . '/tokens?username=username&password=password';
         $acceptHeader = env('API_STANDARDS_TREE') . '.' . env('API_SUBTYPE') . '.' . env('API_VERSION');
 
         $line1 = __(self::PSSWD_TRANSLATIONS . 'line_1');

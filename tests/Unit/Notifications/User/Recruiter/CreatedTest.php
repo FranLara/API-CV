@@ -6,13 +6,12 @@ namespace Tests\Unit\Notifications\User\Recruiter;
 
 use App\Notifications\User\Recruiter\Created;
 use Illuminate\Support\Facades\Lang;
+use PHPUnit\Framework\Attributes\DataProvider;
 use stdClass;
 
 class CreatedTest extends RecruiterTests
 {
-    /**
-     * @dataProvider providerMailData
-     */
+    #[DataProvider('providerMailData')]
     public function testToMail(
         string $language,
         string $expectedSubject,
@@ -21,7 +20,7 @@ class CreatedTest extends RecruiterTests
         string $expectedSecondLine
     ): void {
         Lang::setLocale($language);
-        $mail = (new Created($this->getRecruiter($language)))->toMail(new stdClass());
+        $mail = new Created($this->getRecruiter($language))->toMail(new stdClass());
 
         $this->assertSame($expectedSubject, $mail->subject);
         $this->assertSame($expectedGreeting, $mail->greeting);

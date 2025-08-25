@@ -6,6 +6,7 @@ namespace App\BusinessObjects\Models;
 
 use App\BusinessObjects\Models\Users\Admin;
 use App\BusinessObjects\Models\Users\Recruiter;
+use App\BusinessObjects\Models\Users\Technician;
 use App\Events\Changelogs\Saving;
 use Database\Factories\ChangelogFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -16,7 +17,7 @@ class Changelog extends Model
 {
     use HasFactory, HasUuids;
 
-    public const array ENTITY_TYPES = [Admin::class, Recruiter::class];
+    public const array ENTITY_TYPES = [Admin::class, Recruiter::class, Technician::class];
 
     public $timestamps = false;
 

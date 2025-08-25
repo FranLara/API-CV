@@ -8,14 +8,13 @@ use App\BusinessObjects\Models\Users\Recruiter;
 use App\Events\Users\Recruiters\Saving as SavingEvent;
 use App\Listeners\Users\Recruiters\Saving;
 use Illuminate\Support\Str;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\Unit\Listeners\ListenerTests;
 
 class SavingTest extends ListenerTests
 {
-    /**
-     * @dataProvider providerField
-     */
-    public function testHandle(bool $expectedResult = true, string $field = null, $value = null): void
+    #[DataProvider('providerField')]
+    public function testHandle(bool $expectedResult, ?string $field = null, $value = null): void
     {
         if (Str::of($field)->exactly('email')) {
             Recruiter::factory()->create([$field => $value]);
@@ -28,13 +27,13 @@ class SavingTest extends ListenerTests
 
         /** @var Recruiter $recruiter */
         $recruiter = Recruiter::factory()->make($variable);
-        $result = (new Saving())->handle(new SavingEvent($recruiter));
+        $result = new Saving()->handle(new SavingEvent($recruiter));
 
         $this->assertEquals($expectedResult, $result);
     }
 
     public static function providerField(): array
     {
-        return [[], [false, 'email', 'test@test.com']];
+        return [[true], [false, 'email', 'test@test.com'], [false, 'linkedin_profile', 'test_linkedin_profile']];
     }
 }

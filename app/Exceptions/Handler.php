@@ -20,7 +20,7 @@ class Handler extends ExceptionHandler
     public function register(): void
     {
         $this->stopIgnoring(HttpException::class);
-        $this->reportable(function (Throwable $e) {
+        $this->reportable(function (Throwable $exceptionThrowable) {
         });
     }
 }

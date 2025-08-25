@@ -8,7 +8,7 @@ use App\Utils\Abilities\Emailable;
 use App\Utils\Abilities\LinkedinProfileable;
 use App\Utils\Abilities\Nameable;
 
-class Recruiter extends User
+class Technician extends User
 {
     use Emailable, Nameable, LinkedinProfileable;
 
@@ -18,8 +18,19 @@ class Recruiter extends User
         protected ?string $psswd = null,
         protected ?string $language = null,
         protected ?string $identifier = null,
+        private ?string $githubProfile = null,
         protected ?string $linkedinProfile = null
     ) {
         parent::__construct($identifier, $psswd, $language);
+    }
+
+    public function getGithubProfile(): ?string
+    {
+        return $this->githubProfile;
+    }
+
+    public function setGithubProfile(?string $githubProfile): void
+    {
+        $this->githubProfile = $githubProfile;
     }
 }
