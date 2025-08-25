@@ -41,6 +41,10 @@ if [ $# -gt 0 ]; then
         shift 1
         docker compose exec franlara.cv php artisan "$@"
 
+    elif [[ "$1" == "test" ]]; then
+        shift 1
+        docker compose exec franlara.cv php artisan test "$@"
+
     fi
 
 else

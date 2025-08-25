@@ -94,3 +94,10 @@ jobs:
       report-name: feature-tests
       suite-name: Feature
       branch: ${{github.ref_name}}
+
+  test-coverage:
+    name: Code Coverage Tests
+    needs: install-environment
+    uses: ./.github/workflows/test-coverage.yml
+    with:
+      branch: ${{github.ref_name}}
