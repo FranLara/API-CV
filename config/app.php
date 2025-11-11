@@ -6,6 +6,9 @@ use App\Providers\CommandServiceProvider;
 use App\Providers\EventServiceProvider;
 use App\Providers\RouteServiceProvider;
 use App\Providers\ServiceServiceProvider;
+use App\Providers\Users\AdminServiceProvider;
+use App\Providers\Users\RecruiterServiceProvider;
+use App\Providers\Users\TechnicianServiceProvider;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
@@ -46,7 +49,7 @@ return [ /*
          |
          */
 
-         'debug' => (bool)env('APP_DEBUG', false),
+         'debug' => (bool) env('APP_DEBUG', false),
 
          /*
          |--------------------------------------------------------------------------
@@ -158,14 +161,19 @@ return [ /*
          |
          */
 
-         'providers' => ServiceProvider::defaultProviders()->merge([
-             AppServiceProvider::class,
-             AuthServiceProvider::class,
-             EventServiceProvider::class,
-             RouteServiceProvider::class,
-             CommandServiceProvider::class,
-             ServiceServiceProvider::class,
-         ])->toArray(),
+         'providers' => ServiceProvider::defaultProviders()->merge(
+             [
+                 AppServiceProvider::class,
+                 AuthServiceProvider::class,
+                 AdminServiceProvider::class,
+                 EventServiceProvider::class,
+                 RouteServiceProvider::class,
+                 CommandServiceProvider::class,
+                 ServiceServiceProvider::class,
+                 RecruiterServiceProvider::class,
+                 TechnicianServiceProvider::class,
+             ]
+         )->toArray(),
 
          /*
          |--------------------------------------------------------------------------
@@ -178,6 +186,8 @@ return [ /*
          |
          */
 
-         'aliases' => Facade::defaultAliases()->merge([ // 'Example' => App\Facades\Example::class,
-         ])->toArray(),
+         'aliases' => Facade::defaultAliases()->merge(
+             [ // 'Example' => App\Facades\Example::class,
+             ]
+         )->toArray(),
 ];
