@@ -12,15 +12,13 @@ use Illuminate\Support\Facades\Hash;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\Exception;
 use Tests\Unit\Services\Users\SaverTests;
+use Tests\Utils\Services\Users\Saver as SaverUtils;
 
 class SaverTest extends SaverTests
 {
-    private const string NAME = 'test_name';
-    private const string EMAIL = 'test_email';
-    private const string PSSWD = 'test_psswd';
-    private const string LANGUAGE = 'test_language';
+    use SaverUtils;
+
     private const string GITHUB_PROFILE = 'https://test_github_profile.test';
-    private const string LINKEDIN_PROFILE = 'https://test_linkedin_profile.test';
 
     /**
      * @throws Exception

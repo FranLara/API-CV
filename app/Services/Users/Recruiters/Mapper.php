@@ -8,14 +8,16 @@ use App\BusinessObjects\DTOs\DTO;
 use App\BusinessObjects\DTOs\Users\Recruiter as RecruiterDTO;
 use App\BusinessObjects\Models\Users\Recruiter;
 use App\Services\Users\Mapper as UserMapper;
+use App\Utils\Services\Users\Mapping as MappingUtils;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Hash;
 
 class Mapper extends UserMapper
 {
+    use MappingUtils;
+
     /**
-     * @param RecruiterDTO $dto
-     * @param Recruiter    $recruiter
+     * @param  RecruiterDTO  $dto
+     * @param  Recruiter  $recruiter
      */
     public function map(DTO $dto, Model $recruiter): Recruiter
     {
@@ -30,19 +32,6 @@ class Mapper extends UserMapper
     {
         $recruiter = clone $previousRecruiter;
 
-        if (!empty($dto->getName())) {
-            $recruiter->name = $dto->getName();
-        }
-        if (!empty($dto->getLanguage())) {
-            $recruiter->language = $dto->getLanguage();
-        }
-        if (!empty($dto->getPsswd())) {
-            $recruiter->password = Hash::make($dto->getPsswd());
-        }
-        if (!empty($dto->getLinkedinProfile())) {
-            $recruiter->linkedin_profile = $dto->getLinkedinProfile();
-        }
-
-        return $recruiter;
+        return $this->mapUserNotEmptyValues($recruiter, $dto);
     }
 }
