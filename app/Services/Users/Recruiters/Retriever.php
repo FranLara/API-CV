@@ -26,7 +26,7 @@ class Retriever extends UserRetriever
         $model = RecruiterModel::firstWhere($field, $value);
 
         if (empty($model)) {
-            throw (new ModelNotFoundException())->setModel(RecruiterModel::class, $value);
+            throw new ModelNotFoundException()->setModel(RecruiterModel::class, $value);
         }
 
         return $this->transformer->transform($model);

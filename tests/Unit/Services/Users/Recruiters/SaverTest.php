@@ -11,9 +11,9 @@ use App\Services\Users\Recruiters\Saver;
 use Illuminate\Support\Facades\Hash;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\Exception;
-use Tests\Unit\Services\ServiceTests;
+use Tests\Unit\Services\Users\UserTests;
 
-class SaverTest extends ServiceTests
+class SaverTest extends UserTests
 {
     private const string NAME = 'test_name';
     private const string EMAIL = 'test_email';
@@ -50,7 +50,7 @@ class SaverTest extends ServiceTests
             'name'             => self::NAME,
             'language'         => self::LANGUAGE,
             'linkedin_profile' => self::LINKEDIN_PROFILE,
-            'password'         => Hash::make(self::PSSWD)
+            'password'         => Hash::make(self::PSSWD),
         ];
         $recruiter = new Recruiter($default);
 
@@ -65,14 +65,5 @@ class SaverTest extends ServiceTests
         }
 
         return $recruiter;
-    }
-
-    private function getExpectedField(string $field, bool $modified): string
-    {
-        if ($modified) {
-            return $field . '_mod';
-        }
-
-        return $field;
     }
 }

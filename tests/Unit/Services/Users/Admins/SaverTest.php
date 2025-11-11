@@ -11,9 +11,9 @@ use App\Services\Users\Admins\Saver;
 use Illuminate\Support\Facades\Hash;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\Exception;
-use Tests\Unit\Services\ServiceTests;
+use Tests\Unit\Services\Users\UserTests;
 
-class SaverTest extends ServiceTests
+class SaverTest extends UserTests
 {
     private const string PSSWD = 'test_psswd';
     private const string USERNAME = 'test_username';
@@ -53,14 +53,5 @@ class SaverTest extends ServiceTests
         }
 
         return $admin;
-    }
-
-    private function getExpectedField(string $field, bool $modified): string
-    {
-        if ($modified) {
-            return $field . '_mod';
-        }
-
-        return $field;
     }
 }
