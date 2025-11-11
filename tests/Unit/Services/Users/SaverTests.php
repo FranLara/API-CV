@@ -6,7 +6,7 @@ namespace Tests\Unit\Services\Users;
 
 use Tests\Unit\Services\ServiceTests;
 
-abstract class UserTests extends ServiceTests
+abstract class SaverTests extends ServiceTests
 {
     protected function getExpectedField(string $field, bool $modified): string
     {

@@ -11,9 +11,9 @@ use App\Services\Users\Recruiters\Saver;
 use Illuminate\Support\Facades\Hash;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\Exception;
-use Tests\Unit\Services\Users\UserTests;
+use Tests\Unit\Services\Users\SaverTests;
 
-class SaverTest extends UserTests
+class SaverTest extends SaverTests
 {
     private const string NAME = 'test_name';
     private const string EMAIL = 'test_email';
