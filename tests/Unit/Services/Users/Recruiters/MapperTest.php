@@ -17,41 +17,47 @@ class MapperTest extends TestCase
 {
     use MapperUtils;
 
-    private const array VALUES = [self::NAME, self::PSSWD, self::LANGUAGE, self::IDENTIFIER, self::LINKEDIN_PROFILE];
+    #[DataProvider('providerRecruiter')]
+    public function testMap(RecruiterDTO $dto): void
+    {
+        $recruiter = new Mapper()->map($dto, new Recruiter());
 
-    #[DataProvider('providerRecruiterData')]
-    public function testMap(
-        ?string $name = null,
-        ?string $psswd = null,
-        ?string $language = null,
-        ?string $identifier = null,
-        ?string $linkedinProfile = null
-    ): void {
-        $recruiter = new RecruiterDTO(
-            identifier: $identifier, name: $name, psswd: $psswd, language: $language, linkedinProfile: $linkedinProfile
-        );
-        $recruiter = new Mapper()->map($recruiter, new Recruiter());
-
-        $this->assertSame($name, $recruiter->name);
-        $this->assertSame($language, $recruiter->language);
-        $this->assertSame($linkedinProfile, $recruiter->linkedin_profile);
-        if (!empty($psswd)) {
-            $this->assertTrue(Hash::check($psswd, $recruiter->password));
+        $this->assertSame($dto->getName(), $recruiter->name);
+        $this->assertSame($dto->getLanguage(), $recruiter->language);
+        $this->assertSame($dto->getLinkedinProfile(), $recruiter->linkedin_profile);
+        if (!empty($dto->getPsswd())) {
+            $this->assertTrue(Hash::check($dto->getPsswd(), $recruiter->password));
         }
-        if (empty($identifier)) {
+        if (empty($dto->getIdentifier())) {
             $this->assertGreaterThan(now()->subMinute(), $recruiter->created_at);
         }
     }
 
-    public static function providerRecruiterData(): array
+    public static function providerRecruiter(): array
     {
-        return array_merge(
-            [self::VALUES],
+        $values = [self::NAME, self::PSSWD, self::LANGUAGE, self::IDENTIFIER, self::LINKEDIN_PROFILE];
+
+        $recruiterValues = array_merge(
+            [$values],
             [[null, null, null, null, null]],
-            SetGenerator::generate(self::VALUES, 1),
-            SetGenerator::generate(self::VALUES, 2),
-            SetGenerator::generate(self::VALUES, 3),
-            SetGenerator::generate(self::VALUES, 4),
+            SetGenerator::generate($values, 1),
+            SetGenerator::generate($values, 2),
+            SetGenerator::generate($values, 3),
+            SetGenerator::generate($values, 4),
         );
+
+        $tests = [];
+        foreach ($recruiterValues as $values) {
+            $recruiter = new RecruiterDTO(
+                name: $values[0],
+                psswd: $values[1],
+                language: $values[2],
+                identifier: $values[3],
+                linkedinProfile: $values[4]
+            );
+            $tests[] = [$recruiter];
+        }
+
+        return $tests;
     }
 }

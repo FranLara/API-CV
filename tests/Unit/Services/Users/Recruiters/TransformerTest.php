@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Services\Users\Recruiters;
 
-use App\BusinessObjects\Models\Users\Recruiter as RecruiterModel;
+use App\BusinessObjects\Models\Users\Recruiter;
 use App\Services\Users\Recruiters\Transformer;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -12,60 +12,43 @@ use Tests\Utils\DTOs\SetGenerator;
 
 class TransformerTest extends TestCase
 {
-    private const string NAME = 'test_name';
-    private const string EMAIL = 'test_email';
-    private const string LANGUAGE = 'test_language';
-    private const string IDENTIFIER = 'test_identifier';
-    private const string LINKEDIN_PROFILE = 'test_linkedin_profile';
-
-    private const array VALUES = [self::NAME, self::EMAIL, self::LANGUAGE, self::IDENTIFIER, self::LINKEDIN_PROFILE];
-
-    #[DataProvider('providerRecruiterData')]
-    public function testTransform(
-        ?string $name = null,
-        ?string $email = null,
-        ?string $language = null,
-        ?string $identifier = null,
-        ?string $linkedinProfile = null
-    ): void {
-        $recruiter = new Transformer()->transform(
-            $this->getModel($email, $name, $language, $linkedinProfile, $identifier)
-        );
-
-        $this->assertSame($name, $recruiter->getName());
-        $this->assertSame($email, $recruiter->getEmail());
-        $this->assertSame($language, $recruiter->getLanguage());
-        $this->assertSame($identifier, $recruiter->getIdentifier());
-        $this->assertSame($linkedinProfile, $recruiter->getLinkedinProfile());
-    }
-
-    public static function providerRecruiterData(): array
+    #[DataProvider('providerRecruiter')]
+    public function testTransform(Recruiter $model): void
     {
-        return array_merge(
-            [self::VALUES],
-            [[null, null, null, null, null]],
-            SetGenerator::generate(self::VALUES, 1),
-            SetGenerator::generate(self::VALUES, 2),
-            SetGenerator::generate(self::VALUES, 3),
-            SetGenerator::generate(self::VALUES, 4),
-        );
+        $recruiter = new Transformer()->transform($model);
+
+        $this->assertSame($model->name, $recruiter->getName());
+        $this->assertSame($model->email, $recruiter->getEmail());
+        $this->assertSame($model->id, $recruiter->getIdentifier());
+        $this->assertSame($model->language, $recruiter->getLanguage());
+        $this->assertSame($model->linkedin_profile, $recruiter->getLinkedinProfile());
     }
 
-    private function getModel(
-        ?string $email,
-        ?string $name,
-        ?string $language,
-        ?string $linkedinProfile,
-        ?string $identifier
-    ): RecruiterModel {
-        $recruiter = [
-            'email'            => $email,
-            'name'             => $name,
-            'language'         => $language,
-            'linkedin_profile' => $linkedinProfile,
-            'id'               => $identifier,
-        ];
+    public static function providerRecruiter(): array
+    {
+        $values = ['test_identifier', 'test_name', 'test_email', 'test_language', 'test_linkedin_profile'];
 
-        return new RecruiterModel($recruiter);
+        $recruiterValues = array_merge(
+            [$values],
+            [[null, null, null, null, null]],
+            SetGenerator::generate($values, 1),
+            SetGenerator::generate($values, 2),
+            SetGenerator::generate($values, 3),
+            SetGenerator::generate($values, 4),
+        );
+
+        $tests = [];
+        foreach ($recruiterValues as $values) {
+            $recruiter = [
+                'id'               => $values[0],
+                'name'             => $values[1],
+                'email'            => $values[2],
+                'language'         => $values[3],
+                'linkedin_profile' => $values[4],
+            ];
+            $tests[] = [new Recruiter($recruiter)];
+        }
+
+        return $tests;
     }
 }

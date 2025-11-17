@@ -14,34 +14,36 @@ use Tests\Utils\DTOs\SetGenerator;
 
 class MapperTest extends TestCase
 {
-    private const string PSSWD = 'test_psswd';
-    private const string LANGUAGE = 'test_language';
-    private const string IDENTIFIER = 'test_identifier';
-
-    private const array VALUES = [self::LANGUAGE, self::PSSWD, self::IDENTIFIER];
-
-    #[DataProvider('providerAdminData')]
-    public function testMap(?string $language = null, ?string $psswd = null, ?string $identifier = null): void
+    #[DataProvider('providerAdmin')]
+    public function testMap(AdminDTO $dto): void
     {
-        $admin = new AdminDTO(language: $language, psswd: $psswd, identifier: $identifier);
-        $admin = new Mapper()->map($admin, new Admin());
+        $admin = new Mapper()->map($dto, new Admin());
 
-        $this->assertSame($language, $admin->language);
-        if (!empty($psswd)) {
-            $this->assertTrue(Hash::check($psswd, $admin->password));
+        $this->assertSame($dto->getLanguage(), $admin->language);
+        if (!empty($dto->getPsswd())) {
+            $this->assertTrue(Hash::check($dto->getPsswd(), $admin->password));
         }
-        if (empty($identifier)) {
+        if (empty($dto->getIdentifier())) {
             $this->assertGreaterThan(now()->subMinute(), $admin->created_at);
         }
     }
 
-    public static function providerAdminData(): array
+    public static function providerAdmin(): array
     {
-        return array_merge(
-            [self::VALUES],
+        $values = ['test_language', 'test_psswd', 'test_identifier'];
+
+        $adminValues = array_merge(
+            [$values],
             [[null, null, null]],
-            SetGenerator::generate(self::VALUES, 1),
-            SetGenerator::generate(self::VALUES, 2),
+            SetGenerator::generate($values, 1),
+            SetGenerator::generate($values, 2),
         );
+
+        $tests = [];
+        foreach ($adminValues as $values) {
+            $tests[] = [new AdminDTO(language: $values[0], psswd: $values[1], identifier: $values[2])];
+        }
+
+        return $tests;
     }
 }

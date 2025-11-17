@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Services\Users\Admins;
 
-use App\BusinessObjects\Models\Users\Admin as AdminModel;
+use App\BusinessObjects\Models\Users\Admin;
 use App\Services\Users\Admins\Transformer;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -12,36 +12,32 @@ use Tests\Utils\DTOs\SetGenerator;
 
 class TransformerTest extends TestCase
 {
-    private const string USERNAME = 'test_username';
-    private const string LANGUAGE = 'test_language';
-    private const string IDENTIFIER = 'test_identifier';
-
-    private const array VALUES = [self::USERNAME, self::LANGUAGE, self::IDENTIFIER];
-
-    #[DataProvider('providerAdminData')]
-    public function testTransform(?string $username = null, ?string $language = null, ?string $identifier = null): void
+    #[DataProvider('providerAdmin')]
+    public function testTransform(Admin $model): void
     {
-        $admin = new Transformer()->transform($this->getModel($username, $language, $identifier));
+        $admin = new Transformer()->transform($model);
 
-        $this->assertSame($username, $admin->getUsername());
-        $this->assertSame($language, $admin->getLanguage());
-        $this->assertSame($identifier, $admin->getIdentifier());
+        $this->assertSame($model->id, $admin->getIdentifier());
+        $this->assertSame($model->username, $admin->getUsername());
+        $this->assertSame($model->language, $admin->getLanguage());
     }
 
-    public static function providerAdminData(): array
+    public static function providerAdmin(): array
     {
-        return array_merge(
-            [self::VALUES],
+        $values = ['test_username', 'test_language', 'test_identifier'];
+
+        $adminValues = array_merge(
+            [$values],
             [[null, null, null]],
-            SetGenerator::generate(self::VALUES, 1),
-            SetGenerator::generate(self::VALUES, 2),
+            SetGenerator::generate($values, 1),
+            SetGenerator::generate($values, 2),
         );
-    }
 
-    private function getModel(?string $username, ?string $language, ?string $identifier): AdminModel
-    {
-        $admin = ['username' => $username, 'language' => $language, 'id' => $identifier];
+        $tests = [];
+        foreach ($adminValues as $values) {
+            $tests[] = [new Admin(['username' => $values[0], 'language' => $values[1], 'id' => $values[2]])];
+        }
 
-        return new AdminModel($admin);
+        return $tests;
     }
 }

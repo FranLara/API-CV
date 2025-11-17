@@ -13,15 +13,6 @@ class RecruiterTest extends UserTests
 {
     use RecruiterUtils;
 
-    private const array VALUES = [
-        self::NAME,
-        self::EMAIL,
-        self::PSSWD,
-        self::LANGUAGE,
-        self::IDENTIFIER,
-        self::LINKEDIN_PROFILE,
-    ];
-
     #[DataProvider('providerConstructorData')]
     public function testConstructor(
         ?string $name = null,
@@ -50,14 +41,16 @@ class RecruiterTest extends UserTests
 
     public static function providerConstructorData(): array
     {
+        $values = [self::NAME, self::EMAIL, self::PSSWD, self::LANGUAGE, self::IDENTIFIER, self::LINKEDIN_PROFILE];
+
         return array_merge(
-            [self::VALUES],
+            [$values],
             [[null, null, null, null, null, null]],
-            SetGenerator::generate(self::VALUES, 1),
-            SetGenerator::generate(self::VALUES, 2),
-            SetGenerator::generate(self::VALUES, 3),
-            SetGenerator::generate(self::VALUES, 4),
-            SetGenerator::generate(self::VALUES, 5),
+            SetGenerator::generate($values, 1),
+            SetGenerator::generate($values, 2),
+            SetGenerator::generate($values, 3),
+            SetGenerator::generate($values, 4),
+            SetGenerator::generate($values, 5),
         );
     }
 }

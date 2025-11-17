@@ -15,16 +15,6 @@ class TechnicianTest extends UserTests
 
     private const string GITHUB_PROFILE = 'test_github_profile';
 
-    private const array VALUES = [
-        self::NAME,
-        self::EMAIL,
-        self::PSSWD,
-        self::LANGUAGE,
-        self::IDENTIFIER,
-        self::GITHUB_PROFILE,
-        self::LINKEDIN_PROFILE,
-    ];
-
     #[DataProvider('providerConstructorData')]
     public function testConstructor(
         ?string $name = null,
@@ -76,14 +66,24 @@ class TechnicianTest extends UserTests
 
     public static function providerConstructorData(): array
     {
+        $values = [
+            self::NAME,
+            self::EMAIL,
+            self::PSSWD,
+            self::LANGUAGE,
+            self::IDENTIFIER,
+            self::GITHUB_PROFILE,
+            self::LINKEDIN_PROFILE,
+        ];
+
         return array_merge(
-            [self::VALUES],
-            SetGenerator::generate(self::VALUES, 1),
-            SetGenerator::generate(self::VALUES, 2),
-            SetGenerator::generate(self::VALUES, 3),
-            SetGenerator::generate(self::VALUES, 4),
-            SetGenerator::generate(self::VALUES, 5),
-            SetGenerator::generate(self::VALUES, 6),
+            [$values],
+            SetGenerator::generate($values, 1),
+            SetGenerator::generate($values, 2),
+            SetGenerator::generate($values, 3),
+            SetGenerator::generate($values, 4),
+            SetGenerator::generate($values, 5),
+            SetGenerator::generate($values, 6),
             [[null, null, null, null, null, null, null]],
         );
     }

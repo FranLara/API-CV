@@ -12,8 +12,6 @@ class AdminTest extends UserTests
 {
     private const string USERNAME = 'test_username';
 
-    private const array VALUES = [self::PSSWD, self::USERNAME, self::LANGUAGE, self::IDENTIFIER];
-
     #[DataProvider('providerConstructorData')]
     public function testConstructor(
         ?string $psswd = null,
@@ -51,12 +49,14 @@ class AdminTest extends UserTests
 
     public static function providerConstructorData(): array
     {
+        $values = [self::PSSWD, self::USERNAME, self::LANGUAGE, self::IDENTIFIER];
+
         return array_merge(
-            [self::VALUES],
+            [$values],
             [[null, null, null, null]],
-            SetGenerator::generate(self::VALUES, 1),
-            SetGenerator::generate(self::VALUES, 2),
-            SetGenerator::generate(self::VALUES, 3),
+            SetGenerator::generate($values, 1),
+            SetGenerator::generate($values, 2),
+            SetGenerator::generate($values, 3),
         );
     }
 

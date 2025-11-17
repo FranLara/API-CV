@@ -17,58 +17,57 @@ class MapperTest extends TestCase
 {
     use MapperUtils;
 
-    private const string GITHUB_PROFILE = 'test_github_profile';
+    #[DataProvider('providerTechnician')]
+    public function testMap(TechnicianDTO $dto): void
+    {
+        $technician = new Mapper()->map($dto, new Technician());
 
-    private const array VALUES = [
-        self::NAME,
-        self::PSSWD,
-        self::LANGUAGE,
-        self::IDENTIFIER,
-        self::GITHUB_PROFILE,
-        self::LINKEDIN_PROFILE,
-    ];
-
-    #[DataProvider('providerTechnicianData')]
-    public function testMap(
-        ?string $name = null,
-        ?string $psswd = null,
-        ?string $language = null,
-        ?string $identifier = null,
-        ?string $githubProfile = null,
-        ?string $linkedinProfile = null
-    ): void {
-        $technician = new TechnicianDTO(
-            name: $name,
-            psswd: $psswd,
-            language: $language,
-            identifier: $identifier,
-            githubProfile: $githubProfile,
-            linkedinProfile: $linkedinProfile
-        );
-        $technician = new Mapper()->map($technician, new Technician());
-
-        $this->assertSame($name, $technician->name);
-        $this->assertSame($language, $technician->language);
-        $this->assertSame($githubProfile, $technician->github_profile);
-        $this->assertSame($linkedinProfile, $technician->linkedin_profile);
-        if (!empty($psswd)) {
-            $this->assertTrue(Hash::check($psswd, $technician->password));
+        $this->assertSame($dto->getName(), $technician->name);
+        $this->assertSame($dto->getLanguage(), $technician->language);
+        $this->assertSame($dto->getGithubProfile(), $technician->github_profile);
+        $this->assertSame($dto->getLinkedinProfile(), $technician->linkedin_profile);
+        if (!empty($dto->getPsswd())) {
+            $this->assertTrue(Hash::check($dto->getPsswd(), $technician->password));
         }
-        if (empty($identifier)) {
+        if (empty($dto->getIdentifier())) {
             $this->assertGreaterThan(now()->subMinute(), $technician->created_at);
         }
     }
 
-    public static function providerTechnicianData(): array
+    public static function providerTechnician(): array
     {
-        return array_merge(
-            [self::VALUES],
+        $values = [
+            self::NAME,
+            self::PSSWD,
+            self::LANGUAGE,
+            self::IDENTIFIER,
+            'test_github_profile',
+            self::LINKEDIN_PROFILE,
+        ];
+
+        $technicianValues = array_merge(
+            [$values],
+            SetGenerator::generate($values, 1),
+            SetGenerator::generate($values, 2),
+            SetGenerator::generate($values, 3),
+            SetGenerator::generate($values, 4),
+            SetGenerator::generate($values, 5),
             [[null, null, null, null, null, null]],
-            SetGenerator::generate(self::VALUES, 1),
-            SetGenerator::generate(self::VALUES, 2),
-            SetGenerator::generate(self::VALUES, 3),
-            SetGenerator::generate(self::VALUES, 4),
-            SetGenerator::generate(self::VALUES, 5),
         );
+
+        $tests = [];
+        foreach ($technicianValues as $values) {
+            $technician = new TechnicianDTO(
+                name: $values[0],
+                psswd: $values[1],
+                language: $values[2],
+                identifier: $values[3],
+                githubProfile: $values[4],
+                linkedinProfile: $values[5]
+            );
+            $tests[] = [$technician];
+        }
+
+        return $tests;
     }
 }
