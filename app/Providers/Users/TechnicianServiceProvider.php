@@ -6,14 +6,14 @@ namespace App\Providers\Users;
 
 use App\Services\Mapper;
 use App\Services\Users\Technicians\Mapper as TechniciansMapper;
-use App\Services\Users\Technicians\Saver as TechnicianSaver;
+use App\Services\Users\Technicians\Saver;
 use Illuminate\Support\ServiceProvider;
 
 class TechnicianServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->app->when(TechnicianSaver::class)->needs(Mapper::class)->give(TechniciansMapper::class);
+        $this->app->when(Saver::class)->needs(Mapper::class)->give(TechniciansMapper::class);
     }
 
     public function boot(): void
