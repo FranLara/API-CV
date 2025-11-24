@@ -11,6 +11,7 @@ use App\BusinessObjects\Models\Users\Technician;
 use App\Http\Controllers\API\API as APIController;
 use Dingo\Api\Http\Response;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Illuminate\Testing\TestResponse;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -22,15 +23,19 @@ class TokenTest extends APITests
     private const string TYPE_INDEX = 'token_type';
     private const string TOKEN_INDEX = 'access_token';
     private const string EXPIRATION_INDEX = 'expires_in';
+    private const array INDEXES = [self::TYPE_INDEX, self::TOKEN_INDEX, self::EXPIRATION_INDEX];
 
     #[DataProvider('providerCredentials')]
     public function testRequest(
+        string $expectedRole = Token::GUEST_ROLE,
         array $credentials = [],
-        int $expectedStatusCode = Response::HTTP_OK,
-        string $expectedRole = Token::GUEST_ROLE
+        int $expectedStatusCode = Response::HTTP_OK
     ): void {
         if (empty($credentials)) {
             $credentials = $this->getCredentials($expectedRole);
+        }
+        if ((!Str::of($expectedRole)->exactly(Token::GUEST_ROLE)) && ($expectedStatusCode != Response::HTTP_OK)) {
+            $this->getTechnicianCredentials($credentials[APIController::USERNAME_PARAMETER]);
         }
 
         $response = $this->getTokenResponse($credentials);
@@ -42,13 +47,10 @@ class TokenTest extends APITests
 
             $this->assertSame($expectedRole, $payload->get('role'));
             $response->assertJson(
-                fn(AssertableJson $json) => $json->hasAll(
-                    [
-                        self::TYPE_INDEX,
-                        self::TOKEN_INDEX,
-                        self::EXPIRATION_INDEX,
-                    ]
-                )->where(self::TYPE_INDEX, 'bearer')->where(self::EXPIRATION_INDEX, 3600)
+                fn(AssertableJson $json) => $json->hasAll(self::INDEXES)->where(self::TYPE_INDEX, 'bearer')->where(
+                    self::EXPIRATION_INDEX,
+                    3600
+                )
             );
         }
     }
@@ -62,27 +64,28 @@ class TokenTest extends APITests
 
         if ($response->getStatusCode() == Response::HTTP_OK) {
             $response->assertJson(
-                fn(AssertableJson $json) => $json->hasAll(
-                    [
-                        self::TYPE_INDEX,
-                        self::TOKEN_INDEX,
-                        self::EXPIRATION_INDEX,
-                    ]
-                )->where(self::TYPE_INDEX, 'bearer')->where(self::EXPIRATION_INDEX, 1860)
+                fn(AssertableJson $json) => $json->hasAll(self::INDEXES)->where(self::TYPE_INDEX, 'bearer')->where(
+                    self::EXPIRATION_INDEX,
+                    1860
+                )
             );
         }
     }
 
     public static function providerCredentials(): array
     {
+        $psswd = [APIController::PSSWD_PARAMETER => self::PSSWD];
+        $username = [APIController::USERNAME_PARAMETER => 'test_username'];
+
         return [
-            [[], Response::HTTP_OK],
-            [[], Response::HTTP_OK, Token::ADMIN_ROLE],
-            [[], Response::HTTP_OK, Token::RECRUITER_ROLE],
-            [[], Response::HTTP_OK, Token::TECHNICIAN_ROLE],
-            [[APIController::PSSWD_PARAMETER => self::PSSWD], Response::HTTP_UNPROCESSABLE_ENTITY],
-            [[APIController::USERNAME_PARAMETER => 'test_username'], Response::HTTP_UNPROCESSABLE_ENTITY],
-            [[APIController::USERNAME_PARAMETER => 'test_username', APIController::PSSWD_PARAMETER => self::PSSWD]],
+            [],
+            [Token::ADMIN_ROLE],
+            [Token::RECRUITER_ROLE],
+            [Token::TECHNICIAN_ROLE],
+            [Token::GUEST_ROLE, array_merge($username, $psswd)],
+            [Token::GUEST_ROLE, $psswd, Response::HTTP_UNPROCESSABLE_ENTITY],
+            [Token::RECRUITER_ROLE, [], Response::HTTP_INTERNAL_SERVER_ERROR],
+            [Token::GUEST_ROLE, $username, Response::HTTP_UNPROCESSABLE_ENTITY],
         ];
     }
 
@@ -93,6 +96,7 @@ class TokenTest extends APITests
             [Response::HTTP_OK, Token::GUEST_ROLE],
             [Response::HTTP_OK, Token::ADMIN_ROLE],
             [Response::HTTP_OK, Token::RECRUITER_ROLE],
+            [Response::HTTP_OK, Token::TECHNICIAN_ROLE],
         ];
     }
 
@@ -139,9 +143,15 @@ class TokenTest extends APITests
         return $this->getCredential($recruiter->email);
     }
 
-    private function getTechnicianCredentials(): array
+    private function getTechnicianCredentials(string $email = ''): array
     {
-        $technician = Technician::factory()->create(['password' => Hash::make(self::PSSWD)]);
+        $technician = ['password' => Hash::make(self::PSSWD)];
+
+        if (!empty($email)) {
+            $technician = array_merge(['email' => $email], $technician);
+        }
+
+        $technician = Technician::factory()->create($technician);
 
         return $this->getCredential($technician->email);
     }

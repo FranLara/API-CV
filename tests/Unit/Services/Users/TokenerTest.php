@@ -7,6 +7,7 @@ namespace Tests\Unit\Services\Users;
 use App\BusinessObjects\DTOs\Utils\Token;
 use App\BusinessObjects\Models\Users\Recruiter;
 use App\BusinessObjects\Models\Users\Technician;
+use App\Exceptions\Services\TokenUserCollisionException;
 use App\Http\Controllers\API\API as APIController;
 use App\Services\Users\Tokener;
 use Illuminate\Support\Facades\Hash;
@@ -18,6 +19,9 @@ class TokenerTest extends ServiceTests
 {
     private const array ROLE_CREATION = [Token::RECRUITER_ROLE, Token::TECHNICIAN_ROLE];
 
+    /**
+     * @throws TokenUserCollisionException
+     */
     #[DataProvider('providerCredentials')]
     public function testGetToken(array $credentials, string $expectedRole = Token::GUEST_ROLE): void
     {
@@ -29,6 +33,21 @@ class TokenerTest extends ServiceTests
         $payload = app('tymon.jwt')->setToken($token)->getPayload();
 
         $this->assertSame($expectedRole, $payload->get('role'));
+    }
+
+    public function testGetTokenTokenUserCollisionException(): void
+    {
+        $this->expectException(TokenUserCollisionException::class);
+
+        $credentials = [
+            APIController::USERNAME_PARAMETER => 'test@collision.com',
+            APIController::PSSWD_PARAMETER    => 'test_collision_password',
+        ];
+        $this->createUser($credentials, Token::RECRUITER_ROLE);
+        $this->createUser($credentials, Token::TECHNICIAN_ROLE);
+
+
+        new Tokener()->getToken($credentials);
     }
 
     public static function providerCredentials(): array

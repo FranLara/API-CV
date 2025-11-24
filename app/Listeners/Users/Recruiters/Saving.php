@@ -31,7 +31,8 @@ class Saving
         $errorMessages = '';
 
         $checkRecruiter = Recruiter::whereEmail($recruiter->email)->first();
-        if ((!empty($checkRecruiter)) && ((empty($recruiter->id)) || (($recruiter->id !== $checkRecruiter->id)))) {
+        if ((!empty($checkRecruiter))
+            && ((empty($recruiter->id)) || (!Str::of($recruiter->id)->exactly($checkRecruiter->id)))) {
             $errorMessages .= sprintf('The email "%s" already exists.' . PHP_EOL, $recruiter->email);
         }
 

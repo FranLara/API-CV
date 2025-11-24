@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Http\Controllers\API\Auth;
 
+use App\Exceptions\Controllers\UserCollisionException;
+use App\Exceptions\Services\TokenUserCollisionException;
 use App\Http\Controllers\API\Auth\Token;
 use App\Services\Users\Tokener;
 use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
@@ -41,6 +43,19 @@ class TokenTest extends APITests
         $this->assertArrayHasKey(self::EXPIRATION_INDEX, $data);
         $this->assertSame(self::TOKEN, $data[self::TOKEN_INDEX]);
         $this->assertLessThanOrEqual(0, $data[self::EXPIRATION_INDEX]);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testRequestException(): void
+    {
+        $this->expectException(UserCollisionException::class);
+
+        $tokener = $this->createMock(Tokener::class);
+        $tokener->method('getToken')->willThrowException(new TokenUserCollisionException('test_username'));
+
+        new Token($this->getTokenManager())->request($this->getRequest(), $tokener);
     }
 
     public function testRefresh(): void

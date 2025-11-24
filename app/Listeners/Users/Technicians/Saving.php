@@ -36,7 +36,8 @@ class Saving
         $errorMessages = '';
 
         $checkTechnician = Technician::whereEmail($technician->email)->first();
-        if ((!empty($checkTechnician)) && ((empty($technician->id)) || (($technician->id !== $checkTechnician->id)))) {
+        if ((!empty($checkTechnician))
+            && ((empty($technician->id)) || (!Str::of($technician->id)->exactly($checkTechnician->id)))) {
             $errorMessages .= sprintf('The email "%s" already exists.' . PHP_EOL, $technician->email);
         }
 

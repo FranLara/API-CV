@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\API\Auth;
 
+use App\Exceptions\Controllers\UserCollisionException;
+use App\Exceptions\Services\TokenUserCollisionException;
 use App\Http\Controllers\API\API as APIController;
 use App\Services\Users\Tokener;
 use Dingo\Api\Http\Response;
@@ -34,7 +36,11 @@ class Token extends APIController
                 self::PSSWD_PARAMETER    => 'required_with:' . self::USERNAME_PARAMETER,
             ]
         );
-        $token = $tokener->getToken($request->only([self::USERNAME_PARAMETER, self::PSSWD_PARAMETER]));
+        try {
+            $token = $tokener->getToken($request->only([self::USERNAME_PARAMETER, self::PSSWD_PARAMETER]));
+        } catch (TokenUserCollisionException $exception) {
+            throw new UserCollisionException($exception);
+        }
 
         return $this->getResponse($token);
     }
