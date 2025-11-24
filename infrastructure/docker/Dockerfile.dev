@@ -1,8 +1,15 @@
-FROM serversideup/php:8.3-fpm-nginx-alpine
+FROM serversideup/php:8.4-fpm-nginx-alpine
 
 LABEL maintainer="Fran Lara"
 
 USER root
+
+RUN install-php-extensions xdebug
+
+RUN { \
+      echo "xdebug.mode=coverage"; \
+      echo "xdebug.start_with_request=no"; \
+    } > /usr/local/etc/php/conf.d/xdebug.ini
 
 RUN apk add --update nodejs npm
 

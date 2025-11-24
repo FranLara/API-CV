@@ -14,6 +14,7 @@ use App\Notifications\User\Recruiter\Psswd;
 use App\Utils\Notifications as NotificationUtil;
 use Illuminate\Support\Facades\Notification as FacadeNotification;
 use Illuminate\Support\Str;
+use PHPUnit\Framework\Attributes\DataProvider;
 use ReflectionClass;
 use ReflectionException;
 use Tests\TestCase;
@@ -24,16 +25,15 @@ class NotificationsTest extends TestCase
     private const string TO = 'test_to@email.com';
 
     /**
-     * @dataProvider providerNotification
-     *
      * @throws ReflectionException
      */
+    #[DataProvider('providerNotification')]
     public function testSendMailNotification(
         Notification $notification,
         string $expectLocale = '',
-        string $expectTo = null,
-        string $locale = null,
-        string $to = null
+        ?string $expectTo = null,
+        ?string $locale = null,
+        ?string $recipient = null
     ): void {
         if (empty($expectTo)) {
             $expectTo = config('mail.notifications.internal');
@@ -49,13 +49,15 @@ class NotificationsTest extends TestCase
         $method = $class->getMethod('sendMailNotification');
         $method->setAccessible(true);
 
-        $method->invokeArgs($notifications, [$notification, $locale, $to]);
+        $method->invokeArgs($notifications, [$notification, $locale, $recipient]);
 
-        FacadeNotification::assertSentOnDemand(get_class($notification),
+        FacadeNotification::assertSentOnDemand(
+            get_class($notification),
             function (Notification $notification, array $channels, object $notifiable) use ($expectLocale, $expectTo) {
                 return ((Str::of($notifiable->routes['mail'])->exactly($expectTo))
                         && (Str::of($notification->locale)->exactly($expectLocale)));
-            });
+            }
+        );
         FacadeNotification::assertCount(1);
     }
 

@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Services\Users;
 
@@ -8,10 +9,7 @@ use App\Services\Retriever as RetrieverInterface;
 
 abstract class Retriever implements RetrieverInterface
 {
-	protected Transformer $transformer;
+    abstract public function retrieve(string $identifier): User;
 
-	abstract public function retrieve(string $identifier): User;
-
-	abstract public function retrieveByField(string $field, $value): User;
+    abstract public function retrieveByField(string $field, $value): User;
 }
-

@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\API\Auth;
 
+use App\Exceptions\Controllers\UserCollisionException;
+use App\Exceptions\Services\TokenUserCollisionException;
 use App\Http\Controllers\API\API as APIController;
 use App\Services\Users\Tokener;
 use Dingo\Api\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use PHPOpenSourceSaver\JWTAuth\JWT;
 use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
+use PHPOpenSourceSaver\JWTAuth\JWT;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class Token extends APIController
@@ -23,34 +25,40 @@ class Token extends APIController
     {
         $methods = [Request::METHOD_GET, Request::METHOD_OPTIONS, Request::METHOD_POST];
 
-        return (new Response([], Response::HTTP_OK))->header('Allow', implode(', ', $methods));
+        return new Response([], Response::HTTP_OK)->header('Allow', implode(', ', $methods));
     }
 
     public function request(Request $request, Tokener $tokener): JsonResponse
     {
-        $request->validate([
-            self::USERNAME_PARAMETER => 'required_with:' . self::PSSWD_PARAMETER,
-            self::PSSWD_PARAMETER    => 'required_with:' . self::USERNAME_PARAMETER
-        ]);
-        $token = $tokener->getToken($request->only([self::USERNAME_PARAMETER, self::PSSWD_PARAMETER]));
+        $request->validate(
+            [
+                self::USERNAME_PARAMETER => 'required_with:' . self::PSSWD_PARAMETER,
+                self::PSSWD_PARAMETER    => 'required_with:' . self::USERNAME_PARAMETER,
+            ]
+        );
+        try {
+            $token = $tokener->getToken($request->only([self::USERNAME_PARAMETER, self::PSSWD_PARAMETER]));
+        } catch (TokenUserCollisionException $exception) {
+            throw new UserCollisionException($exception);
+        }
 
         return $this->getResponse($token);
     }
 
     public function refresh(Request $request): JsonResponse
     {
-    	try {
-    		$token = $this->tokenManager->setToken($request->bearerToken())->refresh();
-    	} catch (JWTException $exception) {
-    		throw new UnauthorizedHttpException('jwt-auth', $exception->getMessage(), $exception, $exception->getCode());
-    	}
+        try {
+            $token = $this->tokenManager->setToken($request->bearerToken())->refresh();
+        } catch (JWTException $excep) {
+            throw new UnauthorizedHttpException('jwt-auth', $excep->getMessage(), $excep, $excep->getCode());
+        }
 
-    	$payload = $this->tokenManager->setToken($token)->getPayload()->toArray();
-    	$payload['exp'] = time() + 1860;
+        $payload = $this->tokenManager->setToken($token)->getPayload()->toArray();
+        $payload['exp'] = time() + 1860;
 
-    	$payload = $this->tokenManager->manager()->getPayloadFactory()->customClaims($payload)->make();
+        $payload = $this->tokenManager->manager()->getPayloadFactory()->customClaims($payload)->make();
 
-    	$token = $this->tokenManager->manager()->encode($payload)->get();
+        $token = $this->tokenManager->manager()->encode($payload)->get();
 
         return $this->getResponse($token);
     }

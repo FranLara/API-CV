@@ -13,7 +13,7 @@ class CreatedTest extends ListenerTests
 {
     public function testHandle(): void
     {
-        (new Created())->handle(new RecruiterCreatedEvent(new Recruiter()));
+        new Created()->handle(new RecruiterCreatedEvent(new Recruiter()));
 
         $this->assertDatabaseCount('jobs', 2);
         $this->assertDatabaseHas('jobs', ['queue' => 'notifications']);

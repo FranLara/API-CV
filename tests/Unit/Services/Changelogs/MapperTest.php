@@ -17,8 +17,8 @@ class MapperTest extends TestCase
 
     public function testMap(): void
     {
-        $changelog = (new Mapper())->map(new ChangelogDTO(entityId: self::ENTITY_ID, type: self::TYPE,
-            valuePayload: self::VALUE_PAYLOAD), new Changelog());
+        $changelog = new ChangelogDTO(entityId: self::ENTITY_ID, type: self::TYPE, valuePayload: self::VALUE_PAYLOAD);
+        $changelog = new Mapper()->map($changelog, new Changelog());
 
         $this->assertSame(self::TYPE, $changelog->type);
         $this->assertSame(self::ENTITY_ID, $changelog->entity_id);

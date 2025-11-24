@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Tests\Unit\Listeners;
 
@@ -10,7 +11,7 @@ use Tests\TestCase;
 
 abstract class ListenerTests extends TestCase
 {
-	use RefreshDatabase;
+    use RefreshDatabase;
 
     protected function setUp(): void
     {

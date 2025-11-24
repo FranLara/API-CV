@@ -11,7 +11,7 @@ return [
                 'subject' => 'Admin :username created!',
                 'line_1'  => 'The system recorded a new Admin: ":username"',
             ],
-            'update'   => ['subject' => 'Admin :username updated!', 'line_1' => 'The admin ":username" was updated.',]
+            'update'   => ['subject' => 'Admin :username updated!', 'line_1' => 'The admin ":username" was updated.'],
         ],
         'recruiter' => [
             'creation' => [
@@ -29,8 +29,8 @@ return [
                 'line_4'   => 'Passsword: :psswd',
                 'line_5'   => 'Do not forget to add to the header of the request:',
                 'line_6'   => '"Accept: application/:accept+json" and "Authorization: Bearer " and the JWT.',
-                'line_7'   => 'If you have any doubt, do not hesitate to ask me writing to :email'
-            ]
-        ]
-    ]
+                'line_7'   => 'If you have any doubt, do not hesitate to ask me writing to :email',
+            ],
+        ],
+    ],
 ];

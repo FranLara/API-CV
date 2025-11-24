@@ -25,10 +25,14 @@ class SaverTest extends ServiceTests
     {
         Event::fake();
 
+        $changelogDTO = new ChangelogDTO(
+            entityId: self::ENTITY_ID, type: self::TYPE, valuePayload: self::VALUE_PAYLOAD
+        );
+
         $changelog = ['type' => self::TYPE, 'entity_id' => self::ENTITY_ID, 'value_payload' => self::VALUE_PAYLOAD];
         $mapper = $this->createConfiguredMock(Mapper::class, ['map' => new Changelog($changelog)]);
-        (new Saver($mapper))->save(new ChangelogDTO(entityId: self::ENTITY_ID, type: self::TYPE,
-            valuePayload: self::VALUE_PAYLOAD));
+
+        new Saver($mapper)->save($changelogDTO);
         $changelog = Changelog::where(['type' => self::TYPE, 'entity_id' => self::ENTITY_ID])->first();
 
         $this->assertSame(self::TYPE, $changelog->type);

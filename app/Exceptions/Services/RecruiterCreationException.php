@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Exceptions\Services;
 
@@ -8,18 +9,14 @@ use Dingo\Api\Http\Response;
 
 class RecruiterCreationException extends Exception
 {
-	private Recruiter $recruiter;
+    public function __construct(private readonly Recruiter $recruiter)
+    {
+        $errorMessage = sprintf('The recruiter with email %s was not created.', $recruiter->getEmail());
+        parent::__construct($errorMessage, Response::HTTP_BAD_REQUEST);
+    }
 
-	public function __construct(Recruiter $recruiter)
-	{
-		$errorMessage = sprintf('The recruiter with email %s was not created.', $recruiter->getEmail());
-		parent::__construct($errorMessage, Response::HTTP_BAD_REQUEST);
-		$this->recruiter = $recruiter;
-	}
-
-	public function context(): array
-	{
-		return ['recruiter' => $this->recruiter->toPayload()->toArray()];
-	}
+    public function context(): array
+    {
+        return ['recruiter' => $this->recruiter->toPayload()->toArray()];
+    }
 }
-

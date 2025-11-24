@@ -35,7 +35,7 @@ class CreateTest extends AdminTests
 
     public function testCreateExistingUser(): void
     {
-    	Event::fake([ModelSaved::class]);
+        Event::fake([ModelSaved::class]);
 
         Admin::factory()->create(['username' => self::USERNAME]);
 

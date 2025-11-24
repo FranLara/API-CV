@@ -51,7 +51,7 @@ return [
     |
     */
 
-    'ide' => null,
+    'ide' => 'phpstorm',
 
     /*
     |--------------------------------------------------------------------------
@@ -64,8 +64,7 @@ return [
     |
     */
 
-    'exclude' => [
-        //  'path/to/directory-or-file'
+    'exclude' => [//  'path/to/directory-or-file'
     ],
 
     'add' => [
@@ -105,11 +104,11 @@ return [
     */
 
     'requirements' => [
-//        'min-quality' => 0,
-//        'min-complexity' => 0,
-//        'min-architecture' => 0,
-//        'min-style' => 0,
-//        'disable-security-check' => false,
+        //        'min-quality' => 0,
+        //        'min-complexity' => 0,
+        //        'min-architecture' => 0,
+        //        'min-style' => 0,
+        //        'disable-security-check' => false,
     ],
 
     /*

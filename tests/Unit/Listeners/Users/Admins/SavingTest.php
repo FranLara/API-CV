@@ -9,14 +9,13 @@ use App\BusinessObjects\Models\Users\Admin;
 use App\Events\Users\Admins\Saving as SavingEvent;
 use App\Listeners\Users\Admins\Saving;
 use Illuminate\Support\Str;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\Unit\Listeners\ListenerTests;
 
 class SavingTest extends ListenerTests
 {
-    /**
-     * @dataProvider providerField
-     */
-    public function testHandle(bool $expectedResult = true, string $field = null, $value = null): void
+    #[DataProvider('providerField')]
+    public function testHandle(bool $expectedResult, ?string $field = null, $value = null): void
     {
         if (Str::of($field)->exactly('username')) {
             Admin::factory()->create([$field => $value]);
@@ -29,13 +28,13 @@ class SavingTest extends ListenerTests
 
         /** @var Admin $admin */
         $admin = Admin::factory()->make($variable);
-        $result = (new Saving())->handle(new SavingEvent($admin));
+        $result = new Saving()->handle(new SavingEvent($admin));
 
         $this->assertEquals($expectedResult, $result);
     }
 
     public static function providerField(): array
     {
-        return [[], [false, 'username', 'test']];
+        return [[true], [false, 'username', 'test']];
     }
 }

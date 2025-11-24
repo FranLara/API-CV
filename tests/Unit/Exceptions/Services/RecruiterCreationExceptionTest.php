@@ -35,7 +35,7 @@ class RecruiterCreationExceptionTest extends TestCase
         $this->assertArrayHasKey(self::LINKEDIN_VARIABLE, $exception->context()[self::RECRUITER]);
         $this->assertSame('[HIDDEN]', $exception->context()[self::RECRUITER][self::PSSWD_VARIABLE]);
         $this->assertSame('test_name', $exception->context()[self::RECRUITER][self::NAME_VARIABLE]);
-        $this->assertSame('test@recruiter.com', $exception->context()[self::RECRUITER][self::EMAIL_VARIABLE]);
+        $this->assertSame(self::EMAIL, $exception->context()[self::RECRUITER][self::EMAIL_VARIABLE]);
         $this->assertSame('The recruiter with email test@recruiter.com was not created.', $exception->getMessage());
         $this->assertSame('test_linkedin_profile.com', $exception->context()[self::RECRUITER][self::LINKEDIN_VARIABLE]);
     }

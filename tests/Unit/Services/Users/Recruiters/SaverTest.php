@@ -9,23 +9,23 @@ use App\BusinessObjects\Models\Users\Recruiter;
 use App\Services\Users\Recruiters\Mapper;
 use App\Services\Users\Recruiters\Saver;
 use Illuminate\Support\Facades\Hash;
-use Tests\Unit\Services\ServiceTests;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\MockObject\Exception;
+use Tests\Unit\Services\Users\SaverTests;
+use Tests\Utils\Services\Users\Saver as SaverUtils;
 
-class SaverTest extends ServiceTests
+class SaverTest extends SaverTests
 {
-    private const string NAME = 'test_name';
-    private const string EMAIL = 'test_email';
-    private const string PSSWD = 'test_psswd';
-    private const string LANGUAGE = 'test_language';
-    private const string LINKEDIN_PROFILE = 'test_linkedin_profile';
+    use SaverUtils;
 
     /**
-     * @dataProvider providerUser
+     * @throws Exception
      */
-    public function testSave(bool $existing = false, bool $modified = false): void
+    #[DataProvider('providerUser')]
+    public function testSave(bool $existing, bool $modified = false): void
     {
         $mapper = $this->createConfiguredMock(Mapper::class, ['map' => $this->getRecruiter($existing, $modified)]);
-        (new Saver($mapper))->save(new RecruiterDTO());
+        new Saver($mapper)->save(new RecruiterDTO());
         $recruiter = Recruiter::whereEmail(self::EMAIL)->first();
 
         $this->assertSame(self::EMAIL, $recruiter->email);
@@ -37,7 +37,7 @@ class SaverTest extends ServiceTests
 
     public static function providerUser(): array
     {
-        return [[], [true], [true, true]];
+        return [[false], [true], [true, true]];
     }
 
     private function getRecruiter(bool $existing, bool $modified): Recruiter
@@ -47,7 +47,7 @@ class SaverTest extends ServiceTests
             'name'             => self::NAME,
             'language'         => self::LANGUAGE,
             'linkedin_profile' => self::LINKEDIN_PROFILE,
-            'password'         => Hash::make(self::PSSWD)
+            'password'         => Hash::make(self::PSSWD),
         ];
         $recruiter = new Recruiter($default);
 
@@ -62,14 +62,5 @@ class SaverTest extends ServiceTests
         }
 
         return $recruiter;
-    }
-
-    private function getExpectedField(string $field, bool $modified): string
-    {
-        if ($modified) {
-            return $field . '_mod';
-        }
-
-        return $field;
     }
 }

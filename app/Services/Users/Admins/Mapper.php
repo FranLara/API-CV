@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Services\Users\Admins;
 
@@ -11,19 +12,18 @@ use Illuminate\Support\Facades\Hash;
 
 class Mapper extends UserMapper
 {
-
-	public function map(DTO $dto, Model $admin): Admin
-	{
+    public function map(DTO $dto, Model $admin): Admin
+    {
         if (empty($admin->id)) {
             $admin->created_at = now();
         }
-		if (!empty($dto->getLanguage())) {
-			$admin->language = $dto->getLanguage();
-		}
-		if (!empty($dto->getPsswd())) {
-			$admin->password = Hash::make($dto->getPsswd());
-		}
+        if (!empty($dto->getLanguage())) {
+            $admin->language = $dto->getLanguage();
+        }
+        if (!empty($dto->getPsswd())) {
+            $admin->password = Hash::make($dto->getPsswd());
+        }
 
-		return $admin;
-	}
+        return $admin;
+    }
 }

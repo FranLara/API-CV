@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\BusinessObjects\DTOs\Utils;
 
 use App\BusinessObjects\DTOs\Utils\Token;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class TokenTest extends TestCase
@@ -12,23 +13,18 @@ class TokenTest extends TestCase
     private const string ROLE = 'test_role';
     private const array CREDENTIALS = ['test_credentials'];
 
-    /**
-     * @dataProvider providerConstructorData
-     */
+    #[DataProvider('providerConstructorData')]
     public function testConstructor(
         Token $token,
         string $expectedRole = Token::GUEST_ROLE,
         array $expectedCredentials = []
     ): void {
-        $this->assertIsArray($token->getCredentials());
         $this->assertSame($expectedRole, $token->getRole());
         $this->assertSameSize($expectedCredentials, $token->getCredentials());
     }
 
-    /**
-     * @dataProvider providerGetRole
-     */
-    public function testGetRole(string $role = null, string $expectedRole = Token::GUEST_ROLE): void
+    #[DataProvider('providerGetRole')]
+    public function testGetRole(?string $role = null, string $expectedRole = Token::GUEST_ROLE): void
     {
         $token = new Token();
 
@@ -37,11 +33,9 @@ class TokenTest extends TestCase
         }
         $this->assertSame($expectedRole, $token->getRole());
     }
-
-    /**
-     * @dataProvider providerGetCredentials
-     */
-    public function testGetCredentials(array $credentials = null, array $expectedCredentials = []): void
+    
+    #[DataProvider('providerGetCredentials')]
+    public function testGetCredentials(?array $credentials = null, array $expectedCredentials = []): void
     {
         $token = new Token(Token::GUEST_ROLE);
 
@@ -56,7 +50,7 @@ class TokenTest extends TestCase
         return [
             [new Token()],
             [new Token(self::ROLE), self::ROLE],
-            [new Token(self::ROLE, self::CREDENTIALS), self::ROLE, self::CREDENTIALS]
+            [new Token(self::ROLE, self::CREDENTIALS), self::ROLE, self::CREDENTIALS],
         ];
     }
 

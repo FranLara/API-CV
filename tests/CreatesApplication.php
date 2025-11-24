@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Tests;
 
@@ -8,13 +9,12 @@ use Illuminate\Foundation\Application;
 
 trait CreatesApplication
 {
+    public function createApplication(): Application
+    {
+        $app = require __DIR__.'/../bootstrap/app.php';
 
-	public function createApplication(): Application
-	{
-		$app = require __DIR__ . '/../bootstrap/app.php';
+        $app->make(Kernel::class)->bootstrap();
 
-		$app->make(Kernel::class)->bootstrap();
-
-		return $app;
-	}
+        return $app;
+    }
 }

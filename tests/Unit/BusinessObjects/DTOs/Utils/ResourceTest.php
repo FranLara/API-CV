@@ -6,7 +6,9 @@ namespace Tests\Unit\BusinessObjects\DTOs\Utils;
 
 use App\BusinessObjects\DTOs\Utils\Resource;
 use Illuminate\Http\Request;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Random\RandomException;
 use Tests\Utils\Request as RequestUtils;
 
 class ResourceTest extends TestCase
@@ -23,14 +25,19 @@ class ResourceTest extends TestCase
     private const string ENDPOINT_INDEX = 'endpointExample';
 
     /**
-     * @dataProvider providerGetResource
+     * @throws RandomException
      */
+    #[DataProvider('providerGetResource')]
     public function testGetResource(array $parameters = [], string $type = Request::METHOD_GET): void
     {
-        $resource = (new Resource(request: $this->getRequest(), path: self::PATH, type: $type, parameters: $parameters,
-            description: self::DESCRIPTION))->getResource();
+        $resource = new Resource(
+            request: $this->getRequest(),
+            path: self::PATH,
+            type: $type,
+            parameters: $parameters,
+            description: self::DESCRIPTION
+        )->getResource();
 
-        $this->assertIsArray($resource);
         $this->assertIsArray($resource[self::PATH]);
         $this->assertArrayHasKey(self::PATH, $resource);
         $this->assertArrayHasKey(self::TYPE_INDEX, $resource[self::PATH]);
@@ -44,7 +51,7 @@ class ResourceTest extends TestCase
             $this->assertParameters($parameters, $resource);
         }
         if (empty($parameters)) {
-            $this->assertSame('https://domain.test/' . self::PATH, $resource[self::PATH][self::ENDPOINT_INDEX]);
+            $this->assertSame('https://domain.test/'.self::PATH, $resource[self::PATH][self::ENDPOINT_INDEX]);
         }
     }
 
@@ -58,9 +65,9 @@ class ResourceTest extends TestCase
             [
                 [
                     [self::NAME_INDEX => self::NAME, self::TYPE_INDEX => 'string'],
-                    [self::NAME_INDEX => self::NAME, self::TYPE_INDEX => 'int']
-                ]
-            ]
+                    [self::NAME_INDEX => self::NAME, self::TYPE_INDEX => 'int'],
+                ],
+            ],
         ];
     }
 
@@ -69,10 +76,14 @@ class ResourceTest extends TestCase
         foreach ($parameters as $index => $parameter) {
             $this->assertArrayHasKey(self::NAME_INDEX, $resource[self::PATH][self::PARAMETER_INDEX][$index]);
             $this->assertArrayHasKey(self::TYPE_INDEX, $resource[self::PATH][self::PARAMETER_INDEX][$index]);
-            $this->assertSame($parameter[self::NAME_INDEX],
-                $resource[self::PATH][self::PARAMETER_INDEX][$index][self::NAME_INDEX]);
-            $this->assertSame($parameter[self::TYPE_INDEX],
-                $resource[self::PATH][self::PARAMETER_INDEX][$index][self::TYPE_INDEX]);
+            $this->assertSame(
+                $parameter[self::NAME_INDEX],
+                $resource[self::PATH][self::PARAMETER_INDEX][$index][self::NAME_INDEX]
+            );
+            $this->assertSame(
+                $parameter[self::TYPE_INDEX],
+                $resource[self::PATH][self::PARAMETER_INDEX][$index][self::TYPE_INDEX]
+            );
         }
     }
 }

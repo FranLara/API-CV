@@ -14,9 +14,6 @@ class RouteServiceProvider extends ServiceProvider
     public const string HOME = '/';
     private const string ROOT = 'App\Http\Controllers\\';
 
-    /**
-     * Define your route model bindings, pattern filters, and other route configuration.
-     */
     public function boot(): void
     {
         resolve(UrlGenerator::class)->forceScheme('https');
@@ -25,9 +22,8 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')->namespace(self::ROOT . 'Web')->group(base_path('routes/web.php'));
         });
 
-        $router = app('Dingo\Api\Routing\Router');
-
         /** @var Router $router */
+        $router = app('Dingo\Api\Routing\Router');
         $router->version('v1', fn(Router $api) => require base_path('routes/api.php'));
     }
 }

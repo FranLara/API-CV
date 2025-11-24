@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Services;
 
@@ -8,6 +9,5 @@ use Illuminate\Database\Eloquent\Model;
 
 interface Transformer
 {
-
-	public function transform(Model $model): DTO;
+    public function transform(Model $model): DTO;
 }

@@ -18,18 +18,14 @@ class User extends APIController
 {
     public function request(Request $request, Creator $creator): Response
     {
-        $rules = [
-            self::EMAIL_PARAMETER    => self::REQUIRED_VALIDATION . '|email|unique:recruiters,email',
-            // TODO Add unique to technicians
-            self::NAME_PARAMETER     => self::REQUIRED_VALIDATION,
-            self::LANGUAGE_PARAMETER => [self::REQUIRED_VALIDATION, Rule::in(['en', 'es'])],
-            self::LINKEDIN_PARAMETER => 'sometimes|url'
-        ];
-        $request->validate($rules);
+        $request->validate($this->getValidationRules());
 
-        $recruiter = new Recruiter(name: $request->get(self::NAME_PARAMETER),
-            email: $request->get(self::EMAIL_PARAMETER), language: $request->get(self::LANGUAGE_PARAMETER),
-            linkedinProfile: $request->get(self::LINKEDIN_PARAMETER));
+        $recruiter = new Recruiter(
+            name: $request->get(self::NAME_PARAMETER),
+            email: $request->get(self::EMAIL_PARAMETER),
+            language: $request->get(self::LANGUAGE_PARAMETER),
+            linkedinProfile: $request->get(self::LINKEDIN_PARAMETER)
+        );
 
         try {
             $creator->create($recruiter);
@@ -40,5 +36,16 @@ class User extends APIController
         }
 
         return $this->response->created();
+    }
+
+    private function getValidationRules(): array
+    {
+        return [
+            self::EMAIL_PARAMETER    => self::REQUIRED_VALIDATION
+                                        . '|email|unique:recruiters,email|unique:technicians,email',
+            self::NAME_PARAMETER     => self::REQUIRED_VALIDATION,
+            self::LANGUAGE_PARAMETER => [self::REQUIRED_VALIDATION, Rule::in(['en', 'es'])],
+            self::LINKEDIN_PARAMETER => 'sometimes|url',
+        ];
     }
 }

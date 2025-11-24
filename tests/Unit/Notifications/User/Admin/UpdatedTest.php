@@ -5,14 +5,12 @@ declare(strict_types=1);
 namespace Tests\Unit\Notifications\User\Admin;
 
 use App\Notifications\User\Admin\Updated;
+use PHPUnit\Framework\Attributes\DataProvider;
 use stdClass;
 
 class UpdatedTest extends AdminTests
 {
-
-    /**
-     * @dataProvider providerMailData
-     */
+    #[DataProvider('providerMailData')]
     public function testToMail(
         string $language,
         string $expectedSubject,
@@ -20,7 +18,7 @@ class UpdatedTest extends AdminTests
         string $expectedFirstLine,
         string $expectedSecondLine
     ): void {
-        $mail = (new Updated($this->getAdmin($language)))->toMail(new stdClass());
+        $mail = new Updated($this->getAdmin($language))->toMail(new stdClass());
 
         $this->assertSame($expectedSubject, $mail->subject);
         $this->assertSame($expectedGreeting, $mail->greeting);
@@ -36,14 +34,14 @@ class UpdatedTest extends AdminTests
                 'Admin ' . self::USERNAME . ' updated!',
                 'Warning!',
                 'The admin "' . self::USERNAME . '" was updated.',
-                'Their chosen language is: "English"'
+                'Their chosen language is: "English"',
             ],
             [
                 'es',
                 '¡Administrador ' . self::USERNAME . ' actualizado!',
                 '¡Aviso!',
                 'El administrador "' . self::USERNAME . '" fue actualizado.',
-                'Su idioma escogido es el: "Castellano"'
+                'Su idioma escogido es el: "Castellano"',
             ],
         ];
     }

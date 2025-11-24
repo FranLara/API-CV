@@ -11,6 +11,7 @@ use App\Http\Controllers\API\Auth\User;
 use App\Services\Users\Recruiters\Creator;
 use Dingo\Api\Http\Response;
 use Exception;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Tests\Unit\Http\Controllers\API\APITests;
 
@@ -18,14 +19,15 @@ class UserTest extends APITests
 {
     public function testRequest(): void
     {
-        $data = (new User())->request($this->getRequest(), $this->createMock(Creator::class));
+        $data = new User()->request($this->getRequest(), $this->createMock(Creator::class));
 
         $this->assertEquals(Response::HTTP_CREATED, $data->getStatusCode());
     }
 
     /**
-     * @dataProvider providerException
+     * @throws \PHPUnit\Framework\MockObject\Exception
      */
+    #[DataProvider('providerException')]
     public function testRequestException(Exception $expectedException, Exception $exception): void
     {
         $this->expectException(get_class($expectedException));
@@ -33,7 +35,7 @@ class UserTest extends APITests
         $creator = $this->createMock(Creator::class);
         $creator->method('create')->willThrowException($exception);
 
-        (new User())->request($this->getRequest(), $creator);
+        new User()->request($this->getRequest(), $creator);
     }
 
     public static function providerException(): array
@@ -41,8 +43,8 @@ class UserTest extends APITests
         $recruiterException = new RecruiterCreationException(new Recruiter());
 
         return [
-            [new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR), new Exception()],
             [new UserCreationException($recruiterException), $recruiterException],
+            [new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR), new Exception()],
         ];
     }
 }

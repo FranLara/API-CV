@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Services\Users;
 
@@ -8,8 +9,5 @@ use App\Services\Saver as SaverInterface;
 
 abstract class Saver implements SaverInterface
 {
-	protected Mapper $mapper;
-
-	abstract public function save(DTO $user): bool;
+    abstract public function save(DTO $user): bool;
 }
-
