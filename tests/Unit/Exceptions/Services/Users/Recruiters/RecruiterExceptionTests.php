@@ -16,5 +16,6 @@ abstract class RecruiterExceptionTests extends TestCase
     protected const string PSSWD_VARIABLE = 'psswd';
     protected const string EMAIL_VARIABLE = 'email';
     protected const string LANGUAGE_VARIABLE = 'language';
+    protected const string IDENTIFIER_VARIABLE = 'identifier';
     protected const string LINKEDIN_VARIABLE = 'linkedinProfile';
 }

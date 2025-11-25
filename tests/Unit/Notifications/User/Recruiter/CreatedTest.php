@@ -20,7 +20,7 @@ class CreatedTest extends RecruiterTests
         string $expectedSecondLine
     ): void {
         Lang::setLocale($language);
-        $mail = new Created($this->getRecruiter($language))->toMail(new stdClass());
+        $mail = new Created($this->getFullRecruiter($language))->toMail(new stdClass());
 
         $this->assertSame($expectedSubject, $mail->subject);
         $this->assertSame($expectedGreeting, $mail->greeting);

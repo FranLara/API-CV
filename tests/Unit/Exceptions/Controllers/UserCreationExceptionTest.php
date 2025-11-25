@@ -19,7 +19,7 @@ class UserCreationExceptionTest extends TestCase
 
     public function testConstructor(): void
     {
-        $exception = new UserCreationException(new CreationException($this->getRecruiter()));
+        $exception = new UserCreationException(new CreationException($this->getRecruiterWithoutIdentifier()));
 
         $this->assertNotEmpty($exception->context());
         $this->assertArrayHasKey(self::USER, $exception->context());

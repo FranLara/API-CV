@@ -15,7 +15,7 @@ class PsswdTest extends RecruiterTests
     public function testToMail(string $language, array $expectedMessages): void
     {
         Lang::setLocale($language);
-        $mail = new Psswd($this->getRecruiter($language))->toMail(new stdClass());
+        $mail = new Psswd($this->getFullRecruiter($language))->toMail(new stdClass());
 
         $this->assertSame($expectedMessages[0], $mail->subject);
         $this->assertSame($expectedMessages[1], $mail->greeting);

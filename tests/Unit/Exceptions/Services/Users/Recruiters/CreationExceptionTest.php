@@ -11,7 +11,7 @@ class CreationExceptionTest extends RecruiterExceptionTests
 {
     public function testConstructor(): void
     {
-        $exception = new CreationException($this->getRecruiter());
+        $exception = new CreationException($this->getRecruiterWithoutIdentifier());
 
         $this->assertNotEmpty($exception->context());
         $this->assertArrayHasKey(self::RECRUITER, $exception->context());
@@ -25,6 +25,7 @@ class CreationExceptionTest extends RecruiterExceptionTests
         $this->assertSame('[HIDDEN]', $exception->context()[self::RECRUITER][self::PSSWD_VARIABLE]);
         $this->assertSame('test_name', $exception->context()[self::RECRUITER][self::NAME_VARIABLE]);
         $this->assertSame(self::EMAIL, $exception->context()[self::RECRUITER][self::EMAIL_VARIABLE]);
+        $this->assertArrayNotHasKey(self::IDENTIFIER_VARIABLE, $exception->context()[self::RECRUITER]);
         $this->assertSame('The recruiter with email test@recruiter.com was not created.', $exception->getMessage());
         $this->assertSame('test_linkedin_profile.com', $exception->context()[self::RECRUITER][self::LINKEDIN_VARIABLE]);
     }
