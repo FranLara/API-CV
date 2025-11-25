@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Exceptions\Controllers;
 
 use App\Exceptions\Controllers\UserCreationException;
-use App\Exceptions\Services\RecruiterCreationException;
+use App\Exceptions\Services\Users\Recruiters\RecruiterCreationException;
 use Dingo\Api\Http\Response;
 use Tests\TestCase;
 use Tests\Utils\Recruiter as RecruiterUtils;

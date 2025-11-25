@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Exceptions\Services;
+namespace App\Exceptions\Services\Users\Recruiters;
 
 use App\BusinessObjects\DTOs\Users\Recruiter;
+use App\Exceptions\Services\Exception;
 use Dingo\Api\Http\Response;
 
 class RecruiterCreationException extends Exception

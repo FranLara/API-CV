@@ -6,7 +6,7 @@ namespace App\Services\Users\Recruiters;
 
 use App\BusinessObjects\DTOs\Users\Recruiter;
 use App\Events\Users\Recruiters\Created as RecruiterCreatedEvent;
-use App\Exceptions\Services\RecruiterCreationException;
+use App\Exceptions\Services\Users\Recruiters\RecruiterCreationException;
 use App\Services\Saver;
 use Illuminate\Support\Str;
 

@@ -6,7 +6,7 @@ namespace App\Http\Controllers\API\Auth;
 
 use App\BusinessObjects\DTOs\Users\Recruiter;
 use App\Exceptions\Controllers\UserCreationException;
-use App\Exceptions\Services\RecruiterCreationException;
+use App\Exceptions\Services\Users\Recruiters\RecruiterCreationException;
 use App\Http\Controllers\API\API as APIController;
 use App\Services\Users\Recruiters\Creator;
 use Dingo\Api\Http\Response;

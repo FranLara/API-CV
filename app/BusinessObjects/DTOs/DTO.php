@@ -45,7 +45,7 @@ abstract class DTO
 
             try {
                 return $this->getObjectVariable($key, $value);
-            } catch (Throwable $e) {
+            } catch (Throwable) {
                 return [$key => $value];
             }
         });

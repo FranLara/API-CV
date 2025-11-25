@@ -2,24 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Exceptions\Services;
+namespace Tests\Unit\Exceptions\Services\Users\Recruiters;
 
-use App\Exceptions\Services\RecruiterCreationException;
+use App\Exceptions\Services\Users\Recruiters\RecruiterCreationException;
 use Dingo\Api\Http\Response;
-use Tests\TestCase;
-use Tests\Utils\Recruiter as RecruiterUtils;
 
-class RecruiterCreationExceptionTest extends TestCase
+class RecruiterCreationExceptionTest extends RecruiterExceptionTests
 {
-    use RecruiterUtils;
-
-    private const string NAME_VARIABLE = 'name';
-    private const string RECRUITER = 'recruiter';
-    private const string PSSWD_VARIABLE = 'psswd';
-    private const string EMAIL_VARIABLE = 'email';
-    private const string LANGUAGE_VARIABLE = 'language';
-    private const string LINKEDIN_VARIABLE = 'linkedinProfile';
-
     public function testConstructor(): void
     {
         $exception = new RecruiterCreationException($this->getRecruiter());

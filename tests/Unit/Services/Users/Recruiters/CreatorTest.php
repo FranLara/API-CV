@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Services\Users\Recruiters;
 
 use App\BusinessObjects\DTOs\Users\Recruiter;
-use App\Exceptions\Services\RecruiterCreationException;
+use App\Exceptions\Services\Users\Recruiters\RecruiterCreationException;
 use App\Services\Users\Recruiters\Creator;
 use App\Services\Users\Recruiters\Saver;
 use PHPUnit\Framework\MockObject\Exception;
