@@ -27,7 +27,9 @@ class UserCreationExceptionTest extends TestCase
         $this->assertArrayHasKey('recruiter', $exception->context()[self::USER]);
         $this->assertSame('The user was not created.', $exception->getMessage());
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $exception->getStatusCode());
-        $this->assertSame('The recruiter with email test@recruiter.com was not created.',
-            $exception->context()[self::MESSAGE]);
+        $this->assertSame(
+            'The recruiter with email test@recruiter.com was not created.',
+            $exception->context()[self::MESSAGE]
+        );
     }
 }
