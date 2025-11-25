@@ -16,11 +16,12 @@ class TokenUserCollisionExceptionTest extends TestCase
     public function testConstructor(): void
     {
         $exception = new TokenUserCollisionException(self::USERNAME);
+        $context = $exception->context();
 
-        $this->assertNotEmpty($exception->context());
-        $this->assertArrayHasKey(self::USERNAME_VARIABLE, $exception->context());
+        $this->assertNotEmpty($context);
+        $this->assertArrayHasKey(self::USERNAME_VARIABLE, $context);
+        $this->assertSame(self::USERNAME, $context[self::USERNAME_VARIABLE]);
         $this->assertEquals(Response::HTTP_INTERNAL_SERVER_ERROR, $exception->getCode());
-        $this->assertSame(self::USERNAME, $exception->context()[self::USERNAME_VARIABLE]);
         $this->assertSame('User collision for the username test_username generating a JWT.', $exception->getMessage());
     }
 }

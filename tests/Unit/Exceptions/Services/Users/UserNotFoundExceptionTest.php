@@ -19,12 +19,13 @@ class UserNotFoundExceptionTest extends TestCase
     public function testConstructor(User $user, string $field, string $expectedMessage): void
     {
         $exception = new UserNotFoundException($user, $field);
+        $context = $exception->context();
 
-        $this->assertNotEmpty($exception->context());
-        $this->assertArrayHasKey('field', $exception->context());
-        $this->assertArrayHasKey(self::USER, $exception->context());
+        $this->assertNotEmpty($context);
+        $this->assertArrayHasKey('field', $context);
+        $this->assertArrayHasKey(self::USER, $context);
+        $this->assertArrayHasKey($field, $context[self::USER]);
         $this->assertSame($expectedMessage, $exception->getMessage());
-        $this->assertArrayHasKey($field, $exception->context()[self::USER]);
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $exception->getCode());
     }
 

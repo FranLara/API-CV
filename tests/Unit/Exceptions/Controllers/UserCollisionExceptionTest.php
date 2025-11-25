@@ -14,10 +14,11 @@ class UserCollisionExceptionTest extends TestCase
     public function testConstructor(): void
     {
         $exception = new UserCollisionException(new TokenUserCollisionException('test_username'));
+        $context = $exception->context();
 
-        $this->assertNotEmpty($exception->context());
-        $this->assertArrayHasKey('message', $exception->context());
-        $this->assertArrayHasKey('username', $exception->context());
+        $this->assertNotEmpty($context);
+        $this->assertArrayHasKey('message', $context);
+        $this->assertArrayHasKey('username', $context);
         $this->assertEquals(Response::HTTP_INTERNAL_SERVER_ERROR, $exception->getStatusCode());
         $this->assertSame('There is a collision with the given username.', $exception->getMessage());
     }
