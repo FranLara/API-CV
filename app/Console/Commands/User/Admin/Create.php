@@ -6,10 +6,9 @@ namespace App\Console\Commands\User\Admin;
 
 use App\BusinessObjects\DTOs\Users\Admin;
 use App\Console\Commands\User\Admin\Admin as AdminCommand;
-use App\Notifications\User\Admin\Created;
+use App\Events\Users\Admins\Created as AdminCreatedEvent;
 use App\Services\Retriever;
 use App\Services\Saver;
-use App\Utils\Notifications as NotificationUtils;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
 
@@ -18,8 +17,6 @@ use function Laravel\Prompts\text;
 
 class Create extends AdminCommand
 {
-    use NotificationUtils;
-
     private const string CREATION_TRANSLATIONS = self::ADMIN_TRANSLATIONS . 'creation.';
 
     protected $description = 'This command creates an admin user asking by keyboard the username and the password.';
@@ -36,8 +33,8 @@ class Create extends AdminCommand
         do {
             $username = text(
                 required: true,
-                hint:     __(self::CREATION_TRANSLATIONS . 'username.hint'),
-                label:    __(self::CREATION_TRANSLATIONS . 'username.label')
+                hint: __(self::CREATION_TRANSLATIONS . 'username.hint'),
+                label: __(self::CREATION_TRANSLATIONS . 'username.label')
             );
         } while ((!$this->isUsernameUnique($username)) && (!Str::of($username)->exactly(self::EXIT)));
 
@@ -69,7 +66,7 @@ class Create extends AdminCommand
         $userSaved = $this->saver->save($admin);
 
         if ($userSaved) {
-            $this->sendMailNotification(new Created($admin), $admin->getLanguage());
+            event(new AdminCreatedEvent($admin));
         }
     }
 }
