@@ -19,7 +19,7 @@ class CreatorTest extends ServiceTests
      */
     public function testCreate(): void
     {
-        $this->getCreator(true)->create(new Recruiter());
+        $this->getCreator()->create(new Recruiter());
 
         $this->assertDatabaseCount('jobs', 1);
         $this->assertDatabaseHas('jobs', ['queue' => 'listeners']);
@@ -38,7 +38,7 @@ class CreatorTest extends ServiceTests
     /**
      * @throws Exception
      */
-    private function getCreator(bool $saved): Creator
+    private function getCreator(bool $saved = true): Creator
     {
         return new Creator($this->createConfiguredMock(Saver::class, ['save' => $saved]));
     }

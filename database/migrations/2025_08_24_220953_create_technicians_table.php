@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->uuid('id')->primary();
             $table->string('email')->unique();
             $table->string('name');
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->string('language');
             $table->string('github_profile')->nullable();
             $table->string('linkedin_profile')->nullable();
