@@ -6,7 +6,7 @@ namespace Tests\Unit\Http\Controllers\API\Auth;
 
 use App\BusinessObjects\DTOs\Users\Recruiter;
 use App\Exceptions\Controllers\UserCreationException;
-use App\Exceptions\Services\Users\Recruiters\RecruiterCreationException;
+use App\Exceptions\Services\Users\Recruiters\CreationException;
 use App\Http\Controllers\API\Auth\User;
 use App\Services\Users\Recruiters\Creator;
 use Dingo\Api\Http\Response;
@@ -40,7 +40,7 @@ class UserTest extends APITests
 
     public static function providerException(): array
     {
-        $recruiterException = new RecruiterCreationException(new Recruiter());
+        $recruiterException = new CreationException(new Recruiter());
 
         return [
             [new UserCreationException($recruiterException), $recruiterException],

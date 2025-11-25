@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Services\Users\Recruiters;
 
 use App\BusinessObjects\DTOs\Users\Recruiter;
-use App\Exceptions\Services\Users\Recruiters\RecruiterCreationException;
+use App\Exceptions\Services\Users\Recruiters\CreationException;
 use App\Services\Users\Recruiters\Creator;
 use App\Services\Users\Recruiters\Saver;
 use PHPUnit\Framework\MockObject\Exception;
@@ -14,7 +14,7 @@ use Tests\Unit\Services\ServiceTests;
 class CreatorTest extends ServiceTests
 {
     /**
-     * @throws RecruiterCreationException
+     * @throws CreationException
      * @throws Exception
      */
     public function testCreate(): void
@@ -30,7 +30,7 @@ class CreatorTest extends ServiceTests
      */
     public function testCreateRecruiterCreationException(): void
     {
-        $this->expectException(RecruiterCreationException::class);
+        $this->expectException(CreationException::class);
 
         $this->getCreator(false)->create(new Recruiter());
     }

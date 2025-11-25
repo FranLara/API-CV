@@ -6,7 +6,7 @@ namespace App\Http\Controllers\API\Auth;
 
 use App\BusinessObjects\DTOs\Users\Recruiter;
 use App\Exceptions\Controllers\UserCreationException;
-use App\Exceptions\Services\Users\Recruiters\RecruiterCreationException;
+use App\Exceptions\Services\Users\Recruiters\CreationException;
 use App\Http\Controllers\API\API as APIController;
 use App\Services\Users\Recruiters\Creator;
 use Dingo\Api\Http\Response;
@@ -29,7 +29,7 @@ class User extends APIController
 
         try {
             $creator->create($recruiter);
-        } catch (RecruiterCreationException $exception) {
+        } catch (CreationException $exception) {
             throw new UserCreationException($exception);
         } catch (Throwable $exception) {
             $this->response->errorInternal($exception->getMessage());

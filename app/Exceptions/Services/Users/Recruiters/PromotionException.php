@@ -9,7 +9,7 @@ use App\Exceptions\Services\Exception;
 use Dingo\Api\Http\Response;
 use Illuminate\Support\Facades\DB;
 
-class RecruiterPromotionException extends Exception
+class PromotionException extends Exception
 {
     public function __construct(private readonly Recruiter $recruiter)
     {

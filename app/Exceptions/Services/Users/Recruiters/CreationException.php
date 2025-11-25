@@ -8,7 +8,7 @@ use App\BusinessObjects\DTOs\Users\Recruiter;
 use App\Exceptions\Services\Exception;
 use Dingo\Api\Http\Response;
 
-class RecruiterCreationException extends Exception
+class CreationException extends Exception
 {
     public function __construct(private readonly Recruiter $recruiter)
     {

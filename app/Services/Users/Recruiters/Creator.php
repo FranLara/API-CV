@@ -6,7 +6,7 @@ namespace App\Services\Users\Recruiters;
 
 use App\BusinessObjects\DTOs\Users\Recruiter;
 use App\Events\Users\Recruiters\Created as RecruiterCreatedEvent;
-use App\Exceptions\Services\Users\Recruiters\RecruiterCreationException;
+use App\Exceptions\Services\Users\Recruiters\CreationException;
 use App\Services\Saver;
 use Illuminate\Support\Str;
 
@@ -17,7 +17,7 @@ readonly class Creator
     }
 
     /**
-     * @throws RecruiterCreationException
+     * @throws CreationException
      */
     public function create(Recruiter $recruiter): void
     {
@@ -26,7 +26,7 @@ readonly class Creator
         $userSaved = $this->saver->save($recruiter);
 
         if (empty($userSaved)) {
-            throw new RecruiterCreationException($recruiter);
+            throw new CreationException($recruiter);
         }
 
         event(new RecruiterCreatedEvent($recruiter));
