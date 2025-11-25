@@ -6,7 +6,7 @@ namespace Tests\Unit\Services\Users\Technicians;
 
 use App\BusinessObjects\DTOs\Users\Technician as TechnicianDTO;
 use App\BusinessObjects\Models\Users\Technician;
-use App\Services\Users\Technicians\Mapper;
+use App\Services\Mapper;
 use App\Services\Users\Technicians\Saver;
 use Illuminate\Support\Facades\Hash;
 use PHPUnit\Framework\Attributes\DataProvider;

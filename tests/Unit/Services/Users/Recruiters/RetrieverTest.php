@@ -6,8 +6,8 @@ namespace Tests\Unit\Services\Users\Recruiters;
 
 use App\BusinessObjects\DTOs\Users\Recruiter;
 use App\BusinessObjects\Models\Users\Recruiter as RecruiterModel;
+use App\Services\Transformer;
 use App\Services\Users\Recruiters\Retriever;
-use App\Services\Users\Recruiters\Transformer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use PHPUnit\Framework\MockObject\Exception;
 use Tests\Unit\Services\ServiceTests;

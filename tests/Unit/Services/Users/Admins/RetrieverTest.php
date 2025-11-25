@@ -6,8 +6,8 @@ namespace Tests\Unit\Services\Users\Admins;
 
 use App\BusinessObjects\DTOs\Users\Admin;
 use App\BusinessObjects\Models\Users\Admin as AdminModel;
+use App\Services\Transformer;
 use App\Services\Users\Admins\Retriever;
-use App\Services\Users\Admins\Transformer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use PHPUnit\Framework\MockObject\Exception;
 use Tests\Unit\Services\ServiceTests;

@@ -6,8 +6,8 @@ namespace Tests\Unit\Services\Users\Recruiters;
 
 use App\BusinessObjects\DTOs\Users\Recruiter;
 use App\Exceptions\Services\Users\Recruiters\CreationException;
+use App\Services\Saver;
 use App\Services\Users\Recruiters\Creator;
-use App\Services\Users\Recruiters\Saver;
 use PHPUnit\Framework\MockObject\Exception;
 use Tests\Unit\Services\ServiceTests;
 

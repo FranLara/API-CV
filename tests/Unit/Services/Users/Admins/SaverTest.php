@@ -6,7 +6,7 @@ namespace Tests\Unit\Services\Users\Admins;
 
 use App\BusinessObjects\DTOs\Users\Admin as AdminDTO;
 use App\BusinessObjects\Models\Users\Admin;
-use App\Services\Users\Admins\Mapper;
+use App\Services\Mapper;
 use App\Services\Users\Admins\Saver;
 use Illuminate\Support\Facades\Hash;
 use PHPUnit\Framework\Attributes\DataProvider;

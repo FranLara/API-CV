@@ -6,7 +6,7 @@ namespace Tests\Unit\Services\Users\Recruiters;
 
 use App\BusinessObjects\DTOs\Users\Recruiter as RecruiterDTO;
 use App\BusinessObjects\Models\Users\Recruiter;
-use App\Services\Users\Recruiters\Mapper;
+use App\Services\Mapper;
 use App\Services\Users\Recruiters\Saver;
 use Illuminate\Support\Facades\Hash;
 use PHPUnit\Framework\Attributes\DataProvider;
