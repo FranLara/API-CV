@@ -22,6 +22,8 @@ class UpdateTest extends AdminTests
 
         $this->assertDatabaseCount('jobs', 3);
         $this->assertDatabaseCount('admins', 2);
+        $this->assertDatabaseHas('jobs', ['queue' => 'default']);
+        $this->assertDatabaseHas('jobs', ['queue' => 'listeners']);
         $this->assertDatabaseHas('admins', ['username' => self::USERNAME, 'language' => 'en']);
     }
 

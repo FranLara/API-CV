@@ -6,7 +6,7 @@ namespace App\Console\Commands\User\Admin;
 
 use App\BusinessObjects\DTOs\Users\Admin;
 use App\Console\Commands\User\Admin\Admin as AdminCommand;
-use App\Notifications\User\Admin\Updated;
+use App\Events\Users\Admins\Updated as AdminUpdatedEvent;
 use App\Services\Retriever;
 use App\Services\Saver;
 use App\Utils\Notifications as NotificationUtils;
@@ -45,8 +45,8 @@ class Update extends AdminCommand
     {
         $username = text(
             required: true,
-            hint:     __(self::UPDATE_TRANSLATIONS . 'username.hint'),
-            label:    __(self::UPDATE_TRANSLATIONS . 'username.label'),
+            hint: __(self::UPDATE_TRANSLATIONS . 'username.hint'),
+            label: __(self::UPDATE_TRANSLATIONS . 'username.label'),
         );
 
         if (Str::of($username)->lower()->exactly(self::EXIT)) {
@@ -72,7 +72,7 @@ class Update extends AdminCommand
         $userSaved = $this->saver->save($admin);
 
         if ($userSaved) {
-            $this->sendMailNotification(new Updated($admin), $admin->getLanguage());
+            event(new AdminUpdatedEvent($admin));
         }
     }
 }

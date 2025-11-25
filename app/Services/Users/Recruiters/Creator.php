@@ -8,14 +8,11 @@ use App\BusinessObjects\DTOs\Users\Recruiter;
 use App\Events\Users\Recruiters\Created as RecruiterCreatedEvent;
 use App\Exceptions\Services\RecruiterCreationException;
 use App\Services\Saver;
-use App\Utils\Notifications as NotificationUtils;
 use Illuminate\Support\Str;
 
-class Creator
+readonly class Creator
 {
-    use NotificationUtils;
-
-    public function __construct(private readonly Saver $saver)
+    public function __construct(private Saver $saver)
     {
     }
 
