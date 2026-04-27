@@ -106,4 +106,9 @@ return [ /*
          */
 
          'password_timeout' => 10800,
+         'super_admin'      => [
+             'psswd'    => env('SUPER_ADMIN_PASSWORD', 'super_admin_password'),
+             'username' => env('SUPER_ADMIN_USERNAME', 'super_admin_username'),
+             'language' => env('SUPER_ADMIN_LANGUAGE', 'super_admin_language'),
+         ],
 ];

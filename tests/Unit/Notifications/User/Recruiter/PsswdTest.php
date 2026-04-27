@@ -44,7 +44,7 @@ class PsswdTest extends RecruiterTests
                     'Passsword: ' . self::PSSWD,
                     'Do not forget to add to the header of the request:',
                     '"Accept: application/x.franlara.v1+json" and "Authorization: Bearer " and the JWT.',
-                    'If you have any doubt, do not hesitate to ask me writing to contact@notification.com',
+                    'If you have any doubt, do not hesitate to ask me writing to internal@notification.com',
                 ],
             ],
             [
@@ -60,7 +60,7 @@ class PsswdTest extends RecruiterTests
                     'Passsword: ' . self::PSSWD,
                     'No olvide añadir al header de la petición:',
                     '"Accept: application/x.franlara.v1+json" y "Authorization: Bearer " y el JWT.',
-                    'Si tiene alguna pregunta, no dude en escribirme a contact@notification.com',
+                    'Si tiene alguna pregunta, no dude en escribirme a internal@notification.com',
                 ],
             ],
         ];

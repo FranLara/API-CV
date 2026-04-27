@@ -13,7 +13,7 @@ class Psswd extends Recruiter
     public function toMail(object $notifiable): MailMessage
     {
         $endpoint = config('api.domain') . '/tokens?username=username&password=password';
-        $acceptHeader = env('API_STANDARDS_TREE') . '.' . env('API_SUBTYPE') . '.' . env('API_VERSION');
+        $acceptHeader = config('api.standardsTree') . '.' . config('api.subtype') . '.' . config('api.version');
 
         $line1 = __(self::PSSWD_TRANSLATIONS . 'line_1');
         $line5 = __(self::PSSWD_TRANSLATIONS . 'line_5');
@@ -21,9 +21,9 @@ class Psswd extends Recruiter
         $greeting = __(self::PSSWD_TRANSLATIONS . 'greeting');
         $line2 = __(self::PSSWD_TRANSLATIONS . 'line_2', ['endpoint' => $endpoint]);
         $line6 = __(self::PSSWD_TRANSLATIONS . 'line_6', ['accept' => $acceptHeader]);
-        $line7 = __(self::PSSWD_TRANSLATIONS . 'line_7', ['email' => env('MAIL_CONTACT')]);
         $line4 = __(self::PSSWD_TRANSLATIONS . 'line_4', ['psswd' => $this->user->getPsswd()]);
         $line3 = __(self::PSSWD_TRANSLATIONS . 'line_3', ['username' => $this->user->getEmail()]);
+        $line7 = __(self::PSSWD_TRANSLATIONS . 'line_7', ['email' => config('mail.notifications.internal')]);
 
         return new MailMessage()->subject($subject)
                                 ->greeting($greeting)

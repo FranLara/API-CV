@@ -15,12 +15,12 @@ abstract class APITests extends FeatureTests
     {
         parent::setUp();
 
-        $this->domain = env('API_DOMAIN');
+        $this->domain = config('api.domain');
     }
 
     protected function getHeader(array $headers = []): array
     {
-        $acceptHeader = env('API_STANDARDS_TREE') . '.' . env('API_SUBTYPE') . '.' . env('API_VERSION');
+        $acceptHeader = config('api.standardsTree') . '.' . config('api.subtype') . '.' . config('api.version');
 
         return array_merge(['Accept' => 'application/' . $acceptHeader . '+json'], $headers);
     }
