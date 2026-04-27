@@ -17,12 +17,19 @@ return [
             ],
         ],
         'recruiter' => [
-            'creation' => [
+            'creation'  => [
                 'subject' => '¡Un nuevo reclutador :email creado!',
                 'line_1'  => 'La API ha registrado un nuevo reclutador ":email" con este perfil de LinkedIn '
                              . '":linkedin_profile"',
             ],
-            'psswd'    => [
+            'promotion' => [
+                'subject' => '¡Su usuario ha sido promocionado en la API del CV de Fran Lara!',
+                'line_1'  => 'Su usuario :email fue internamente promocionado a un nuevo rol en la aplicación.',
+                'line_2'  => 'Para acceder al código fuente de la API, añada su perfil de GitHub '
+                             . 'llamando al siguiente endpoint:',
+                'line_3'  => 'Endpoint: :endpoint',
+            ],
+            'psswd'     => [
                 'subject'  => '¡Usuario para la API del CV de Fran Lara creado!',
                 'greeting' => 'Bienvenido/a',
                 'line_1'   => 'Su usuario para llamar a la API del CV de Fran Lara ha sido creado. Para llamar a los '

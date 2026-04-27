@@ -14,11 +14,17 @@ return [
             'update'   => ['subject' => 'Admin :username updated!', 'line_1' => 'The admin ":username" was updated.'],
         ],
         'recruiter' => [
-            'creation' => [
+            'creation'  => [
                 'subject' => 'Recruiter :email created!',
                 'line_1'  => 'The API recorded a new Recruiter ":email" with this LinkedIn profile ":linkedin_profile"',
             ],
-            'psswd'    => [
+            'promotion' => [
+                'subject' => 'Your user was promoted in the Fran Lara CV API!',
+                'line_1'  => 'Your user :email was internally promoted to a new role in the application.',
+                'line_2'  => 'Add your GitHub account calling the following endpoint to access to the API source code:',
+                'line_3'  => 'Endpoint: :endpoint',
+            ],
+            'psswd'     => [
                 'subject'  => 'User for Fran Lara CV API created!',
                 'greeting' => 'Welcome',
                 'line_1'   => 'Your user to call the Fran Lara CV API has been created. '
