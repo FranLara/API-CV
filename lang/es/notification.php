@@ -23,11 +23,13 @@ return [
                              . '":linkedin_profile"',
             ],
             'promotion' => [
-                'subject' => '¡Su usuario ha sido promocionado en la API del CV de Fran Lara!',
-                'line_1'  => 'Su usuario :email fue internamente promocionado a un nuevo rol en la aplicación.',
-                'line_2'  => 'Para acceder al código fuente de la API, añada su perfil de GitHub '
-                             . 'llamando al siguiente endpoint:',
-                'line_3'  => 'Endpoint: :endpoint',
+                'subject'  => '¡Su usuario ha sido promocionado en la API del CV de Fran Lara!',
+                'greeting' => 'Hola',
+                'line_1'   => 'Su usuario :email fue internamente promocionado a un nuevo rol en la aplicación.',
+                'line_2'   => 'Para acceder al código fuente de la API, añada su perfil de GitHub '
+                              . 'llamando al siguiente endpoint:',
+                'line_3'   => 'Endpoint (PATCH): :endpoint',
+                'line_4'   => 'Payload: {"github_profile":"tu_perfil_de_github"}',
             ],
             'psswd'     => [
                 'subject'  => '¡Usuario para la API del CV de Fran Lara creado!',
@@ -36,7 +38,7 @@ return [
                               . 'endpoints que requieren autenticación, necesitará obtener y usar un JWT. Para '
                               . 'solicitar un JWT, necesita llamar al siguiente endpoint con el usuario y contraseña '
                               . 'dados:',
-                'line_2'   => 'Endpoint: :endpoint',
+                'line_2'   => 'Endpoint (POST): :endpoint',
                 'line_3'   => 'Username: :username',
                 'line_4'   => 'Passsword: :psswd',
                 'line_5'   => 'No olvide añadir al header de la petición:',

@@ -8,7 +8,12 @@ $api->group(['middleware' => 'api', 'limit' => 60, 'namespace' => 'App\Http\Cont
     $api->options('allows', 'Root@options');
 
     $api->group(['namespace' => 'Auth'], function ($api) {
-        $api->post('accounts', 'User@request');
+        $api->group(['prefix' => 'accounts'], function ($api) {
+            $api->post('', 'User@request');
+            $api->group(['middleware' => 'api.cv.auth'], function ($api) {
+                $api->patch('', 'User@request');
+            });
+        });
 
         $api->group(['prefix' => 'tokens'], function ($api) {
             $api->options('', 'Token@options');

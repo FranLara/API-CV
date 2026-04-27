@@ -39,7 +39,7 @@ class PsswdTest extends RecruiterTests
                     'Your user to call the Fran Lara CV API has been created. '
                     . 'To make the calls to authenticated endpoints, you will need to request and use a JWT. '
                     . 'To request a JWT you need to call the following endpoint with the given credentials:',
-                    'Endpoint: https://domain.test/tokens?username=username&password=password',
+                    'Endpoint (POST): https://domain.test/tokens?username=username&password=password',
                     'Username: ' . self::EMAIL,
                     'Passsword: ' . self::PSSWD,
                     'Do not forget to add to the header of the request:',
@@ -55,7 +55,7 @@ class PsswdTest extends RecruiterTests
                     'Su usuario para llamar a la API del CV de Fran Lara ha sido creado. '
                     . 'Para llamar a los endpoints que requieren autenticación, necesitará obtener y usar un JWT. '
                     . 'Para solicitar un JWT, necesita llamar al siguiente endpoint con el usuario y contraseña dados:',
-                    'Endpoint: https://domain.test/tokens?username=username&password=password',
+                    'Endpoint (POST): https://domain.test/tokens?username=username&password=password',
                     'Username: ' . self::EMAIL,
                     'Passsword: ' . self::PSSWD,
                     'No olvide añadir al header de la petición:',

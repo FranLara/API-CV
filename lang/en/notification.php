@@ -19,10 +19,12 @@ return [
                 'line_1'  => 'The API recorded a new Recruiter ":email" with this LinkedIn profile ":linkedin_profile"',
             ],
             'promotion' => [
-                'subject' => 'Your user was promoted in the Fran Lara CV API!',
-                'line_1'  => 'Your user :email was internally promoted to a new role in the application.',
-                'line_2'  => 'Add your GitHub account calling the following endpoint to access to the API source code:',
-                'line_3'  => 'Endpoint: :endpoint',
+                'subject'  => 'Your user was promoted in the Fran Lara CV API!',
+                'greeting' => 'Hello',
+                'line_1'   => 'Your user :email was internally promoted to a new role in the application.',
+                'line_2'   => 'Add your GitHub account calling the following endpoint to access the API source code:',
+                'line_3'   => 'Endpoint (PATCH): :endpoint',
+                'line_4'   => 'Payload: {"github_profile":"your_github_profile"}',
             ],
             'psswd'     => [
                 'subject'  => 'User for Fran Lara CV API created!',
@@ -30,7 +32,7 @@ return [
                 'line_1'   => 'Your user to call the Fran Lara CV API has been created. '
                               . 'To make the calls to authenticated endpoints, you will need to request and use a JWT. '
                               . 'To request a JWT you need to call the following endpoint with the given credentials:',
-                'line_2'   => 'Endpoint: :endpoint',
+                'line_2'   => 'Endpoint (POST): :endpoint',
                 'line_3'   => 'Username: :username',
                 'line_4'   => 'Passsword: :psswd',
                 'line_5'   => 'Do not forget to add to the header of the request:',
