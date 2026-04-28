@@ -8,6 +8,7 @@ class Changelog extends DTO
 {
     public function __construct(
         private readonly string $type,
+        private readonly string $action,
         private readonly string $entityId,
         private readonly string $valuePayload
     ) {
@@ -17,6 +18,11 @@ class Changelog extends DTO
     public function getType(): string
     {
         return $this->type;
+    }
+
+    public function getAction(): string
+    {
+        return $this->action;
     }
 
     public function getEntityId(): string

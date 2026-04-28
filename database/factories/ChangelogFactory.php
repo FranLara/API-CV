@@ -15,6 +15,7 @@ class ChangelogFactory extends Factory
     {
         return [
             'entity_id'     => fake()->numberBetween(1),
+            'action'        => collect($this->model::ACTIONS)->random(),
             'type'          => collect($this->model::ENTITY_TYPES)->random(),
             'value_payload' => json_encode([fake()->word() => fake()->word()]),
         ];

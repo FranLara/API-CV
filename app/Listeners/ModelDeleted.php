@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace App\Listeners;
 
 use App\BusinessObjects\DTOs\Changelog;
+use App\BusinessObjects\Models\Changelog as ChangelogModel;
 use App\Events\ModelDeleted as ModelDeletedEvent;
 use App\Services\Changelogs\Saver;
 use Illuminate\Contracts\Events\ShouldHandleEventsAfterCommit;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-readonly class ModelDeleted //implements ShouldQueue, ShouldHandleEventsAfterCommit
+readonly class ModelDeleted implements ShouldQueue, ShouldHandleEventsAfterCommit
 {
     public function __construct(private Saver $saver)
     {
@@ -18,7 +19,12 @@ readonly class ModelDeleted //implements ShouldQueue, ShouldHandleEventsAfterCom
 
     public function handle(ModelDeletedEvent $event): void
     {
-        $changelog = new Changelog(get_class($event->model), $event->model->id, $event->model->toJson());
+        $changelog = new Changelog(
+            entityId: $event->model->id,
+            type: get_class($event->model),
+            valuePayload: $event->model->toJson(),
+            action: ChangelogModel::ACTION_DELETED,
+        );
 
         $this->saver->save($changelog);
     }

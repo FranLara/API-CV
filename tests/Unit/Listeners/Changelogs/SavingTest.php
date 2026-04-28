@@ -29,6 +29,11 @@ class SavingTest extends ListenerTests
 
     public static function providerField(): array
     {
-        return [[true], [false, 'type', 'test'], [false, 'value_payload', 'test']];
+        return [
+            [true],
+            [false, 'type', 'test'],
+            [false, 'action', 'test'],
+            [false, 'value_payload', 'test'],
+        ];
     }
 }

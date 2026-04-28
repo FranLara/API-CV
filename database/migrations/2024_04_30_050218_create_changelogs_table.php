@@ -9,8 +9,9 @@ return new class extends Migration {
     {
         Schema::create('changelogs', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('entity_id');
+            $table->uuid('entity_id')->index();
             $table->string('type', 310);
+            $table->string('action', 20);
             $table->json('value_payload');
             $table->timestamp('created_at')->useCurrent();
         });

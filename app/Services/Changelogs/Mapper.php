@@ -15,6 +15,7 @@ class Mapper implements MapperInterface
     {
         $changelog->created_at = now();
         $changelog->type = $dto->getType();
+        $changelog->action = $dto->getAction();
         $changelog->entity_id = $dto->getEntityId();
         $changelog->value_payload = $dto->getValuePayload();
 

@@ -15,6 +15,7 @@ use Tests\Unit\Services\ServiceTests;
 class SaverTest extends ServiceTests
 {
     private const string TYPE = 'test_type';
+    private const string ACTION = 'test_action';
     private const string ENTITY_ID = 'test_entity_id';
     private const string VALUE_PAYLOAD = 'test_valuePayload';
 
@@ -26,16 +27,25 @@ class SaverTest extends ServiceTests
         Event::fake();
 
         $changelogDTO = new ChangelogDTO(
-            entityId: self::ENTITY_ID, type: self::TYPE, valuePayload: self::VALUE_PAYLOAD
+            type: self::TYPE,
+            action: self::ACTION,
+            entityId: self::ENTITY_ID,
+            valuePayload: self::VALUE_PAYLOAD
         );
 
-        $changelog = ['type' => self::TYPE, 'entity_id' => self::ENTITY_ID, 'value_payload' => self::VALUE_PAYLOAD];
+        $changelog = [
+            'type'          => self::TYPE,
+            'action'        => self::ACTION,
+            'entity_id'     => self::ENTITY_ID,
+            'value_payload' => self::VALUE_PAYLOAD,
+        ];
         $mapper = $this->createConfiguredMock(Mapper::class, ['map' => new Changelog($changelog)]);
 
         new Saver($mapper)->save($changelogDTO);
         $changelog = Changelog::where(['type' => self::TYPE, 'entity_id' => self::ENTITY_ID])->first();
 
         $this->assertSame(self::TYPE, $changelog->type);
+        $this->assertSame(self::ACTION, $changelog->action);
         $this->assertSame(self::ENTITY_ID, $changelog->entity_id);
         $this->assertSame(self::VALUE_PAYLOAD, $changelog->value_payload);
     }

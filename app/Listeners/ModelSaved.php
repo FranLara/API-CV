@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Listeners;
 
 use App\BusinessObjects\DTOs\Changelog;
+use App\BusinessObjects\Models\Changelog as ChangelogModel;
 use App\Events\ModelSaved as ModelSavedEvent;
 use App\Services\Changelogs\Saver;
 use Illuminate\Contracts\Events\ShouldHandleEventsAfterCommit;
@@ -18,7 +19,12 @@ readonly class ModelSaved implements ShouldQueue, ShouldHandleEventsAfterCommit
 
     public function handle(ModelSavedEvent $event): void
     {
-        $changelog = new Changelog(get_class($event->model), $event->model->id, $event->model->toJson());
+        $changelog = new Changelog(
+            entityId: $event->model->id,
+            type: get_class($event->model),
+            action: ChangelogModel::ACTION_SAVED,
+            valuePayload: $event->model->toJson(),
+        );
 
         $this->saver->save($changelog);
     }

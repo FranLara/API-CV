@@ -24,6 +24,11 @@ class Saving
             $errorMessages .= $this->getCollectionErrorMessage('type', collect($event->changelog::ENTITY_TYPES), $type);
         }
 
+        $action = $event->changelog->action;
+        if (!in_array($action, $event->changelog::ACTIONS, true)) {
+            $errorMessages .= $this->getCollectionErrorMessage('action', collect($event->changelog::ACTIONS), $action);
+        }
+
         if (!empty($errorMessages)) {
             return false;
         }
