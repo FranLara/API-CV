@@ -16,6 +16,7 @@ use App\Services\Retriever;
 use App\Services\Saver;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
+use Throwable;
 
 readonly class Promoter
 {
@@ -27,6 +28,7 @@ readonly class Promoter
      * @throws PromotionException
      * @throws UserNotFoundException
      * @throws InvalidPromotionException
+     * @throws Throwable
      */
     public function promote(string $email): void
     {
@@ -59,6 +61,7 @@ readonly class Promoter
 
     /**
      * @throws PromotionException
+     * @throws Throwable
      */
     private function promoteRecruiter(Recruiter $recruiter): void
     {

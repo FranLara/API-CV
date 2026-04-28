@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\BusinessObjects\Models\Users;
 
+use App\Events\ModelDeleted;
 use App\Events\ModelSaved;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticableContract;
@@ -21,7 +22,7 @@ abstract class User extends Model implements JWTSubject, AuthenticableContract
 
     protected $hidden = ['password'];
 
-    protected $dispatchesEvents = ['saved' => ModelSaved::class];
+    protected $dispatchesEvents = ['saved' => ModelSaved::class, 'deleted' => ModelDeleted::class];
 
     public function getJWTIdentifier()
     {

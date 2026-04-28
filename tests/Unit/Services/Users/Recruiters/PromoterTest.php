@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Hash;
 use PHPUnit\Framework\MockObject\Exception;
 use Tests\Unit\Services\ServiceTests;
 use Tests\Utils\Recruiter as RecruiterUtils;
+use Throwable;
 
 class PromoterTest extends ServiceTests
 {
@@ -31,6 +32,7 @@ class PromoterTest extends ServiceTests
      * @throws UserNotFoundException
      * @throws PromotionException
      * @throws Exception
+     * @throws Throwable
      */
     public function testPromote(): void
     {
@@ -51,6 +53,7 @@ class PromoterTest extends ServiceTests
      * @throws InvalidPromotionException
      * @throws PromotionException
      * @throws UserNotFoundException
+     * @throws Throwable
      */
     public function testPromoteUserNotFoundException(): void
     {
@@ -63,6 +66,7 @@ class PromoterTest extends ServiceTests
      * @throws Exception
      * @throws UserNotFoundException
      * @throws PromotionException
+     * @throws Throwable
      */
     public function testPromoteInvalidPromotionException(): void
     {
@@ -78,6 +82,7 @@ class PromoterTest extends ServiceTests
      * @throws InvalidPromotionException
      * @throws UserNotFoundException
      * @throws Exception
+     * @throws Throwable
      */
     public function testPromotePromotionException(): void
     {

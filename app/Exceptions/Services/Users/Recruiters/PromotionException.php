@@ -8,9 +8,13 @@ use App\BusinessObjects\DTOs\Users\Recruiter;
 use App\Exceptions\Services\Exception;
 use Dingo\Api\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class PromotionException extends Exception
 {
+    /**
+     * @throws Throwable
+     */
     public function __construct(private readonly Recruiter $recruiter)
     {
         DB::rollBack();

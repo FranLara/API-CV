@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Events\Changelogs\Saving as ChangelogSaving;
+use App\Events\ModelDeleted;
 use App\Events\ModelSaved;
 use App\Events\Users\Admins\Created as AdminCreated;
 use App\Events\Users\Admins\Saving as AdminSaving;
@@ -14,6 +15,7 @@ use App\Events\Users\Recruiters\Promoted as RecruiterPromoted;
 use App\Events\Users\Recruiters\Saving as RecruiterSaving;
 use App\Events\Users\Technicians\Saving as TechnicianSaving;
 use App\Listeners\Changelogs\Saving as ChangelogSavingListener;
+use App\Listeners\ModelDeleted as ModelDeletedListener;
 use App\Listeners\ModelSaved as ModelSavedListener;
 use App\Listeners\Users\Admins\Created as AdminCreatedListener;
 use App\Listeners\Users\Admins\Saving as AdminSavingListener;
@@ -28,6 +30,7 @@ class EventServiceProvider extends ServiceProvider
 {
     protected $listen = [
         ModelSaved::class        => [ModelSavedListener::class],
+        ModelDeleted::class      => [ModelDeletedListener::class],
         AdminSaving::class       => [AdminSavingListener::class],
         AdminCreated::class      => [AdminCreatedListener::class],
         AdminUpdated::class      => [AdminUpdatedListener::class],
