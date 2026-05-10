@@ -42,10 +42,32 @@ return [ /*
          */
 
          'channels' => [
+             'system'      => [
+                 'driver'               => 'stack',
+                 'channels'             => ['systemLog', 'syslog', 'errorlog'],
+             ],
+             'syslog'      => [
+                 'driver'               => 'syslog',
+                 'level'                => env('LOG_LEVEL', 'debug'),
+                 'facility'             => env('LOG_SYSLOG_FACILITY', LOG_USER),
+                 'replace_placeholders' => true,
+             ],
+             'errorlog'    => [
+                 'driver'               => 'errorlog',
+                 'level'                => env('LOG_LEVEL', 'debug'),
+                 'replace_placeholders' => true,
+             ],
              'credentials' => [
                  'driver'               => 'single',
                  'path'                 => storage_path('logs/wrong-credentials.log'),
-                 'replace_placeholders' => true
-             ]
-         ]
+                 'replace_placeholders' => true,
+             ],
+             'systemLog'   => [
+                 'driver'               => 'daily',
+                 'path'                 => storage_path('logs/wrong-system-log.log'),
+                 'level'                => env('LOG_LEVEL', 'debug'),
+                 'days'                 => env('LOG_DAILY_DAYS', 14),
+                 'replace_placeholders' => true,
+             ],
+         ],
 ];
