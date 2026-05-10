@@ -17,6 +17,7 @@ class Root extends APIController
     private const string STRING_PARAMETER = 'string';
     private const string ENDPOINT_TRANSLATIONS = self::API_TRANSLATIONS . 'endpoints.';
     private const string TOKEN_TRANSLATIONS = self::ENDPOINT_TRANSLATIONS . 'tokens.';
+    private const string HEALTH_TRANSLATIONS = self::ENDPOINT_TRANSLATIONS . 'health.';
     private const string ACCOUNT_TRANSLATIONS = self::ENDPOINT_TRANSLATIONS . 'accounts.';
 
     public function index(Request $request, JWT $tokenManager): Response
@@ -45,6 +46,9 @@ class Root extends APIController
     private function getPublicResources(Request $request): Collection
     {
         $resources = collect();
+
+        $description = __(self::HEALTH_TRANSLATIONS . 'check');
+        $resources->push(new Resource('health', $request, $description, type: Request::METHOD_GET));
 
         $path = 'tokens (' . Request::METHOD_POST . ')';
         $description = __(self::TOKEN_TRANSLATIONS . 'request');

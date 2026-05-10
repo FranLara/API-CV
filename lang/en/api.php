@@ -7,5 +7,6 @@ return [
             'refresh' => 'Returns a JSON Web Token (JWT) with a refreshed expiration time.',
         ],
         'accounts' => ['request' => 'Request a creation of a user account.'],
+        'health'   => ['check' => 'Returns the health status of the server and its dependencies.'],
     ],
 ];

@@ -19,6 +19,7 @@ class RootTest extends APITests
     private const string TYPE_INDEX = 'type';
     private const string NAME_INDEX = 'name';
     private const string TOKEN_PATH = 'tokens';
+    private const string HEALTH_PATH = 'health';
     private const string STRING_TYPE = 'string';
     private const string RESOURCES = 'Resources';
     private const string ACCOUNT_PATH = 'accounts';
@@ -28,9 +29,10 @@ class RootTest extends APITests
     private const string ENDPOINT_INDEX = 'endpointExample';
     private const string ENDPOINT_TRANSLATIONS = self::API_TRANSLATIONS . 'endpoints.';
     private const string TOKEN_TRANSLATIONS = self::ENDPOINT_TRANSLATIONS . 'tokens.';
+    private const string HEALTH_TRANSLATIONS = self::ENDPOINT_TRANSLATIONS . 'health.';
     private const string ACCOUNT_TRANSLATIONS = self::ENDPOINT_TRANSLATIONS . 'accounts.';
 
-    private const array PUBLIC_RESOURCES_TO_CHECK = [
+    private const array PUBLIC_RESOURCES_WITH_PARAMETERS_TO_CHECK = [
         self::TOKEN_PATH . ' (POST)' => [
             self::TYPE_INDEX        => Request::METHOD_POST,
             self::PARAMETER_INDEX   => 2,
@@ -48,6 +50,13 @@ class RootTest extends APITests
                                        . APIController::NAME_PARAMETER . '&' . APIController::LANGUAGE_PARAMETER . '='
                                        . APIController::LANGUAGE_PARAMETER . '&' . APIController::LINKEDIN_PARAMETER
                                        . '=' . APIController::LINKEDIN_PARAMETER,
+        ],
+    ];
+    private const array PUBLIC_RESOURCES_WITHOUT_PARAMETERS_TO_CHECK = [
+        self::HEALTH_PATH => [
+            self::TYPE_INDEX        => Request::METHOD_GET,
+            self::DESCRIPTION_INDEX => self::HEALTH_TRANSLATIONS . 'check',
+            self::ENDPOINT_INDEX    => self::DOMAIN . 'health',
         ],
     ];
     private const array TOKENED_RESOURCES_TO_CHECK = [
@@ -75,15 +84,21 @@ class RootTest extends APITests
         $this->assertIsArray($index[self::RESOURCES]);
         $this->assertArrayHasKey(self::RESOURCES, $index);
 
-        $resources = self::PUBLIC_RESOURCES_TO_CHECK;
+        $resourcesWithParams = self::PUBLIC_RESOURCES_WITH_PARAMETERS_TO_CHECK;
+        $resourcesWoParams = self::PUBLIC_RESOURCES_WITHOUT_PARAMETERS_TO_CHECK;
 
         if (!empty($token)) {
-            $resources = array_merge($resources, self::TOKENED_RESOURCES_TO_CHECK);
+            $resourcesWithParams = array_merge($resourcesWithParams, self::TOKENED_RESOURCES_TO_CHECK);
         }
 
-        collect($resources)->each(
+        collect($resourcesWithParams)->each(
             function (array $config, string $resource) use ($index) {
-                $this->assertResources($index[self::RESOURCES][$resource], $config);
+                $this->assertResourcesWithParameters($index[self::RESOURCES][$resource], $config);
+            }
+        );
+        collect($resourcesWoParams)->each(
+            function (array $config, string $resource) use ($index) {
+                $this->assertResourcesWithoutParameters($index[self::RESOURCES][$resource], $config);
             }
         );
 
@@ -126,7 +141,7 @@ class RootTest extends APITests
         $this->controller = new Root();
     }
 
-    private function assertResources(array $resource, array $config): void
+    private function assertResourcesWithParameters(array $resource, array $config): void
     {
         $this->assertArrayHasKey(self::TYPE_INDEX, $resource);
         $this->assertIsArray($resource[self::PARAMETER_INDEX]);
@@ -143,5 +158,15 @@ class RootTest extends APITests
             $this->assertArrayHasKey(self::NAME_INDEX, $resource[self::PARAMETER_INDEX][$i]);
             $this->assertArrayHasKey(self::TYPE_INDEX, $resource[self::PARAMETER_INDEX][$i]);
         }
+    }
+
+    private function assertResourcesWithoutParameters(array $resource, array $config): void
+    {
+        $this->assertArrayHasKey(self::TYPE_INDEX, $resource);
+        $this->assertArrayHasKey(self::ENDPOINT_INDEX, $resource);
+        $this->assertArrayHasKey(self::DESCRIPTION_INDEX, $resource);
+        $this->assertSame($config[self::TYPE_INDEX], $resource[self::TYPE_INDEX]);
+        $this->assertSame($config[self::ENDPOINT_INDEX], $resource[self::ENDPOINT_INDEX]);
+        $this->assertSame(__($config[self::DESCRIPTION_INDEX]), $resource[self::DESCRIPTION_INDEX]);
     }
 }
