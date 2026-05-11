@@ -14,14 +14,16 @@ class Health extends APIController
 {
     public function check(Checker $checker): Response
     {
-        $status = $checker->check();
         $statusCode = Response::HTTP_OK;
+        $componentStatuses = $checker->check();
 
-        if (!Str::of($status)->exactly(Checker::STATUS_OK)) {
+        if ($componentStatuses->contains(fn(string $status) => (!Str::of($status)->exactly(Checker::STATUS_OK)))) {
             $statusCode = Response::HTTP_SERVICE_UNAVAILABLE;
         }
 
-        return new Response(['status' => $status, 'timestamp' => now()->toIso8601String()], $statusCode);
+        $response = ['components' => $componentStatuses->toArray(), 'timestamp' => now()->toIso8601String()];
+
+        return new Response($response, $statusCode);
     }
 
     public function options(): Response

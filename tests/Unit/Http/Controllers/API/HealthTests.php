@@ -12,18 +12,22 @@ use PHPUnit\Framework\Attributes\DataProvider;
 
 class HealthTests extends APITests
 {
-    #[DataProvider('providerStatus')]
-    public function testIndex(string $status, int $expectedStatusCode = Response::HTTP_OK): void
+    private const string COMPONENTS = 'components';
+
+    #[DataProvider('providerComponents')]
+    public function testIndex(array $components, int $expectedStatusCode = Response::HTTP_OK): void
     {
-        $checkResponse = $this->controller->check($this->createConfiguredMock(Checker::class, ['check' => $status]));
+        $statuses = collect($components);
+        $checkResponse = $this->controller->check($this->createConfiguredMock(Checker::class, ['check' => $statuses]));
         $statusCode = $checkResponse->getStatusCode();
         $check = json_decode($checkResponse->content(), true);
 
         $this->assertIsArray($check);
-        $this->assertArrayHasKey('status', $check);
-        $this->assertSame($status, $check['status']);
         $this->assertArrayHasKey('timestamp', $check);
+        $this->assertArrayHasKey(self::COMPONENTS, $check);
         $this->assertEquals($expectedStatusCode, $statusCode);
+        $this->assertCount($statuses->count(), $check[self::COMPONENTS]);
+        $this->assertSame($statuses->toJson(), json_encode($check[self::COMPONENTS]));
     }
 
     public function testOptions(): void
@@ -36,9 +40,9 @@ class HealthTests extends APITests
         $this->assertSame(implode(', ', $expectedMethods), $data->headers->get('Allow'));
     }
 
-    public static function providerStatus(): array
+    public static function providerComponents(): array
     {
-        return [[Checker::STATUS_OK], ['degraded', Response::HTTP_SERVICE_UNAVAILABLE]];
+        return [[['database' => Checker::STATUS_OK]], [['database' => 'degraded'], Response::HTTP_SERVICE_UNAVAILABLE]];
     }
 
     protected function setUp(): void
