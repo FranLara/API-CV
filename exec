@@ -37,6 +37,10 @@ if [ $# -gt 0 ]; then
         shift 1
         docker compose exec ${PROJECT_NAME} php artisan test "$@"
 
+    elif [[ "$1" == "self-update" ]]; then
+        shift 1
+        docker compose exec -u root ${PROJECT_NAME} composer self-update
+
     fi
 
 else
