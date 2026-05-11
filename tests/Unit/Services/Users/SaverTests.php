@@ -11,7 +11,7 @@ abstract class SaverTests extends ServiceTests
     protected function getExpectedField(string $field, bool $modified): string
     {
         if ($modified) {
-            return $field . '_mod';
+            return str_replace('.test_mod', '.testmod', $field . '_mod');
         }
 
         return $field;

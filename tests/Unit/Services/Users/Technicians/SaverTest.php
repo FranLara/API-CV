@@ -62,8 +62,8 @@ class SaverTest extends SaverTests
             $technician->name = self::NAME . '_mod';
             $technician->language = self::LANGUAGE . '_mod';
             $technician->password = Hash::make(self::PSSWD . '_mod');
-            $technician->github_profile = self::GITHUB_PROFILE . '_mod';
-            $technician->linkedin_profile = self::LINKEDIN_PROFILE . '_mod';
+            $technician->github_profile = self::GITHUB_PROFILE . 'mod';
+            $technician->linkedin_profile = self::LINKEDIN_PROFILE . 'mod';
         }
 
         return $technician;

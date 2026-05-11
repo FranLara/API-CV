@@ -58,7 +58,7 @@ class SaverTest extends SaverTests
             $recruiter->name = self::NAME . '_mod';
             $recruiter->language = self::LANGUAGE . '_mod';
             $recruiter->password = Hash::make(self::PSSWD . '_mod');
-            $recruiter->linkedin_profile = self::LINKEDIN_PROFILE . '_mod';
+            $recruiter->linkedin_profile = self::LINKEDIN_PROFILE . 'mod';
         }
 
         return $recruiter;
