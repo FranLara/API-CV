@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Notifications;
 
@@ -9,11 +10,12 @@ use Illuminate\Notifications\Notification as BaseNotification;
 
 abstract class Notification extends BaseNotification implements ShouldQueue
 {
-	use Queueable;
+    use Queueable;
 
-	protected const string NOTIFICATION_TRANSLATIONS = 'notification.';
+    protected const string NOTIFICATION_TRANSLATIONS = 'notification.';
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->onQueue('notifications');
     }
 }

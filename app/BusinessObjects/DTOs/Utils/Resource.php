@@ -8,8 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Random\RandomException;
 
-use function collect;
-
 class Resource
 {
     private string $host;
@@ -44,9 +42,11 @@ class Resource
             $endpoint .= '?' . $this->getParameterForEndpointExample($this->parameters->shift());
         }
 
-        $this->parameters->each(function (array $parameter) use (&$endpoint) {
-            $endpoint .= '&' . $this->getParameterForEndpointExample($parameter);
-        });
+        $this->parameters->each(
+            function (array $parameter) use (&$endpoint) {
+                $endpoint .= '&' . $this->getParameterForEndpointExample($parameter);
+            }
+        );
 
         return [
             $this->path => [
@@ -67,7 +67,7 @@ class Resource
 
         $param .= match ($parameter['type']) {
             'int' => random_int(1, 31),
-            'bool' => (bool)rand(0, 1),
+            'bool' => (bool) rand(0, 1),
             'string' => $parameter['name'],
         };
 

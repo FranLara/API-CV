@@ -10,8 +10,6 @@ use App\Http\Controllers\API\API as APIController;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
-use function collect;
-
 class Tokener
 {
     private const string ROLE_CLAIM = 'role';
