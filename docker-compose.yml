@@ -27,14 +27,16 @@ services:
             MARIADB_DATABASE: '${MARIA_DB_DATABASE}'
             MARIADB_USER: '${MARIA_DB_USERNAME}'
             MARIADB_PASSWORD: '${MARIA_DB_USER_PASSWORD}'
+            MARIADB_AUTO_UPGRADE: 1
         volumes:
             - franlara-mariadb:/var/lib/mysql
         networks:
             - franlaranet
         healthcheck:
-            test: [ 'CMD', 'mysqladmin', 'ping','-p${MARIA_DB_ROOT_PASSWORD}' ]
-            retries: 3
+            test: [ 'CMD', 'mariadb-admin', 'ping', '-u', 'root', '-p${MARIA_DB_ROOT_PASSWORD}' ]
+            interval: 10s
             timeout: 5s
+            retries: 3
         restart: always
     maildebug:
         image: mailhog/mailhog
