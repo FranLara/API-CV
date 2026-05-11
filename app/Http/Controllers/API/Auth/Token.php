@@ -21,13 +21,6 @@ class Token extends APIController
     {
     }
 
-    public function options(): Response
-    {
-        $methods = [Request::METHOD_GET, Request::METHOD_OPTIONS, Request::METHOD_POST];
-
-        return new Response([], Response::HTTP_OK)->header('Allow', implode(', ', $methods));
-    }
-
     public function request(Request $request, Tokener $tokener): JsonResponse
     {
         $request->validate(
@@ -61,6 +54,13 @@ class Token extends APIController
         $token = $this->tokenManager->manager()->encode($payload)->get();
 
         return $this->getResponse($token);
+    }
+
+    public function options(): Response
+    {
+        $methods = [Request::METHOD_GET, Request::METHOD_OPTIONS, Request::METHOD_POST];
+
+        return new Response([], Response::HTTP_OK)->header('Allow', implode(', ', $methods));
     }
 
     private function getResponse(string $token): JsonResponse

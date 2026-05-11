@@ -94,7 +94,7 @@ class RootTest extends APITests
 
     private function assertPublicResources(AssertableJson $resources): AssertableJson
     {
-        return $resources->has(
+        return $resources->has('health')->has(
             'tokens (POST)',
             fn(AssertableJson $token) => $token->hasAll($this->resourceIndexes)->where(
                 self::TYPE_INDEX,

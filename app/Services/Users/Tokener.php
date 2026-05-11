@@ -58,8 +58,8 @@ class Tokener
     {
         $claims = ['sub' => 0, self::ROLE_CLAIM => Token::GUEST_ROLE];
         $credentials = [
-            APIController::USERNAME_PARAMETER => env('SUPER_ADMIN_USERNAME'),
-            APIController::PSSWD_PARAMETER    => env('SUPER_ADMIN_PASSWORD'),
+            APIController::PSSWD_PARAMETER    => config('auth.super_admin.psswd'),
+            APIController::USERNAME_PARAMETER => config('auth.super_admin.username'),
         ];
 
         if (!empty($token->getCredentials())) {

@@ -10,12 +10,12 @@ use Dingo\Api\Http\Response;
 use Illuminate\Http\Request;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-class HealthTests extends APITests
+class HealthTest extends APITests
 {
     private const string COMPONENTS = 'components';
 
     #[DataProvider('providerComponents')]
-    public function testIndex(array $components, int $expectedStatusCode = Response::HTTP_OK): void
+    public function testCheck(array $components, int $expectedStatusCode = Response::HTTP_OK): void
     {
         $statuses = collect($components);
         $checkResponse = $this->controller->check($this->createConfiguredMock(Checker::class, ['check' => $statuses]));

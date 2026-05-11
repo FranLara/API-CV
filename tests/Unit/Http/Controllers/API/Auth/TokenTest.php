@@ -8,6 +8,8 @@ use App\Exceptions\Controllers\UserCollisionException;
 use App\Exceptions\Services\TokenUserCollisionException;
 use App\Http\Controllers\API\Auth\Token;
 use App\Services\Users\Tokener;
+use Dingo\Api\Http\Response;
+use Illuminate\Http\Request;
 use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
 use PHPOpenSourceSaver\JWTAuth\Factory;
 use PHPOpenSourceSaver\JWTAuth\JWT;
@@ -82,6 +84,16 @@ class TokenTest extends APITests
         $tokenManager->method('setToken')->willThrowException(new JWTException());
 
         new Token($tokenManager)->refresh($this->getRequest(['bearerToken' => '']));
+    }
+
+    public function testOptions(): void
+    {
+        $data = new Token($this->createMock(JWT::class))->options();
+
+        $expectedMethods = [Request::METHOD_GET, Request::METHOD_OPTIONS, Request::METHOD_POST];
+
+        $this->assertEquals(Response::HTTP_OK, $data->getStatusCode());
+        $this->assertSame(implode(', ', $expectedMethods), $data->headers->get('Allow'));
     }
 
     /**
