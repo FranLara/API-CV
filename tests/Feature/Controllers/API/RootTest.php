@@ -25,6 +25,7 @@ class RootTest extends APITests
     private const string ENDPOINT_INDEX = 'endpointExample';
     private const string ENDPOINT_TRANSLATIONS = self::API_TRANSLATIONS . 'endpoints.';
     private const string TOKEN_TRANSLATIONS = self::ENDPOINT_TRANSLATIONS . 'tokens.';
+    private const string HEALTH_TRANSLATIONS = self::ENDPOINT_TRANSLATIONS . 'health.';
     private const string ACCOUNT_TRANSLATIONS = self::ENDPOINT_TRANSLATIONS . 'accounts.';
 
     private array $parameterIndexes = [self::TYPE_INDEX, self::NAME_INDEX];
@@ -94,7 +95,33 @@ class RootTest extends APITests
 
     private function assertPublicResources(AssertableJson $resources): AssertableJson
     {
-        return $resources->has('health')->has(
+        $resources = $this->assertPublicGetResources($resources);
+
+        return $this->assertPublicPostResources($resources);
+    }
+
+    private function assertPublicGetResources(AssertableJson $resources): AssertableJson
+    {
+        return $resources->has(
+            'health',
+            fn(AssertableJson $token) => $token->hasAll($this->resourceIndexes)->where(
+                self::TYPE_INDEX,
+                Request::METHOD_GET
+            )->where(
+                self::DESCRIPTION_INDEX,
+                __(
+                    self::HEALTH_TRANSLATIONS . 'check'
+                )
+            )->where(
+                self::ENDPOINT_INDEX,
+                $this->domain . '/health'
+            )
+        );
+    }
+
+    private function assertPublicPostResources(AssertableJson $resources): AssertableJson
+    {
+        return $resources->has(
             'tokens (POST)',
             fn(AssertableJson $token) => $token->hasAll($this->resourceIndexes)->where(
                 self::TYPE_INDEX,

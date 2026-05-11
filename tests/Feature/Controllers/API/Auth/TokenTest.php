@@ -10,6 +10,7 @@ use App\BusinessObjects\Models\Users\Recruiter;
 use App\BusinessObjects\Models\Users\Technician;
 use App\Http\Controllers\API\API as APIController;
 use Dingo\Api\Http\Response;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Testing\Fluent\AssertableJson;
@@ -24,6 +25,8 @@ class TokenTest extends APITests
     private const string TOKEN_INDEX = 'access_token';
     private const string EXPIRATION_INDEX = 'expires_in';
     private const array INDEXES = [self::TYPE_INDEX, self::TOKEN_INDEX, self::EXPIRATION_INDEX];
+
+    private string $endpoint;
 
     #[DataProvider('providerCredentials')]
     public function testRequest(
@@ -59,7 +62,7 @@ class TokenTest extends APITests
     public function testRefresh(int $expectedStatusCode, ?string $role = null): void
     {
         $authorization = ['Authorization' => 'Bearer ' . $this->getToken($role)];
-        $response = $this->getJson($this->domain . '/tokens', $this->getHeader($authorization));
+        $response = $this->getJson($this->endpoint, $this->getHeader($authorization));
         $this->assertEquals($expectedStatusCode, $response->getStatusCode());
 
         if ($response->getStatusCode() == Response::HTTP_OK) {
@@ -70,6 +73,15 @@ class TokenTest extends APITests
                 )
             );
         }
+    }
+
+    public function testOptions(): void
+    {
+        $methods = [Request::METHOD_GET, Request::METHOD_OPTIONS, Request::METHOD_POST];
+        $this->withHeaders($this->getHeader())->options($this->endpoint)->assertHeader(
+            'Allow',
+            implode(', ', $methods)
+        );
     }
 
     public static function providerCredentials(): array
@@ -100,6 +112,13 @@ class TokenTest extends APITests
         ];
     }
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->endpoint = $this->domain . '/tokens';
+    }
+
     private function getCredentials(string $role = Token::GUEST_ROLE): array
     {
         return match ($role) {
@@ -112,7 +131,7 @@ class TokenTest extends APITests
 
     private function getTokenResponse(array $credentials): TestResponse
     {
-        return $this->postJson($this->domain . '/tokens', $credentials, $this->getHeader());
+        return $this->postJson($this->endpoint, $credentials, $this->getHeader());
     }
 
     private function getToken(?string $role): string
