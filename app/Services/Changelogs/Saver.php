@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Changelogs;
 
+use App\BusinessObjects\DTOs\Changelog;
 use App\BusinessObjects\DTOs\DTO;
 use App\BusinessObjects\Models\Changelog as ChangelogModel;
 use App\Services\Mapper;
@@ -15,6 +16,9 @@ readonly class Saver implements SaverInterface
     {
     }
 
+    /**
+     * @param  Changelog  $changelog
+     */
     public function save(DTO $changelog): bool
     {
         $model = new ChangelogModel();

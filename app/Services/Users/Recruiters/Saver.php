@@ -16,6 +16,9 @@ class Saver extends UserSaver
     {
     }
 
+    /**
+     * @param Recruiter $recruiter
+     */
     public function save(DTO $recruiter): bool
     {
         $model = $this->getMappedModel($recruiter);

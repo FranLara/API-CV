@@ -16,6 +16,9 @@ class Saver extends UserSaver
     {
     }
 
+    /**
+     * @param  Technician  $technician
+     */
     public function save(DTO $technician): bool
     {
         $model = $this->getMappedModel($technician);
