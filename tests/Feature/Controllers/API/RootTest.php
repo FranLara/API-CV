@@ -11,11 +11,12 @@ use PHPOpenSourceSaver\JWTAuth\JWT;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\Exception;
 use ReflectionException;
-
-use function PHPUnit\Framework\returnSelf;
+use Tests\Utils\TokenManager as TokenManagerUtils;
 
 class RootTest extends APITests
 {
+    use TokenManagerUtils;
+
     private const string TYPE_INDEX = 'type';
     private const string NAME_INDEX = 'name';
     private const string STRING_TYPE = 'string';
@@ -41,8 +42,7 @@ class RootTest extends APITests
     #[DataProvider('providerRole')]
     public function testIndex(?string $role = null): void
     {
-        $mockedTokenManager = $this->createConfiguredMock(JWT::class, ['setToken' => returnSelf(), 'check' => true]);
-        $this->app->bind(JWT::class, fn() => $mockedTokenManager);
+        $this->app->bind(JWT::class, fn() => $this->getMockedTokenManager());
 
         $header = $this->getHeader($this->getAuthorization($role));
         $this->getJson($this->domain, $header)->assertJson(

@@ -21,4 +21,3 @@ trait Request
         return Mockery::mock(LaravelRequest::class, $mockedFunctions);
     }
 }
-

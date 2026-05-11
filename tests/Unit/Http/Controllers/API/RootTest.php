@@ -8,14 +8,14 @@ use App\Http\Controllers\API\API as APIController;
 use App\Http\Controllers\API\Root;
 use Dingo\Api\Http\Response;
 use Illuminate\Http\Request;
-use PHPOpenSourceSaver\JWTAuth\JWT;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\Exception;
-
-use function PHPUnit\Framework\returnSelf;
+use Tests\Utils\TokenManager as TokenManagerUtils;
 
 class RootTest extends APITests
 {
+    use TokenManagerUtils;
+
     private const string TYPE_INDEX = 'type';
     private const string NAME_INDEX = 'name';
     private const string TOKEN_PATH = 'tokens';
@@ -76,8 +76,8 @@ class RootTest extends APITests
     public function testIndex(?string $token = null): void
     {
         $request = $this->getRequest(['bearerToken' => $token]);
-        $mockedTokenManager = $this->createConfiguredMock(JWT::class, ['setToken' => returnSelf(), 'check' => true]);
-        $index = json_decode($this->controller->index($request, $mockedTokenManager)->content(), true);
+
+        $index = json_decode($this->controller->index($request, $this->getMockedTokenManager())->content(), true);
 
         $this->assertIsArray($index);
         $this->assertIsArray($index[self::RESOURCES]);
