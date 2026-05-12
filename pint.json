@@ -6,6 +6,7 @@
         "const": "only_if_meta",
         "property": "only_if_meta"
       }
-    }
+    },
+    "php_unit_method_casing": "camel_case"
   }
 }

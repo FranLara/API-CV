@@ -8,7 +8,7 @@
 	],
 	"license" : "MIT",
 	"require" : {
-		"php": "^8.4",
+		"php": "^8.5",
 		"ext-pdo": "*",
 		"api-ecosystem-for-laravel/dingo-api": "^4.1",
 		"doctrine/dbal": "^4.4.3",

@@ -17,6 +17,7 @@
           <!-- Pint controls operator/concat spacing -->
           <exclude name="PSR12.Operators.OperatorSpacing"/>
           <exclude name="PSR12.Traits.UseDeclaration.MultipleImport"/>
+          <exclude name="PSR12.Classes.ClassInstantiation.MissingParentheses"/>
 
           <!-- Pint controls multi-line function call / declaration wrapping -->
           <exclude name="PEAR.Functions.FunctionCallSignature"/>
