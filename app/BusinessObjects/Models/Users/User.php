@@ -14,9 +14,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 
-abstract class User extends Model implements JWTSubject, AuthenticableContract
+abstract class User extends Model implements AuthenticableContract, JWTSubject
 {
-    use Notifiable, HasFactory, Authenticatable, HasUuids;
+    use Authenticatable, HasFactory, HasUuids, Notifiable;
 
     public $timestamps = false;
 

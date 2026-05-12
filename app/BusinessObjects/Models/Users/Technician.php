@@ -9,6 +9,8 @@ use Database\Factories\TechnicianFactory;
 
 class Technician extends User
 {
+    public $timestamps = true;
+
     protected $fillable = ['id', 'email', 'name', 'password', 'language', 'github_profile', 'linkedin_profile'];
 
     public function __construct(array $attributes = [])

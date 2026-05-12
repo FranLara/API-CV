@@ -9,6 +9,8 @@ use Database\Factories\RecruiterFactory;
 
 class Recruiter extends User
 {
+    public $timestamps = true;
+
     protected $fillable = ['id', 'email', 'name', 'password', 'language', 'linkedin_profile'];
 
     public function __construct(array $attributes = [])
