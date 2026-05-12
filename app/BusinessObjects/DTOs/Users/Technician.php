@@ -10,7 +10,7 @@ use App\Utils\Abilities\Nameable;
 
 class Technician extends User
 {
-    use Emailable, Nameable, LinkedinProfileable;
+    use Emailable, LinkedinProfileable, Nameable;
 
     public function __construct(
         protected ?string $name = null,

@@ -36,23 +36,21 @@ class Resource
     public function getResource(): array
     {
         $parameters = $this->parameters->all();
-        $endpoint = $this->host . '/' . explode(' ', $this->path)[0];
+        $endpoint = $this->host.'/'.explode(' ', $this->path)[0];
 
         if ($this->parameters->isNotEmpty()) {
-            $endpoint .= '?' . $this->getParameterForEndpointExample($this->parameters->shift());
+            $endpoint .= '?'.$this->getParameterForEndpointExample($this->parameters->shift());
         }
 
-        $this->parameters->each(
-            function (array $parameter) use (&$endpoint) {
-                $endpoint .= '&' . $this->getParameterForEndpointExample($parameter);
-            }
-        );
+        $this->parameters->each(function (array $parameter) use (&$endpoint) {
+            $endpoint .= '&'.$this->getParameterForEndpointExample($parameter);
+        });
 
         return [
             $this->path => [
-                'type'            => $this->type,
-                'description'     => $this->description,
-                'parameters'      => $parameters,
+                'type' => $this->type,
+                'description' => $this->description,
+                'parameters' => $parameters,
                 'endpointExample' => $endpoint,
             ],
         ];
@@ -63,7 +61,7 @@ class Resource
      */
     private function getParameterForEndpointExample(array $parameter): string
     {
-        $param = $parameter['name'] . '=';
+        $param = $parameter['name'].'=';
 
         $param .= match ($parameter['type']) {
             'int' => random_int(1, 31),

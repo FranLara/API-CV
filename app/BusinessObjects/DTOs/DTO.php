@@ -12,9 +12,7 @@ use Throwable;
 
 abstract class DTO
 {
-    public function __construct(protected ?string $identifier = null)
-    {
-    }
+    public function __construct(protected ?string $identifier = null) {}
 
     public function getIdentifier(): ?string
     {
@@ -24,11 +22,6 @@ abstract class DTO
     public function setIdentifier(string $identifier): void
     {
         $this->identifier = $identifier;
-    }
-
-    public function toPayload(): Collection
-    {
-        return $this->toArray(collect(get_object_vars($this)));
     }
 
     protected function toArray(Collection $variables): Collection
@@ -56,8 +49,22 @@ abstract class DTO
         return match (get_class($value)) {
             Carbon::class => [$key => $value->toDateTime()],
             Collection::class => [$key => $this->toArray($value)],
-            stdClass::class => [$key => $this->toArray(collect(json_decode(json_encode($value))))],
+            stdClass::class => [
+                $key => $value
+                        |> json_encode(...)
+                        |> json_decode(...)
+                        |> collect(...)
+                        |> $this(...),
+            ],
             default => [$key => $value->toPayload()],
         };
+    }
+
+    public function toPayload(): Collection
+    {
+        return $this
+               |> get_object_vars(...)
+               |> collect(...)
+               |> $this(...);
     }
 }
