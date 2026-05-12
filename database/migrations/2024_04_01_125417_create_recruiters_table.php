@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     public function up(): void
     {
         Schema::create('recruiters', function (Blueprint $table) {
@@ -14,7 +15,7 @@ return new class extends Migration {
             $table->string('password');
             $table->string('language');
             $table->string('linkedin_profile')->nullable();
-            $table->timestamp('created_at')->useCurrent();
+            $table->timestamps();
         });
     }
 
