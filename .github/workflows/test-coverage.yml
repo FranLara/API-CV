@@ -22,7 +22,7 @@ jobs:
     name: Code Coverage Tests
     runs-on: ubuntu-latest
     container:
-      image: serversideup/php:8.4-cli-alpine
+      image: serversideup/php:8.5-cli-alpine
       options: --user root
 
     steps:
