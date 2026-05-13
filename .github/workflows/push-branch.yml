@@ -26,7 +26,7 @@ jobs:
 
     steps:
       - name: Checkout to check library security
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Get cached Composer libraries
         uses: actions/cache@v4
@@ -48,7 +48,7 @@ jobs:
 
     steps:
       - name: Checkout to find changes
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 2
 

@@ -23,7 +23,7 @@ jobs:
       options: --user root
     steps:
       - name: Checkout to prepare environment
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Copy .env and create test result folder
         run: mv .env.example .env

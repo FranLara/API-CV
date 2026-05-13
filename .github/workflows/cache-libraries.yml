@@ -12,7 +12,7 @@ jobs:
       options: --user root
     steps:
       - name: Checkout to cache
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Cache Composer libraries
         id: cache-composer

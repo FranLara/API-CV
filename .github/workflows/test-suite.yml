@@ -41,7 +41,7 @@ jobs:
 
     steps:
       - name: Checkout to test
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Get cached Composer libraries
         uses: actions/cache@v4
