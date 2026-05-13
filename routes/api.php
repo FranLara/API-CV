@@ -16,7 +16,7 @@ $api->group(['middleware' => 'api', 'limit' => 60, 'namespace' => 'App\Http\Cont
         $api->group(['prefix' => 'accounts'], function ($api) {
             $api->post('', 'User@request');
             $api->group(['middleware' => 'api.cv.auth'], function ($api) {
-                $api->patch('', 'User@request');
+                $api->patch('', 'User@update');
             });
         });
 
