@@ -32,7 +32,8 @@ class TokenerTest extends ServiceTests
         $token = new Tokener()->getToken($credentials);
         $payload = app('tymon.jwt')->setToken($token)->getPayload();
 
-        $this->assertSame($expectedRole, $payload->get('role'));
+        $this->assertTrue($payload->hasKey(Tokener::USERNAME_CLAIM));
+        $this->assertSame($expectedRole, $payload->get(Tokener::ROLE_CLAIM));
     }
 
     public function testGetTokenTokenUserCollisionException(): void
@@ -41,35 +42,35 @@ class TokenerTest extends ServiceTests
 
         $credentials = [
             APIController::USERNAME_PARAMETER => 'test@collision.com',
-            APIController::PSSWD_PARAMETER    => 'test_collision_password',
+            APIController::PSSWD_PARAMETER => 'test_collision_password',
         ];
         $this->createUser($credentials, Token::RECRUITER_ROLE);
         $this->createUser($credentials, Token::TECHNICIAN_ROLE);
 
 
-        new Tokener()->getToken($credentials);
+        (new Tokener)->getToken($credentials);
     }
 
     public static function providerCredentials(): array
     {
         $admin = [
             [
+                APIController::PSSWD_PARAMETER => env('SUPER_ADMIN_PASSWORD'),
                 APIController::USERNAME_PARAMETER => env('SUPER_ADMIN_USERNAME'),
-                APIController::PSSWD_PARAMETER    => env('SUPER_ADMIN_PASSWORD'),
             ],
             Token::ADMIN_ROLE,
         ];
         $recruiter = [
             [
                 APIController::USERNAME_PARAMETER => 'test@recruiter.com',
-                APIController::PSSWD_PARAMETER    => 'test_recruiter_password',
+                APIController::PSSWD_PARAMETER => 'test_recruiter_password',
             ],
             Token::RECRUITER_ROLE,
         ];
         $technician = [
             [
                 APIController::USERNAME_PARAMETER => 'test@technician.com',
-                APIController::PSSWD_PARAMETER    => 'test_technician_password',
+                APIController::PSSWD_PARAMETER => 'test_technician_password',
             ],
             Token::TECHNICIAN_ROLE,
         ];
@@ -86,7 +87,7 @@ class TokenerTest extends ServiceTests
     private function createUser(array $credentials, string $expectedRole): void
     {
         $user = [
-            'email'    => $credentials[APIController::USERNAME_PARAMETER],
+            'email' => $credentials[APIController::USERNAME_PARAMETER],
             'password' => Hash::make($credentials[APIController::PSSWD_PARAMETER]),
         ];
         if (Str::of($expectedRole)->exactly(Token::RECRUITER_ROLE)) {

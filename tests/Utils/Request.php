@@ -12,9 +12,10 @@ trait Request
     protected function getRequest(array $additionalFunctions = []): LaravelRequest
     {
         $mockedFunctions = array_merge([
-            'get'                  => '',
-            'only'                 => [],
-            'validate'             => true,
+            'get' => '',
+            'only' => [],
+            'input' => '',
+            'validate' => true,
             'getSchemeAndHttpHost' => 'https://domain.test',
         ], $additionalFunctions);
 

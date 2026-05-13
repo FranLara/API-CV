@@ -54,7 +54,7 @@ abstract class DTO
                         |> json_encode(...)
                         |> json_decode(...)
                         |> collect(...)
-                        |> $this(...),
+                        |> $this->toArray(...),
             ],
             default => [$key => $value->toPayload()],
         };
@@ -65,6 +65,6 @@ abstract class DTO
         return $this
                |> get_object_vars(...)
                |> collect(...)
-               |> $this(...);
+               |> $this->toArray(...);
     }
 }

@@ -9,4 +9,7 @@ return [
         'accounts' => ['request' => 'Solicita la creación de una cuenta de usuario.'],
         'health'   => ['check' => 'Devuelve el estado de salud del servidor y sus dependencias.'],
     ],
+    'errors'    => [
+        'forbidden' => ['technician_only' => 'Solo un rol técnico puede realizar esta acción.'],
+    ],
 ];

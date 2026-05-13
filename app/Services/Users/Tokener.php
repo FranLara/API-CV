@@ -12,7 +12,9 @@ use Illuminate\Support\Str;
 
 class Tokener
 {
-    private const string ROLE_CLAIM = 'role';
+    public const string ROLE_CLAIM = 'role';
+    public const string USERNAME_CLAIM = 'username';
+
     private const array ROLES = [Token::ADMIN_ROLE, Token::RECRUITER_ROLE, Token::TECHNICIAN_ROLE];
 
     /**
@@ -21,51 +23,29 @@ class Tokener
     public function getToken(array $credentials): string
     {
         if (empty($credentials)) {
-            return $this->getPayload(new Token());
+            return $this->getPayload(new Token);
         }
 
         return $this->getTokenByRole($credentials);
     }
 
-    /**
-     * @throws TokenUserCollisionException
-     */
-    private function getTokenByRole(array $credentials): string
-    {
-        $token = collect(self::ROLES)->map(
-            function (string $role) use ($credentials) {
-                return $this->getPayload(new Token($role, $credentials));
-            }
-        )->filter();
-
-        if ($token->count() === 1) {
-            return $token->first();
-        }
-
-        if ($token->count() > 1) {
-            throw new TokenUserCollisionException($credentials[APIController::USERNAME_PARAMETER]);
-        }
-
-        $message = 'The username "{username}" tried to request a token, but it could\'t login.';
-        Log::channel('credentials')->notice($message, ['username' => $credentials[APIController::USERNAME_PARAMETER]]);
-
-        return $this->getPayload(new Token());
-    }
-
     private function getPayload(Token $token): string
     {
-        $claims = ['sub' => 0, self::ROLE_CLAIM => Token::GUEST_ROLE];
+        $claims = ['sub' => 0, self::ROLE_CLAIM => Token::GUEST_ROLE, self::USERNAME_CLAIM => ''];
         $credentials = [
-            APIController::PSSWD_PARAMETER    => config('auth.super_admin.psswd'),
+            APIController::PSSWD_PARAMETER => config('auth.super_admin.psswd'),
             APIController::USERNAME_PARAMETER => config('auth.super_admin.username'),
         ];
 
-        if (!empty($token->getCredentials())) {
+        if (! empty($token->getCredentials())) {
             $credentials = $this->getCredentials($token);
-            $claims = [self::ROLE_CLAIM => $token->getRole()];
+            $claims = [
+                self::ROLE_CLAIM => $token->getRole(),
+                self::USERNAME_CLAIM => $token->getCredentials()[APIController::USERNAME_PARAMETER],
+            ];
         }
 
-        $token = auth('api.' . $token->getRole())->claims($claims)->attempt($credentials);
+        $token = auth('api.'.$token->getRole())->claims($claims)->attempt($credentials);
 
         if (strval($token)) {
             return $token;
@@ -81,8 +61,31 @@ class Tokener
         }
 
         return [
+            'email' => $token->getCredentials()[APIController::USERNAME_PARAMETER],
             'password' => $token->getCredentials()[APIController::PSSWD_PARAMETER],
-            'email'    => $token->getCredentials()[APIController::USERNAME_PARAMETER],
         ];
+    }
+
+    /**
+     * @throws TokenUserCollisionException
+     */
+    private function getTokenByRole(array $credentials): string
+    {
+        $token = collect(self::ROLES)->map(function (string $role) use ($credentials) {
+            return $this->getPayload(new Token($role, $credentials));
+        })->filter();
+
+        if ($token->count() === 1) {
+            return $token->first();
+        }
+
+        if ($token->count() > 1) {
+            throw new TokenUserCollisionException($credentials[APIController::USERNAME_PARAMETER]);
+        }
+
+        $message = 'The username "{username}" tried to request a token, but it could\'t login.';
+        Log::channel('credentials')->notice($message, ['username' => $credentials[APIController::USERNAME_PARAMETER]]);
+
+        return $this->getPayload(new Token);
     }
 }

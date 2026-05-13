@@ -16,8 +16,12 @@ abstract class API extends Controller
     public const string PSSWD_PARAMETER = 'password';
     public const string USERNAME_PARAMETER = 'username';
     public const string LANGUAGE_PARAMETER = 'language';
+    public const string GITHUB_PARAMETER = 'github_profile';
     public const string LINKEDIN_PARAMETER = 'linkedin_profile';
 
     protected const string API_TRANSLATIONS = 'api.';
+
+    protected const string URL_VALIDATION = 'url';
+    protected const string EMAIL_VALIDATION = 'email';
     protected const string REQUIRED_VALIDATION = 'required';
 }

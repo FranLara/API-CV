@@ -9,4 +9,7 @@ return [
         'accounts' => ['request' => 'Request a creation of a user account.'],
         'health'   => ['check' => 'Returns the health status of the server and its dependencies.'],
     ],
+    'errors'    => [
+        'forbidden' => ['technician_only' => 'Only a technician role is allowed to perform this action.'],
+    ],
 ];
